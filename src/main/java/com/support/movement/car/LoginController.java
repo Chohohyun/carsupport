@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 // 깃허브 테스트합니다.
 // 기섷브 테스트 2
+
+// 깃 허브테스트343332432432141234
 // 가상 URL 주소로 접속하면 호출되는 메소드를 소유한 컨트롤러 클래스 선언
 // @Controller 를 붙임으로써 컨트롤러 클래스임을 지정한다.
 @Controller
