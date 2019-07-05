@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!--***************************************************************-->
+	<!--POM.xml 파일의 전반적인 설정-->
+	<!--***************************************************************-->
+	<modelVersion>4.0.0</modelVersion> <!--POM 모델 버전 설정-->
+	<groupId>com.naver</groupId> <!--프로젝트 생성 조직의 고유 아이디 설정-->
+	<artifactId>erp2</artifactId> <!--프로젝트를 식별하기 위한 식별 고유 아이디 설정-->
+	<name>z_spring2</name> <!--프로젝트명 설정-->
+	<packaging>war</packaging> <!--프로젝트의 패키징 형태 설정-->
+	<version>1.0.0-BUILD-SNAPSHOT</version> <!--프로젝트의 현재 버전 설정. 개발중에는 접미사로 예약어 SNAPSHOT 을 쓴다.-->
+	<!--SNAPSHOT 을 쓰면 다른 방식으로 관리한다.-->
+	<!--[주의] groupId + artifactId  값은 중복되면 라이브러리 관리 시 충돌 상황이 발생할 도 있다. -->
+	
+	<!--***************************************************************-->
+	<!--아래에서 반복 사용할  값을 설정-->
+	<!--***************************************************************-->
+	<properties>
+		<java-version>1.8</java-version> <!-- 이후부터는 0 하면   1.8   이 리턴 된다.-->
+		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+	</properties>
+	<!--***************************************************************-->
+	<!--ORACLE JDBC 관련 API 를 다운로드할 사이트 주소를 등록-->
+	<!--	[참고] ORACLE JDBC 관련 API 는 기본 메이븐 사이트(http://search.maven.org/) 에 없기 떄문.-->
+	<!--***************************************************************-->
+	<repositories>
+		<repository>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>http://maven.jahia.org/maven2</url>
+		</repository>
+	</repositories>
+	
+	<!--*************************************************************************************************
+	http://search.maven.org/ 사이트에 있는   groupId 항목,artifactId 항목,version 항목 에 해당하는 jar 파일 수입 한다.
+	프로젝트에서 필요한 Library 들의 Maven ID를 <dependency> 태그로 등록해 놓으면 자동으로 API 를 다운로해서 빌드한다.
+	의존 라이브러리까지도 자동 import 해준다. 개별적으로 다운 받고 싶은 API 도 이곳에서 검색해 다운 받는다.
+	*************************************************************************************************-->
+	<dependencies>
+		<!--==============================================
+		Spring 의 상황정보(=context)를 관리하는 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<!--=============================================
+				Spring 은 Commons-logging 을 이용해서 로그를 남긴다
+				프로젝트에서는 commons-logging 을 사용하지 않고 logback 을 사용하기 때문에
+				충돌 제거를 위해 commons-logging 을 제외하고 import 한다
+				=============================================-->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--=============================================
+		Spring Web MVC 를 지원하는 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!--=============================================
+		Servlet 지원 API, JSP 지원 API, JSTL 지원 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!--=============================================
+		spring 이 지원하는 JDBC 관련 API 다운받도록 설정  (주의-=>요 부분 설정 시 에러 발생)
+		================================================-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.3.6.RELEASE</version>
+			<!-- [주의] 아래처럼 <version> 태그 설정 말것. 4.3.4..RELEASE 버전은 에러 발생함-->
+			<!-- <version>0</version>-->
+		</dependency>
+		<!--=============================================
+		mybatis 관련 API 다운받도록 설정 
+		=============================================-->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<!--=============================================
+		[DB 정보] 관리하는 API 다운받도록 설정 
+		=============================================-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<!--=============================================
+		[커넥션풀]을 제공하는 API 다운받도록 설정 
+		=============================================-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		<!--=============================================
+		Oracle JDBC 를 등록한다. 즉 Oracle 과 Java 가 연동할 수 있는 API 를 제공한다
+		<주의> 먼저 상단에 http://maven.jahia.org/maven2 레파지토리가 등록되어 있어야 한다
+		=============================================-->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>12.1.0.1</version>
+		</dependency>
+		<!--=============================================
+		비동기 방식으로 클라이언트가 JSON 으로 수신 받도록 하는 API 등록.
+		=============================================-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.5</version>
+			<!-- <주의><version>2.5.4</version> 은에러발생-->
+			<!--       <version>2.5.1</version>는가능-->
+			<!--       <version>2.1.1</version>는가능-->
+		</dependency>
+		
+		<!--=============================================
+		클라이언트에게 JSON 으로 응답하기 위해 응답데이터를 JSON 으로 변환도록 하는 API 등록.
+		=============================================-->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
+		<!--=============================================
+		fileupload 관련 API 다운받도록 설정 
+		=============================================-->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		<!--=============================================
+		AOP 관리툴인 AspectJ을  사용하기 위한 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		<!--=============================================
+		단위테스트를 지원하는 junit 관련 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		<!--=============================================
+		의존관계를 자동으로 연결해주는 @Inject 어노테이션 지원 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		
+		<!--=============================================
+		[MyBatis SQL 설정 XML 파일]의 쿼리를 로그로 출력하게 지원하는 API 다운받도록 설정<선택1>
+		================================================-->
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.7</version>
+		</dependency>
+		
+		<!--=============================================
+		Logging(=기록만듦) 관련 API 다운받도록 설정 
+		================================================-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+	<!--****************************************************************-->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>org.test.int1.Main</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
