@@ -44,7 +44,7 @@ public class LoginController {
 			HttpSession session) {
 
 		// HttpSession 객체에 저장된 로그인 아이디 삭제하기
-		session.removeAttribute("admin_id");
+		session.removeAttribute("id");
 
 		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
 		//session.invalidate();
@@ -82,8 +82,8 @@ public class LoginController {
 		try {
 			session.removeAttribute("uri");
 			admin_idCnt = this.loginService.getAdminCnt(paramsMap);
-			if(admin_idCnt==1) {
-				session.setAttribute("admin_id", paramsMap.get("admin_id"));
+			if(admin_idCnt>=1) {
+				session.setAttribute("id", paramsMap.get("id"));
 				// 아이디 암호 저장의사가 없을경우
 				// 아이디 암호 저장한 Cookies 객체 생성하고 쿠키값을 null로 덮어 씌우고 수명 없애기
 				// 그리고 이 쿠키를 HttpServletRequest 객체에 저장하기
@@ -96,7 +96,7 @@ public class LoginController {
 					cookie2.setMaxAge(0);
 					response.addCookie(cookie2);*/
 					
-					Util.addCookie(response, "admin_id", null, 0);
+					Util.addCookie(response, "id", null, 0);
 					Util.addCookie(response, "pwd", null, 0);
 				}
 				else {
@@ -111,7 +111,7 @@ public class LoginController {
 					response.addCookie(cookie2);*/
 					
 
-					Util.addCookie(response, "admin_id",paramsMap.get("admin_id") , 60*60*24);
+					Util.addCookie(response, "id",paramsMap.get("id") , 60*60*24);
 					Util.addCookie(response, "pwd", paramsMap.get("pwd"), 60*60*24);
 				}
 			}

@@ -23,7 +23,39 @@ public class LoginServiceImpl implements LoginService{
 	private LoginDAO loginDAO;
 	
 	public int getAdminCnt(Map<String,String> admin_id_pwd) {
-		int adminCnt = this.loginDAO.getAdminCnt(admin_id_pwd);
-		return adminCnt;
+		int adminIdCnt = this.loginDAO.getAdminIdCnt(admin_id_pwd);
+		if(adminIdCnt==1) {
+
+			int adminCnt = this.loginDAO.getAdminCnt(admin_id_pwd);
+			if(adminCnt==1) {
+				return 1;
+			}
+			else {
+				return 2;
+			}
+		}
+		int userIdCnt =  this.loginDAO.getUserIdCnt(admin_id_pwd);
+		if(userIdCnt==1) {
+			int userCnt = this.loginDAO.getUserCnt(admin_id_pwd);
+			if(userCnt==1) {
+				return 3;
+			}
+			else {
+				return 4;
+			}
+		}
+
+		int driverIdCnt =  this.loginDAO.getDriverIdCnt(admin_id_pwd);
+		if(driverIdCnt==1) {
+			int driverCnt = this.loginDAO.getDriverCnt(admin_id_pwd);
+			if(driverCnt==1) {
+				return 5;
+			}
+			else {
+				return 6;
+			}
+		}
+		
+		return 0;
 	}
 }

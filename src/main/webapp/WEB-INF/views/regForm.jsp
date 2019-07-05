@@ -112,7 +112,7 @@
 <head>
    
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>회원가입</title>
 
     <!-- Icons font CSS-->
     <link href="/support/resources/vendor2/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -128,22 +128,16 @@
     <link href="/support/resources/css/main.css" rel="stylesheet" media="all">
     <link href="/support/resources/css2/main.css" rel="stylesheet" media="all">
     
-<!--===============================================================================================-->	
+    
+    
 	<link rel="icon" type="image/png" href="/support/resources/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/support/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/animate/animate.css">
-<!--===============================================================================================-->	
 	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/support/resources/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/support/resources/css/main.css">
-<!--===============================================================================================-->
     
     
 </head>

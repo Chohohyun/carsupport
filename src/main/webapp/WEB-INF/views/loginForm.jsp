@@ -6,15 +6,16 @@
 
 <!-- jsp 기술의 한 종류인 include Directive를 이용하여 common.jsp 파일 내의 소스를 삽입하기 -->
 <%@include file="common.jsp" %>
+<html>
 <script>
 	$(document).ready(function() {
 		
 		//$(".admin_id").val("abc");
 		//$(".pwd").val("abc123");
-		inputData("admin_id",'${cookie.admin_id.value}');
+		inputData("id",'${cookie.id.value}');
 		inputData("pwd",'${cookie.pwd.value}');
 		
-		<c:if test="${!empty cookie.admin_id.value}">
+		<c:if test="${!empty cookie.id.value}">
 		inputData("is_login","y")
 		</c:if>
 		
@@ -29,10 +30,10 @@
 	}
 	function checkLoginForm() {
 		// 입력된 아이디를 가져와 변수에 저장
-		var admin_id = $(".admin_id").val();
+		var id = $(".id").val();
 		// 아이디를 입력 안했으면 경고하고 함수 중단
-		if (admin_id.split(" ").join("") == "") {
-			$(".admin_id").val("");
+		if (id.split(" ").join("") == "") {
+			$(".id").val("");
 			alert("아이디를 입력하지 않았습니다.");
 			return;
 		}
@@ -45,56 +46,24 @@
 			alert("비밀번호를 입력하지 않았습니다.");
 			return;
 		}
-
-		if (is_empty("login_option")) {
-			alert("로그인할 페이지를 선택해 주십시요");
-			$("[name='login_option']").focus();
-			return;
-		}
-		alert( $('[name="login_option"]:checked').val());
-
 		$.ajax({
-			url:"/erp/loginProc.do",
-			type:"post",
-			// 일일이 써야함
-			//data:{'admin_id':admin_id, 'pwd':pwd}
-			// 여러개도 가능	
+			url:"/support/loginProc.do",
+			type:"post",	
 			data: $("[name=loginForm]").serialize(),
 			datatype:"html",
-			/* success:function(html){
-				var idCnt = $(html).text();
-				alert(idCnt);
-				idCnt = idCnt.split(" ").join("");
-				if(idCnt==1){
-					alert("로그인 성공!");
-					//location.replace("/erp/boardListForm.do");
-				}
-				else{
-					alert("로그인 실패!");
-				}
-			}, */
 			success:function(data){
 				if(data==1){
-					alert("로그인 성공!");
-/* 
-					 만약 post 방식으로 "erp/boardListForm.do 에 접근하고 싶다면?
-							
-					 POST 방식으로 보내려고 할 때 여기에 폼 하나 만들고 폼을 SUBMIT 
+					alert("관리자 로그인 성공!");
+					location.replace("/support/adminMainPage.do");
+				}
+				if(data==3){
+					alert("관리자 로그인 성공!");
+					location.replace("/support/adminMainPage.do");
 					
-						<form name="boardListForm" method="post" action="/erp/boardListForm.do">
-						</form>  */
-							// body태그 하단에 폼태그를 선언하고
-							// location.replace 대신 아래 코드를 사용한다.
-					// document.boardListForm.submit();
-
-					if($('[name="login_option"]:checked').val() == 1){
-
-						location.replace("/erp/boardListForm.do");
-					}
-					else{
-
-						location.replace("/erp/contactSearchForm.do");	
-					}
+				}
+				if(data==5){
+					alert("관리자 로그인 성공!");
+					location.replace("/support/adminMainPage.do");
 				}
 				else{
 					alert("로그인 실패!");
@@ -108,6 +77,7 @@
 
 	}
 </script>
+<head>
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="/support/resources/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
