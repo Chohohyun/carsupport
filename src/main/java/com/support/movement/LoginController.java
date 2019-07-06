@@ -149,4 +149,37 @@ public class LoginController {
 		} 
 		return userRegCnt;
 	}
+	
+
+	//**********************************
+	// 운전자 가입 (재영 작업)
+	//**********************************
+	@RequestMapping(
+			value="/driverRegForm.do",
+			 method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+
+	@ResponseBody 
+	public int driverRegProc(
+			HttpSession session,HttpServletResponse response,
+			DriverDTO driverDTO
+			) {
+		
+		int driverRegCnt=0;
+		System.out.println(driverDTO.getAdmission_code());
+		System.out.println("여기까진 가는건가?");
+		try {
+			session.removeAttribute("uri");
+			
+			driverRegCnt = this.loginService.getDriverRegCnt(driverDTO);
+			System.out.println("드라이버 됩니다");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+			driverRegCnt=-1;
+		} 
+		return driverRegCnt;
+	}
+	
 }

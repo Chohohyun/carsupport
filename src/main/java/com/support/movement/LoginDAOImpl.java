@@ -79,4 +79,13 @@ public class LoginDAOImpl implements LoginDAO{
 				"com.support.movement.LoginDAO.getUserRegCnt",userDTO);
 		return userRegCnt;
 	}
+	
+
+	// 운전자 가입 메소드
+	@Override
+	public int getDriverRegCnt(DriverDTO driverDTO) {
+		int driverRegCnt = this.sqlSession.insert(
+				"com.support.movement.LoginDAO.getDriverRegCnt",driverDTO);
+		return driverRegCnt;
+	}
 }

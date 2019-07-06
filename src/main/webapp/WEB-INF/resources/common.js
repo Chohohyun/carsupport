@@ -1,3 +1,21 @@
+//회원가입  ID
+function id_check(idV){
+            try{
+                val = $.trim(idV);
+                if(val==""){
+                    return false;
+                }
+
+                var id_RegExp = new RegExp(/^[a-z][a-z0-9]{5,14}$/).test(val);
+                return id_RegExp;
+
+            }
+            catch(e){
+                alert("id_check()에서 에러발생");
+                return false;
+            }
+        }
+
 //비어있는지 확인
 function is_empty(nameV){
 

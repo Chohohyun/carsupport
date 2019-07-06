@@ -51,16 +51,16 @@
 			success:function(data){
 				if(data==1){
 					alert("관리자 로그인 성공!");
-					location.replace("/support/regForm.do");
+					location.replace("/support/adminMainPage.do");
 				}
 				else if(data==3){
-					alert("관리자 로그인 성공!");
-					location.replace("/support/regForm.do");
+					alert("일반회원 로그인 성공!");
+					location.replace("/support/userMainPage.do");
 					
 				}
 				else if(data==5){
-					alert("관리자 로그인 성공!");
-					location.replace("/support/regForm.do");
+					alert("운전자 로그인 성공!");
+					location.replace("/support/driverMainPage.do");
 				}
 				else{
 					alert("로그인 실패!");
@@ -150,22 +150,6 @@
 	
 	<form name="goRegForm" method="get" action="/support/regForm.do"></form>
 	
-<!--===============================================================================================-->	
-	<script src="/support/resources/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/support/resources/vendor/bootstrap/js/popper.js"></script>
-	<script src="/support/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/support/resources/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/support/resources/vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="/support/resources/js/main.js"></script>
 
 </body>
 </html>

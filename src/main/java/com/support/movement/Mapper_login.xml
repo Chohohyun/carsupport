@@ -73,5 +73,42 @@
 	</insert>
 	
 	
+	<insert id="getDriverRegCnt" parameterType="com.support.movement.DriverDTO">
+	insert into driver(
+		driver_no,
+		driver_id,
+		driver_pwd,
+		driver_name,
+		driver_gender,
+		driver_jumin_num,
+		driver_postal_code,
+		driver_road_addr,
+		driver_jibun_addr,
+		driver_detail_addr,
+		driver_phone,
+		driver_email,
+		driver_license_number,
+		admission_code
+		
+	) values (
+	(select nvl(max(driver_no),0)+1 from driver), 
+	#{id},
+	#{pwd1},
+	#{name},
+	#{gender},
+	'${jumin_num1}${jumin_num2}',
+	#{postal_code},
+	#{road_addr},
+	#{jibun_addr},
+	#{detail_addr},
+	#{phone},
+	#{email},
+	#{driver_license_number},
+	#{admission_code}
+	
+	)
+			
+	</insert>
+	
 	
 </mapper>

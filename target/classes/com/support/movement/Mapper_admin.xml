@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.support.movement.AdminDAO">
+
+	
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getAcceptPermit" parameterType="String" resultType="int">
+		select count(*) from admin where admin_id=#{id}
+	</select>
+	
+	<select id="getAcceptListAllCnt" resultType="int">
+		select count(*) from driver where admission_code='n'
+	</select>
+	
+	<select id="getAcceptList" resultType="hashmap">
+		select
+            driver_no||'' as "driver_no", 
+             driver_name as "driver_name", 
+             driver_id as "driver_id", 
+             driver_pwd as "driver_pwd", 
+             driver_gender as "driver_gender", 
+             driver_jumin_num as "driver_jumin_num", 
+             driver_postal_code||'' as "driver_postal_code", 
+             driver_road_addr as "driver_road_addr", 
+             driver_jibun_addr as "driver_jibun_addr", 
+             driver_detail_addr as "driver_detail_addr", 
+             driver_phone as "driver_phone",  
+             driver_email as "driver_email",  
+             driver_license_number as "driver_license_number", 
+             to_char(driver_reg_date,'YYYY-MM-DD') "driver_reg_date"
+              
+         from driver
+         where admission_code='n' 
+		
+	</select>
+	
+	
+	<select id="getUpDelListAllCnt" resultType="int">
+		select count(*) from driver where admission_code='y'
+	</select>
+	
+	<select id="getUpDelList" resultType="hashmap">
+		select
+            driver_no||'' as "driver_no", 
+             driver_name as "driver_name", 
+             driver_id as "driver_id", 
+             driver_pwd as "driver_pwd", 
+             driver_gender as "driver_gender", 
+             driver_jumin_num as "driver_jumin_num", 
+             driver_postal_code||'' as "driver_postal_code", 
+             driver_road_addr as "driver_road_addr", 
+             driver_jibun_addr as "driver_jibun_addr", 
+             driver_detail_addr as "driver_detail_addr", 
+             driver_phone as "driver_phone",  
+             driver_email as "driver_email",  
+             driver_license_number as "driver_license_number", 
+             to_char(driver_reg_date,'YYYY-MM-DD') "driver_reg_date"
+              
+         from driver
+         where admission_code='y' 
+		
+	</select>
+	
+	
+	<update id="getAcceptDriverCnt" parameterType="int">
+		update driver 
+		set admission_code='y'
+		where driver_no=#{driver} 
+	</update>
+	
+	
+	<insert id="getDriverRegCnt" parameterType="com.support.movement.DriverDTO">
+	insert into driver(
+		driver_no,
+		driver_id,
+		driver_pwd,
+		driver_name,
+		driver_gender,
+		driver_jumin_num,
+		driver_postal_code,
+		driver_road_addr,
+		driver_jibun_addr,
+		driver_detail_addr,
+		driver_phone,
+		driver_email,
+		driver_license_number,
+		admission_code
+		
+	) values (
+	(select nvl(max(driver_no),0)+1 from driver), 
+	#{id},
+	#{pwd1},
+	#{name},
+	#{gender},
+	'${jumin_num1}${jumin_num2}',
+	#{postal_code},
+	#{road_addr},
+	#{jibun_addr},
+	#{detail_addr},
+	#{phone},
+	#{email},
+	#{driver_license_number},
+	#{admission_code}
+	
+	)
+			
+	</insert>
+	
+	
+	<select id= "getDriverDTO" parameterType="int" resultType="com.support.movement.DriverDTO">
+		select
+			driver_no||'' as "driver_no",
+			driver_id as "id",
+			driver_pwd as "pwd1",
+			driver_name as "name",
+			driver_gender as "gender",
+			substr(driver_jumin_num,1,6) as "jumin_num1",
+			substr(driver_jumin_num,7,7) as "jumin_num2",
+			driver_postal_code||'' as "postal_code",
+			driver_road_addr as "road_addr",
+			driver_jibun_addr as "jibun_addr",
+			driver_detail_addr as "detail_addr",
+			driver_phone as "phone",
+			driver_email as "email",
+			driver_license_number as "driver_license_number",
+			admission_code as "admission_code"
+			
+			from driver
+			where driver_no = #{driver_no}
+			 
+			
+	</select>
+</mapper>

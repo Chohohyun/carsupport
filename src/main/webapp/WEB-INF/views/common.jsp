@@ -5,7 +5,28 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- 얘는 include directive에 포함되지 않는다. -->
-	
+ <script src="/support/resources/vendor2/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="/support/resources/vendor2/select2/select2.min.js"></script>
+    <script src="/support/resources/vendor2/datepicker/moment.min.js"></script>
+    <script src="/support/resources/vendor2/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="/support/resources/js2/global.js"></script>
+
+
+	<script src="/support/resources/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="/support/resources/vendor/bootstrap/js/popper.js"></script>
+	<script src="/support/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/support/resources/vendor/select2/select2.min.js"></script>
+	<script src="/support/resources/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="/support/resources/js/main.js"></script>
 <script src="/support/resources/jquery-1.11.0.min.js"></script>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

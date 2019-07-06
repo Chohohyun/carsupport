@@ -68,6 +68,7 @@
 	}
 function goDriverRegForm() {
 		alert(1);
+		alert($("[name=driverRegForm]").serialize());
 		$.ajax({
 			url:"/support/driverRegForm.do",
 			type:"post",
@@ -79,6 +80,7 @@ function goDriverRegForm() {
 					alert("회원가입 성공!");
 					
 
+					location.replace("/support/loginForm.do");
 				}
 				else{
 					alert("회원가입 실패!");
@@ -92,33 +94,7 @@ function goDriverRegForm() {
 
 	}
 </script> <!-- Jquery JS-->
-    <script src="/support/resources/vendor2/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="/support/resources/vendor2/select2/select2.min.js"></script>
-    <script src="/support/resources/vendor2/datepicker/moment.min.js"></script>
-    <script src="/support/resources/vendor2/datepicker/daterangepicker.js"></script>
-
-    <!-- Main JS-->
-    <script src="/support/resources/js2/global.js"></script>
-
-
-<!-- end document-->
-<!--===============================================================================================-->	
-	<script src="/support/resources/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/support/resources/vendor/bootstrap/js/popper.js"></script>
-	<script src="/support/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/support/resources/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/support/resources/vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="/support/resources/js/main.js"></script>
+   
 <head>
    
     <!-- Title Page-->
@@ -148,6 +124,7 @@ function goDriverRegForm() {
 	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="/support/resources/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/support/resources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/support/resources/css2/main.css">
     
     
 </head>
@@ -675,7 +652,7 @@ function goDriverRegForm() {
                						 
                             <input type="button" class="login100-form-btn btn btn--radius-2 btn--green" type="button" onclick="goLoginForm();" value="취소">
                                <span class="focus-input100"></span>
-                          
+                          	<input type="hidden" name="admission_code" value="n">
                           </div>           
                        </div>    
                     </form>

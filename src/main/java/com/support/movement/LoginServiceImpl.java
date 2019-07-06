@@ -64,4 +64,12 @@ public class LoginServiceImpl implements LoginService{
 		int userRegCnt = this.loginDAO.getUesrRegCnt(userDTO);
 		return userRegCnt;
 	}
+	
+
+	@Override
+	public int getDriverRegCnt(DriverDTO driverDTO) {
+		int driverRegCnt = this.loginDAO.getDriverRegCnt(driverDTO);
+		return driverRegCnt;
+	}
+	
 }

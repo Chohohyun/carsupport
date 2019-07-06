@@ -7,4 +7,6 @@ public interface LoginService {
 	int getAdminCnt(Map<String,String> admin_id_pwd);
 
 	int getUserRegCnt(UserDTO userDTO);
+
+	int getDriverRegCnt(DriverDTO driverDTO);
 }

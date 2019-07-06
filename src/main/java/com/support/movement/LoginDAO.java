@@ -18,4 +18,6 @@ public interface LoginDAO {
 
 	int getUesrRegCnt(UserDTO userDTO);
 
+	int getDriverRegCnt(DriverDTO driverDTO);
+
 }
