@@ -1,4 +1,4 @@
-package com.support.movement.car;
+package com.support.movement;
 
 import java.util.Map;
 
@@ -15,5 +15,7 @@ public interface LoginDAO {
 	int getDriverIdCnt(Map<String, String> admin_id_pwd);
 
 	int getDriverCnt(Map<String, String> admin_id_pwd);
+
+	int getUesrRegCnt(UserDTO userDTO);
 
 }

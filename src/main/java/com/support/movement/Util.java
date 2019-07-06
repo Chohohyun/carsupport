@@ -1,4 +1,4 @@
-package com.support.movement.car;
+package com.support.movement;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

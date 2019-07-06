@@ -1,4 +1,4 @@
-package com.support.movement.car;
+package com.support.movement;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class LoginDAOImpl implements LoginDAO{
 	@Override
 	public int getAdminIdCnt(Map<String, String> admin_id_pwd) {
 		int adminIdCnt = this.sqlSession.selectOne(
-				"com.support.movement.car.LoginDAO.getAdminIdCnt",admin_id_pwd);
+				"com.support.movement.LoginDAO.getAdminIdCnt",admin_id_pwd);
 		return adminIdCnt;
 	}
 
@@ -32,7 +32,7 @@ public class LoginDAOImpl implements LoginDAO{
 	public int getAdminCnt(Map<String,String> admin_id_pwd) {
 		
 		int adminCnt = this.sqlSession.selectOne(
-				"com.support.movement.car.LoginDAO.getAdminCnt",
+				"com.support.movement.LoginDAO.getAdminCnt",
 				admin_id_pwd);
 		return adminCnt;
 	}
@@ -41,7 +41,7 @@ public class LoginDAOImpl implements LoginDAO{
 	@Override
 	public int getUserIdCnt(Map<String, String> admin_id_pwd) {
 		int userIdCnt = this.sqlSession.selectOne(
-				"com.support.movement.car.LoginDAO.getUserIdCnt",admin_id_pwd);
+				"com.support.movement.LoginDAO.getUserIdCnt",admin_id_pwd);
 		return userIdCnt;
 	}
 
@@ -50,7 +50,7 @@ public class LoginDAOImpl implements LoginDAO{
 	@Override
 	public int getUserCnt(Map<String, String> admin_id_pwd) {
 		int userCnt = this.sqlSession.selectOne(
-				"com.support.movement.car.LoginDAO.getUserCnt",admin_id_pwd);
+				"com.support.movement.LoginDAO.getUserCnt",admin_id_pwd);
 		return userCnt;
 	}
 
@@ -59,7 +59,7 @@ public class LoginDAOImpl implements LoginDAO{
 	@Override
 	public int getDriverIdCnt(Map<String, String> admin_id_pwd) {
 		int driverIdCnt = this.sqlSession.selectOne(
-				"com.support.movement.car.LoginDAO.getDriverIdCnt",admin_id_pwd);
+				"com.support.movement.LoginDAO.getDriverIdCnt",admin_id_pwd);
 		return driverIdCnt;
 	}
 
@@ -68,7 +68,15 @@ public class LoginDAOImpl implements LoginDAO{
 	@Override
 	public int getDriverCnt(Map<String, String> admin_id_pwd) {
 		int driverCnt = this.sqlSession.selectOne(
-				"com.support.movement.car.LoginDAO.getDriverCnt",admin_id_pwd);
+				"com.support.movement.LoginDAO.getDriverCnt",admin_id_pwd);
 		return driverCnt;
+	}
+
+	// 유저 가입 메소드
+	@Override
+	public int getUesrRegCnt(UserDTO userDTO) {
+		int userRegCnt = this.sqlSession.insert(
+				"com.support.movement.LoginDAO.getUserRegCnt",userDTO);
+		return userRegCnt;
 	}
 }

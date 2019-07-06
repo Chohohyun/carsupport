@@ -52,7 +52,7 @@
 	</bean>		
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="log4jdbcProxyDataSource"/>
-		<property name="mapperLocations" value="classpath:com/support/movement/car/*.xml"/>		
+		<property name="mapperLocations" value="classpath:com/support/movement/*.xml"/>		
 	</bean> 
 			 
 	<!--**********************************************************************************************-->
@@ -75,7 +75,7 @@
 	<!--**********************************************************************************************-->
 	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-	    <property name="basePackage" value="com.support.movement.car.dao" />
+	    <property name="basePackage" value="com.support.movement.dao" />
 	</bean> 	
 </beans>
 		

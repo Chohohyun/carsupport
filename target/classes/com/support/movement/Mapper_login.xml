@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.support.movement.LoginDAO">
+
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getAdminIdCnt" parameterType="hashmap" resultType="int">
+		select count(*) from admin where admin_id=#{id}
+	</select>
+	
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getAdminCnt" parameterType="hashmap" resultType="int">
+		select count(*) from admin where admin_id=#{id} and pwd=#{pwd}
+	</select>
+	
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getUserIdCnt" parameterType="hashmap" resultType="int">
+		select count(*) from disability_user where user_id=#{id}
+	</select>
+	
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getUserCnt" parameterType="hashmap" resultType="int">
+		select count(*) from disability_user where user_id=#{id} and user_pwd={pwd}
+	</select>
+	
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getDriverIdCnt" parameterType="hashmap" resultType="int">
+		select count(*) from driver where driver_id=#{id}
+	</select>
+	
+	<!-- 관리자 로그인 아이디 갯수 -->
+	<select id="getDriverCnt" parameterType="hashmap" resultType="int">
+		select count(*) from driver where driver_id=#{id} and driver_pwd=#{pwd}
+	</select>
+	
+	
+	<insert id="getUserRegCnt" parameterType="com.support.movement.UserDTO">
+	insert into disability_user(
+		user_no,
+		user_id,
+		user_pwd,
+		user_name,
+		user_gender,
+		user_jumin_num,
+		user_postal_code,
+		user_road_addr,
+		user_jibun_addr,
+		user_detail_addr,
+		user_phone,
+		user_email,
+		disability_grade_code,
+		disability_type_code,
+		wheelchair
+	) values (
+	(select nvl(max(user_no),0)+1 from disability_user), 
+	#{id},
+	#{pwd1},
+	#{name},
+	#{gender},
+	'${jumin_num1}${jumin_num2}',
+	#{postal_code},
+	#{road_addr},
+	#{jibun_addr},
+	#{detail_addr},
+	#{phone},
+	#{email},
+	${disability_type},
+	${disability_grade},
+	${wheelchair}
+	)
+			
+	</insert>
+	
+	
+	
+</mapper>

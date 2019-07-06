@@ -1,4 +1,4 @@
-package com.support.movement.car;
+package com.support.movement;
 
 import java.text.DateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.support.movement.car;
+package com.support.movement;
 
 import java.util.Map;
 
@@ -57,5 +57,11 @@ public class LoginServiceImpl implements LoginService{
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public int getUserRegCnt(UserDTO userDTO) {
+		int userRegCnt = this.loginDAO.getUesrRegCnt(userDTO);
+		return userRegCnt;
 	}
 }

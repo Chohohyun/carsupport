@@ -19,9 +19,6 @@
 		inputData("is_login","y")
 		</c:if>
 		
-		$("[name=loginForm] .login").click(function() {
-			checkLoginForm();
-		});
 		//$('[name="loginForm"]').find('. login').click(function(){
 	});
 		
@@ -54,16 +51,16 @@
 			success:function(data){
 				if(data==1){
 					alert("관리자 로그인 성공!");
-					location.replace("/support/adminMainPage.do");
+					location.replace("/support/regForm.do");
 				}
-				if(data==3){
+				else if(data==3){
 					alert("관리자 로그인 성공!");
-					location.replace("/support/adminMainPage.do");
+					location.replace("/support/regForm.do");
 					
 				}
-				if(data==5){
+				else if(data==5){
 					alert("관리자 로그인 성공!");
-					location.replace("/support/adminMainPage.do");
+					location.replace("/support/regForm.do");
 				}
 				else{
 					alert("로그인 실패!");
@@ -109,8 +106,8 @@
 						교통약자이동지원센터
 					</span>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="id" placeholder="ID(아이디)">
+					<div class="wrap-input100 validate-input" >
+						<input class="input100 id" type="text" name="id" placeholder="ID(아이디)">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -118,7 +115,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pwd" placeholder="Password(암호)">
+						<input class="input100 pwd" type="password" name="pwd" placeholder="Password(암호)">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -126,9 +123,9 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn login">
-							로그인
-						</button>
+						<input type="button" class="login100-form-btn login" onclick="checkLoginForm();" value="로그인">
+							
+					
 					</div>
 
 					<div class="text-center p-t-12">
@@ -151,7 +148,7 @@
 		</div>
 	</div>
 	
-	<form name="goRegForm" method="get" action="/support/goRegForm.do"></form>
+	<form name="goRegForm" method="get" action="/support/regForm.do"></form>
 	
 <!--===============================================================================================-->	
 	<script src="/support/resources/vendor/jquery/jquery-3.2.1.min.js"></script>

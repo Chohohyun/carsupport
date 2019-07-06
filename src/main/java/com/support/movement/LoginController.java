@@ -1,4 +1,4 @@
-package com.support.movement.car;
+package com.support.movement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class LoginController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/goRegForm.do")
+	@RequestMapping(value="/regForm.do")
 	public ModelAndView RegForm(
 			// HttpSession 객체가 들어올 매개변수 선언
 			// 매개변수에 자료형이 HttpSession이면 웹서버가
@@ -122,5 +122,31 @@ public class LoginController {
 			admin_idCnt=-1;
 		} 
 		return admin_idCnt;
+	}
+	
+	
+	@RequestMapping(
+			value="/userRegForm.do",
+			 method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+
+	@ResponseBody 
+	public int userRegProc(
+			HttpSession session,HttpServletResponse response,
+			UserDTO userDTO
+			) {
+		int userRegCnt=0;
+		try {
+			session.removeAttribute("uri");
+			
+			userRegCnt = this.loginService.getUserRegCnt(userDTO);
+			System.out.println("됩시다");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.loginProc(~) 에서 에러 발생");
+			userRegCnt=-1;
+		} 
+		return userRegCnt;
 	}
 }
