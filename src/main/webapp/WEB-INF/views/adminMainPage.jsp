@@ -132,6 +132,21 @@ function driverAcceptForm(){
 	function driverUpDelForm(){
 		location.replace("/support/driverUpDelForm.do");
 	}
+	// 차량관리
+	function carRegForm(){
+		location.replace("/support/adminCarRegForm.do");
+	}
+	function carUpDelForm(){
+		location.replace("/support/adminCarUpDelForm.do");
+	}
+	function carListInfoForm(){
+		location.replace("/support/carListInfoForm.do");
+	}
+	function carMaintanceListForm(){
+		location.replace("/support/carMaintanceListForm.do");
+	}
+	
+	
 	function userRegForm(){
 		location.replace("/support/userRegForm.do");
 	}
@@ -198,10 +213,10 @@ function driverAcceptForm(){
 					<li class="navi_set">  
 						<div class="topnav">차량관리</div>
 						<ul class="subnav">  
-							<li><a href="#">차량 등록</a></li>  
-							<li><a href="#">차량 수정/삭제</a></li> 
-							<li><a href="#">차량 정보</a></li>  
-							<li><a href="#">차량별 정비내역</a></li>  
+							<li><a href="javascript:carRegForm();">차량 등록</a></li>  
+							<li><a href="javascript:carUpDelForm();">차량 수정/삭제</a></li> 
+							<li><a href="javascript:carListInfoForm();">차량 정보</a></li>  
+							<li><a href="javascript:carMaintanceListForm();">차량별 정비내역</a></li> 
 						</ul>  
 					</li> 
 					

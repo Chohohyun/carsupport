@@ -280,4 +280,146 @@
       
    </update>
 	
+	
+	<!-- ==================등록된 드라이버 리스트(차량등록된운전자제외) ==========================-->
+	<select id="getDriverList" resultType="hashmap">
+		select 
+            driver_name as "driver_name",
+            driver_no||'' as "driver_no"
+        from driver 
+        where admission_code='y'  
+              and driver_no not IN(select car_driver from car_info)
+	</select>
+	
+	<!-- ============================차량 등록(운전자이름을 운전자넘버로)==============================-->
+	<insert id="getCarRegCnt" parameterType="com.support.movement.CarDTO">
+		insert into car_info(
+			car_info_no
+			, car_number
+			, car_year
+			, car_distance
+			, car_code
+			, car_driver
+		) values (
+			(select nvl(max(car_info_no),0)+1 from car_info)
+			, #{car_number}
+			, #{car_year}
+			, #{car_distance}
+			, #{car_code}
+			, #{car_driver}
+		)
+	</insert>
+	
+	
+	
+	<!-- ============================차량총개수==============================-->
+	<select id="getCarListAllCnt" resultType="int">
+		select count(*) from car_info
+	</select>
+	
+	<!-- ============================차량리스트==============================-->
+	<select id="getCarList" resultType="hashmap">
+		select
+			ci.car_info_no||'' as "car_info_no"
+			, ci.car_number||'' as "car_number"
+			, ci.car_year||'' as "car_year"
+			, ci.car_distance||'' "car_distance"
+			, (select car_type from code_car cc where cc.car_code=ci.car_code) as "car_code"
+			, ci.car_driver||'' as "car_driver"
+			, ci.car_reg_date||'' as "car_reg_date"
+		from car_info ci 
+		where 1=1
+		
+	</select>
+	
+	<!-- ============================차량상세보기==============================-->
+	<select id="getCarDTO" parameterType="int" resultType="com.support.movement.CarDTO">
+		select
+			car_info_no||'' as "car_info_no"
+			, car_number||'' as "car_number"
+			, car_year||'' as "car_year"
+			, car_distance||'' "car_distance"
+			, car_code||'' as "car_code"
+			, car_driver||'' as "driver_no"
+			, (select d.DRIVER_NAME||'' from driver d, car_info c where d.DRIVER_NO=c.CAR_DRIVER and c.CAR_INFO_NO=#{car_info_no})||'' as "car_driver"
+		from car_info
+		where car_info_no=#{car_info_no}
+		
+	</select>
+	
+	<!-- ============================차량정보수정==============================-->
+	<update id="getCarUpdateCnt" parameterType="com.support.movement.CarDTO">
+		update car_info set
+		    car_number = #{car_number}
+		 	, car_year = ${car_year}
+		 	, car_distance = ${car_distance}
+		 	, car_code = ${car_code}
+		 	, car_driver = #{car_driver}
+		where car_info_no=#{car_info_no}		
+	</update>
+	
+	<!-- ============================차량정보삭제==============================-->
+	<delete id="getCarDeleteCnt" parameterType="int">
+		delete from car_info
+		where car_info_no=#{car_info_no}
+	</delete>
+	
+	
+	<!-- ============================차량정비등록==============================-->
+	<insert id="getCarMaintanceRegCnt" parameterType="com.support.movement.CarMaintanceDTO">
+		insert into car_maintance_info (
+			car_maintance_info_no
+			, car_number
+			, car_maintance_date
+			, car_maintance_code
+			, car_maintance_content
+		) values (
+			(select nvl(max(car_maintance_info_no),0)+1 from car_maintance_info)
+			, #{car_number}
+			, to_date(#{car_maintance_date},'YYYYMMDD')
+			, ${car_maintance_code}
+			, #{car_maintance_content}
+		)	
+	</insert>
+	
+	<!-- ============================차량정비수정삭제(리스트 개수)==============================-->
+	<select id="getCarMaintanceListAllCnt" resultType="int">
+		select count(*) from car_maintance_info	
+	</select>
+	
+	<!-- ============================차량정비수정삭제(리스트)==============================-->
+	<select id="getCarMaintanceList" resultType="hashmap">
+		select
+			car_maintance_info_no||'' as "car_maintance_info_no"
+			, car_number||'' as "car_number"
+			, car_maintance_date||'' as "car_maintance_date"
+		from car_maintance_info	
+	</select>
+	
+	<!-- ============================차량정비수정삭제(상세보기)==============================-->
+	<select id="getCarMaintanceDTO" parameterType="int" resultType="com.support.movement.CarMaintanceDTO">
+		select
+			car_maintance_info_no||'' as "car_maintance_info_no"
+			, car_number||'' as "car_number"
+			, to_char(car_maintance_date,'YYYYMMDD')||'' as "car_maintance_date"
+			, car_maintance_code||'' as "car_maintance_code"
+			, car_maintance_content||'' as "car_maintance_content"
+		from car_maintance_info	 
+		where car_maintance_info_no=#{car_maintance_info_no}
+	</select>
+	
+	<!-- ============================차량 정비내용 정보 수정==============================-->
+	<update id="getCarMaintanceUpdateCnt" parameterType="com.support.movement.CarMaintanceDTO">
+		update car_maintance_info set			
+		    car_number = #{car_number}
+		 	, car_maintance_date = to_date(#{car_maintance_date},'YYYYMMDD')
+		 	, car_maintance_code = ${car_maintance_code}
+		 	, car_maintance_content = #{car_maintance_content}
+		where car_maintance_info_no=#{car_maintance_info_no}		
+	</update>
+	<!-- ============================차량 정비내용 정보 삭제==============================-->
+	<delete id="getCarMaintancDeleteCnt" parameterType="int">
+		delete from car_maintance_info
+		where car_maintance_info_no=#{car_maintance_info_no}
+	</delete>
 </mapper>

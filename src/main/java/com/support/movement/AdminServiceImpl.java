@@ -37,10 +37,10 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<Map<String, String>> getAcceptList(String id) {
-		
+
 		List<Map<String, String>> acceptList = this.adminDAO.getAcceptList();
-			return acceptList;
-		
+		return acceptList;
+
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getDriverUpDelList(String id) {
 		List<Map<String, String>> upDelList = this.adminDAO.getDriverUpDelList();
 		return upDelList;
-	
+
 	}
 
 	@Override
@@ -134,5 +134,82 @@ public class AdminServiceImpl implements AdminService{
 		int userDelCnt = this.adminDAO.getUserDelCnt(userDTO);
 		return userDelCnt;
 	}
-	
+
+	@Override
+	public List<Map<String, String>> getDriverList() {
+		List<Map<String, String>> driverList = this.adminDAO.getDriverList();
+		return driverList;
+	}
+
+	@Override
+	public int getCarRegCnt(CarDTO carDTO) {
+		int carRegCnt = this.adminDAO.getCarRegCnt(carDTO);
+		return carRegCnt;
+	}
+
+	@Override
+	public int getCarListAllCnt() {
+		int carRegCnt = this.adminDAO.getCarListAllCnt();
+		return carRegCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getCarList() {
+		List<Map<String, String>> carList = this.adminDAO.getCarList();
+		return carList;
+	}
+
+	@Override
+	public CarDTO getCarDTO(int car_info_no) {
+		CarDTO carDTO = this.adminDAO.getCarDTO(car_info_no);
+		return carDTO;
+	}
+
+	@Override
+	public int getCarUpdateCnt(CarDTO carDTO) {
+		int carUpdateCnt = this.adminDAO.getCarUpdateCnt(carDTO);
+		return carUpdateCnt;
+	}
+
+	@Override
+	public int getCarDeleteCnt(int car_info_no) {
+		int carDeleteCnt = this.adminDAO.getCarDeleteCnt(car_info_no);
+		return carDeleteCnt;
+	}
+
+	@Override
+	public int getCarMaintanceRegCnt(CarMaintanceDTO carMaintanceDTO) {
+		int carMaintanceRegCnt = this.adminDAO.getCarMaintanceRegCnt(carMaintanceDTO);
+		return carMaintanceRegCnt;
+	}
+
+	@Override
+	public int getCarMaintanceListAllCnt() {
+		int carMaintanceListAllCnt = this.adminDAO.getCarMaintanceListAllCnt();
+		return carMaintanceListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getCarMaintanceList() {
+		List<Map<String, String>> carMaintanceList = this.adminDAO.getCarMaintanceList();
+		return carMaintanceList;
+	}
+
+	@Override
+	public CarMaintanceDTO getCarMaintanceDTO(int car_maintance_info_no) {
+		CarMaintanceDTO carMaintanceDTO = this.adminDAO.getCarMaintanceDTO(car_maintance_info_no);
+		return carMaintanceDTO;
+	}
+
+	@Override
+	public int getCarMaintanceUpdateCnt(CarMaintanceDTO carMaintanceDTO) {
+		int carMaintanceUpdateCnt = this.adminDAO.getCarMaintanceUpdateCnt(carMaintanceDTO);
+		return carMaintanceUpdateCnt;
+	}
+
+	@Override
+	public int getCarMaintancDeleteCnt(int car_maintance_info_no) {
+		int carMaintanceDeleteCnt = this.adminDAO.getCarMaintancDeleteCnt(car_maintance_info_no);
+		return carMaintanceDeleteCnt;
+	}
 }

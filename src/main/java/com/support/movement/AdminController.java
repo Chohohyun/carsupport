@@ -152,7 +152,7 @@ public class AdminController {
 		return mav; 
 	} 
 
-	
+
 	@RequestMapping(value="/userUpDelDetailForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
 	public ModelAndView userUpDelDetail( 
 			@RequestParam(value="user_no") int user_no, 
@@ -342,39 +342,330 @@ public class AdminController {
 		}
 		return mav;
 	}
-	
+
 	//**********************************
-		// 유저 수정 삭제
-		//**********************************
-		@RequestMapping(
-				value="/adminUserUpDelProc.do",
-				method = RequestMethod.POST,produces="application/json;charset=UTF-8"
-				)
-		@ResponseBody 
-		public int userUpDelProc(
-				HttpSession session,HttpServletResponse response,
-				UserDTO userDTO,
-				@RequestParam(value="upDel") String upDel
-				) {
+	// 유저 수정 삭제
+	//**********************************
+	@RequestMapping(
+			value="/adminUserUpDelProc.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public int userUpDelProc(
+			HttpSession session,HttpServletResponse response,
+			UserDTO userDTO,
+			@RequestParam(value="upDel") String upDel
+			) {
 
-			int userUpDelCnt=0;
-			try {
-				System.out.println(upDel);
-				if(upDel.equals("up")) {
-					userUpDelCnt = this.adminService.getUserUpCnt(userDTO);
-				}
-				else {
-					userUpDelCnt = this.adminService.getUserDelCnt(userDTO);
-				}
-				System.out.println("드라이버 됩니다");
+		int userUpDelCnt=0;
+		try {
+			System.out.println(upDel);
+			if(upDel.equals("up")) {
+				userUpDelCnt = this.adminService.getUserUpCnt(userDTO);
+			}
+			else {
+				userUpDelCnt = this.adminService.getUserDelCnt(userDTO);
+			}
+			System.out.println("드라이버 됩니다");
 
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
-				userUpDelCnt=-1;
-			} 
-			return userUpDelCnt;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+			userUpDelCnt=-1;
+		} 
+		return userUpDelCnt;
+	}
+
+
+
+	/* 차량관리 */
+
+	//***************************************************
+	// 차량 등록 UI 이동
+	//***************************************************
+	@RequestMapping(value="/adminCarRegForm.do")
+	public ModelAndView adminCarRegForm( HttpSession session ) {
+		System.out.println("차량등록페이지");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("adminCarRegForm.jsp");
+		return mav;
+	}
+
+	//----------------------
+	// 운전자 리스트 (SelectBox용도)
+	//----------------------
+	@RequestMapping(
+			value="/driverList.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public List<Map<String,String>> dirverList(){
+		List<Map<String,String>> driverlist = this.adminService.getDriverList();		
+		return driverlist;
+
+	}
+
+	//-----------------------
+	//차량 등록 진행 (DB INSERT)
+	//-----------------------
+	@RequestMapping(
+			value="/adminCarRegProc.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public int carRegProc(
+			HttpSession session, HttpServletResponse response,
+			CarDTO carDTO
+			){
+		int carRegCnt = 0;
+		try {
+			carRegCnt = this.adminService.getCarRegCnt(carDTO);
+		} catch (Exception e) {
+			System.out.println("carRegProc을 불러오는 도중 오류");
 		}
-		
+		return carRegCnt;
+	}
 
+	//***************************************************
+	//차량 수정/삭제 리스트 UI 이동 (리스트와 리스트수량)
+	//***************************************************
+	@RequestMapping(value="/adminCarUpDelForm.do")
+	public ModelAndView adminCarUpDelForm( HttpSession session ) {
+		System.out.println("차량리스트페이지");
+		ModelAndView mav = new ModelAndView();
+		int carListAllCnt = 0;
+		List<Map<String,String>> carList = new ArrayList<Map<String,String>>();
+		try {
+			carListAllCnt = this.adminService.getCarListAllCnt();
+			if(carListAllCnt!=0) {
+				carList= this.adminService.getCarList();
+			}
+
+		} catch (Exception e) {
+			System.out.println("adminCarUpDelForm을 불러오는 도중 오류");
+		}
+		mav.setViewName("adminCarUpDelForm.jsp");
+		mav.addObject("carListAllCnt", carListAllCnt);
+		mav.addObject("carList", carList);
+		return mav;
+	}
+	//***************************************************
+	//차량 정보 상세보기 UI 이동 (차 고유넘버)
+	//***************************************************
+	@RequestMapping(value="/carContent.do")
+	public ModelAndView adminCarUpDelDetailForm( 
+			HttpSession session
+			, @RequestParam(value="car_info_no") int car_info_no
+			) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("adminCarUpDelDetailForm.jsp");
+		CarDTO carDTO = this.adminService.getCarDTO(car_info_no); 
+		mav.addObject("carDTO", carDTO);
+		System.out.println(carDTO.getCar_code());
+		System.out.println(carDTO.getCar_distance());
+		System.out.println(carDTO.getCar_info_no());
+		System.out.println(carDTO.getCar_driver());
+		System.out.println(carDTO.getCar_number());
+		System.out.println(carDTO.getCar_year());
+		System.out.println(carDTO.getDriver_no());
+		return mav;
+	}
+
+	//***************************************************
+	//차량 정보 업데이트 (차 고유넘버)
+	//***************************************************
+	@RequestMapping(
+			value="/carUpdateProc.do"
+			, method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+
+			) 
+	@ResponseBody 
+	public int carUpdateProc(			
+			HttpSession session
+			,CarDTO carDTO)
+	{
+		int carUpdateCnt =0;
+		try {
+			carUpdateCnt = this.adminService.getCarUpdateCnt(carDTO); 
+		} catch (Exception e) {
+			System.out.println("adminCarDeleteCnt을 불러오는 도중 오류");
+		}
+
+		return carUpdateCnt;
+	}
+
+	//***************************************************
+	//차량 정보 삭제  (차 고유넘버)
+	//***************************************************
+	@RequestMapping(
+			value="/carDeleteProc.do"
+			, method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)	
+	@ResponseBody 
+	public int carDeleteProc( 
+			HttpSession session
+			, @RequestParam(value="car_info_no") int car_info_no
+			) 
+	{
+		int carDeleteCnt =0;
+		try {
+			carDeleteCnt = this.adminService.getCarDeleteCnt(car_info_no); 
+		} catch (Exception e) {
+			System.out.println("adminCarDeleteCnt을 불러오는 도중 오류");
+		}
+
+		return carDeleteCnt;
+	}
+
+	//***************************************************
+	// 차량 정보 UI 이동
+	//***************************************************
+	@RequestMapping(value="/carListInfoForm.do")
+	public ModelAndView carListInfoForm( HttpSession session ) {
+		System.out.println("차량정보페이지");
+		ModelAndView mav = new ModelAndView();
+		int carListAllCnt = 0;
+		List<Map<String,String>> carList = new ArrayList<Map<String,String>>();
+		try {
+			carListAllCnt = this.adminService.getCarListAllCnt();
+			if(carListAllCnt!=0) {
+				carList= this.adminService.getCarList();
+			}
+
+		} catch (Exception e) {
+			System.out.println("carListInfoForm을 불러오는 도중 오류");
+		}
+		mav.setViewName("carListInfoForm.jsp");
+		mav.addObject("carList", carList);
+		mav.addObject("carListAllCnt", carListAllCnt);
+		System.out.println("차정보리스트완?");
+		return mav;
+	}
+
+	//***************************************************
+	// 차량 정비 등록 UI 이동
+	//***************************************************
+	@RequestMapping(value="/carMaintenanceRegForm.do")
+	public ModelAndView carMaintenanceRegForm( 
+			HttpSession session 
+			, @RequestParam(value="car_info_no") int car_info_no
+			) {
+		System.out.println("차량정비등록페이지");
+		ModelAndView mav = new ModelAndView();
+		CarDTO carDTO = this.adminService.getCarDTO(car_info_no); 
+		mav.addObject("carDTO", carDTO);
+		mav.setViewName("carMaintenanceRegForm.jsp");
+		return mav;
+	}
+
+
+	//-----------------------
+	//차량 정비 내용 등록 진행 (DB INSERT)
+	//-----------------------
+	@RequestMapping(
+			value="/carMaintanceRegProc.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public int carMaintanceRegProc(
+			HttpSession session, HttpServletResponse response,
+			CarMaintanceDTO carMaintanceDTO
+			){
+		int carMaintanceRegCnt = 0;
+		try {
+			carMaintanceRegCnt = this.adminService.getCarMaintanceRegCnt(carMaintanceDTO);
+		} catch (Exception e) {
+			System.out.println("carRegProc을 불러오는 도중 오류");
+		}
+		return carMaintanceRegCnt;
+	}
+
+	//***************************************************
+	// 차량 정비 수정/삭제 리스트 UI 이동
+	//***************************************************
+	@RequestMapping(value="/carMaintanceListForm.do")
+	public ModelAndView carMaintanceListForm( 
+			HttpSession session 
+			) {
+		System.out.println("차량정비수정삭제페이지");
+		int carMaintanceListAllCnt = 0;
+		List<Map<String,String>> carMaintanceList = new ArrayList<Map<String,String>>();
+		ModelAndView mav = new ModelAndView();
+		try {
+			carMaintanceListAllCnt = this.adminService.getCarMaintanceListAllCnt();
+			if(carMaintanceListAllCnt!=0) {
+				carMaintanceList= this.adminService.getCarMaintanceList();
+			}
+
+		} catch (Exception e) {
+			System.out.println("carListInfoForm을 불러오는 도중 오류");
+		}
+		mav.addObject("carMaintanceListAllCnt", carMaintanceListAllCnt);
+		mav.addObject("carMaintanceList", carMaintanceList);
+
+		mav.setViewName("carMaintanceListForm.jsp");
+		return mav;
+	}
+
+	//***************************************************
+	// 차량 정비 수정/삭제 상세보기 UI 이동 (차량정비 고유 넘버) 
+	//***************************************************
+	@RequestMapping(value="/carMaintanceContent.do")
+	public ModelAndView adminCarMaintanceUpDelDetailForm( 
+			HttpSession session
+			, @RequestParam(value="car_maintance_info_no") int car_maintance_info_no
+			) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("carMaintanceUpDelDetailForm.jsp");
+		CarMaintanceDTO carMaintanceDTO = this.adminService.getCarMaintanceDTO(car_maintance_info_no); 
+		mav.addObject("carMaintanceDTO", carMaintanceDTO);
+
+		return mav;
+	}
+
+	//***************************************************
+	//차량 정비내용 정보 업데이트 (차 정비 고유넘버)
+	//***************************************************
+	@RequestMapping(
+			value="/carMaintanceUpdateProc.do"
+			, method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+
+			) 
+	@ResponseBody 
+	public int carMaintanceUpdateProc(			
+			HttpSession session
+			,CarMaintanceDTO carMaintanceDTO)
+	{
+		int carMaintanceUpdateCnt =0;
+		try {
+			carMaintanceUpdateCnt = this.adminService.getCarMaintanceUpdateCnt(carMaintanceDTO); 
+		} catch (Exception e) {
+			System.out.println("carMaintanceUpdateProc을 불러오는 도중 오류");
+		}
+
+		return carMaintanceUpdateCnt;
+	}
+
+	//***************************************************
+	//차량 정비내용 정보 삭제  (차 정비 고유넘버)
+	//***************************************************
+	@RequestMapping(
+			value="/carMaintanceDeleteProc.do"
+			, method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)	
+	@ResponseBody 
+	public int carMaintancDeleteProc( 
+			HttpSession session
+			, @RequestParam(value="car_maintance_info_no") int car_maintance_info_no
+			) 
+	{
+		int carMaintancDeleteCnt =0;
+		try {
+			carMaintancDeleteCnt = this.adminService.getCarMaintancDeleteCnt(car_maintance_info_no); 
+		} catch (Exception e) {
+			System.out.println("carMaintancDeleteProc을 불러오는 도중 오류");
+		}
+
+		return carMaintancDeleteCnt;
+	}
 }

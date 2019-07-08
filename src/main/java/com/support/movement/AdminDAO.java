@@ -39,4 +39,30 @@ public interface AdminDAO {
 
 	int getUserDelCnt(UserDTO userDTO);
 
+	List<Map<String, String>> getDriverList();
+
+	int getCarRegCnt(CarDTO carDTO);
+
+	int getCarListAllCnt();
+
+	List<Map<String, String>> getCarList();
+	
+	CarDTO getCarDTO(int car_info_no);
+
+	int getCarUpdateCnt(CarDTO carDTO);
+
+	int getCarDeleteCnt(int car_info_no);
+
+	int getCarMaintanceRegCnt(CarMaintanceDTO carMaintanceDTO);
+
+	int getCarMaintanceListAllCnt();
+
+	List<Map<String, String>> getCarMaintanceList();
+
+	CarMaintanceDTO getCarMaintanceDTO(int car_maintance_info_no);
+
+	int getCarMaintanceUpdateCnt(CarMaintanceDTO carMaintanceDTO);
+
+	int getCarMaintancDeleteCnt(int car_maintance_info_no);
+
 }

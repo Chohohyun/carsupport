@@ -129,5 +129,94 @@ public class AdminDAOImpl implements AdminDAO{
 		int userDelCnt = this.sqlSession.update("com.support.movement.AdminDAO.getUserDelCnt",userDTO);
 		return userDelCnt;
 	}
+
+	@Override
+	public List<Map<String, String>> getDriverList() {
+		List<Map<String, String>> driverList = this.sqlSession.selectList(
+				"com.support.movement.AdminDAO.getDriverList");
+		return driverList;
+	}
+
+	@Override
+	public int getCarRegCnt(CarDTO carDTO) {
+		int carRegCnt = this.sqlSession.insert(
+				"com.support.movement.AdminDAO.getCarRegCnt",carDTO);
+		return carRegCnt;
+	}
+	
+	@Override
+	public int getCarListAllCnt() {
+		int carListAllCnt = this.sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getCarListAllCnt");
+		return carListAllCnt;
+	}
+	
+	@Override
+	public List<Map<String, String>> getCarList() {
+		List<Map<String, String>> carList = this.sqlSession.selectList(
+				"com.support.movement.AdminDAO.getCarList");
+		return carList;
+	}
+	
+	@Override
+	public CarDTO getCarDTO(int car_info_no) {
+		CarDTO carDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getCarDTO", car_info_no);
+		return carDTO;
+	}
+	
+	@Override
+	public int getCarUpdateCnt(CarDTO carDTO) {
+		int carUpdateCnt = this.sqlSession.update(
+				"com.support.movement.AdminDAO.getCarUpdateCnt", carDTO);
+		return carUpdateCnt;
+	}
+	
+	@Override
+	public int getCarDeleteCnt(int car_info_no) {
+		int carDeleteCnt = this.sqlSession.delete(
+				"com.support.movement.AdminDAO.getCarDeleteCnt", car_info_no);
+		return carDeleteCnt;
+	}
+	@Override
+	public int getCarMaintanceRegCnt(CarMaintanceDTO carMaintanceDTO) {
+		int carMaintanceRegCnt = this.sqlSession.insert(
+				"com.support.movement.AdminDAO.getCarMaintanceRegCnt",carMaintanceDTO);
+		return carMaintanceRegCnt;
+	}
+	
+	@Override
+	public int getCarMaintanceListAllCnt() {
+		int carMaintanceListAllCnt = this.sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getCarMaintanceListAllCnt");
+		return carMaintanceListAllCnt;
+	}
+	
+	@Override
+	public List<Map<String, String>> getCarMaintanceList() {
+		List<Map<String, String>> carMaintanceList = this.sqlSession.selectList(
+				"com.support.movement.AdminDAO.getCarMaintanceList");
+		return carMaintanceList;
+	}
+	@Override
+	public CarMaintanceDTO getCarMaintanceDTO(int car_maintance_info_no) {
+		CarMaintanceDTO carMaintanceDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getCarMaintanceDTO", car_maintance_info_no);
+		return carMaintanceDTO;
+	}
+	
+
+	@Override
+	public int getCarMaintanceUpdateCnt(CarMaintanceDTO carMaintanceDTO) {
+		int carMaintanceUpdateCnt = this.sqlSession.update(
+				"com.support.movement.AdminDAO.getCarMaintanceUpdateCnt", carMaintanceDTO);
+		return carMaintanceUpdateCnt;
+	}
+	
+	@Override
+	public int getCarMaintancDeleteCnt(int car_maintance_info_no) {
+		int carMaintanceDeleteCnt = this.sqlSession.delete(
+				"com.support.movement.AdminDAO.getCarMaintancDeleteCnt", car_maintance_info_no);
+		return carMaintanceDeleteCnt;
+	}
+	
 	
 }
