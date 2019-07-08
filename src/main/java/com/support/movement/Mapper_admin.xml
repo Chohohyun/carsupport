@@ -132,4 +132,32 @@
 			 
 			
 	</select>
+	<update id="getCarDriverDelCnt" parameterType="com.support.movement.DriverDTO">
+		update car_info 
+		set car_driver=''
+		where car_driver=#{driver_no} 
+	</update>
+	
+	<update id="getDriverDelCnt" parameterType="com.support.movement.DriverDTO">
+		update driver
+		set admission_code='d'
+		where driver_no=${driver_no}
+	</update>
+	<update id="getDriverUpCnt" parameterType="com.support.movement.DriverDTO">
+		update driver
+		set 
+			driver_id = #{id},
+			driver_pwd = #{pwd1},
+			driver_name=#{name},
+			driver_gender=#{gender},
+			driver_jumin_num='${jumin_num1}${jumin_num2}',
+			driver_postal_code=${postal_code},
+			driver_road_addr=#{road_addr},
+			driver_jibun_addr=#{jibun_addr},
+			driver_detail_addr=#{detail_addr},
+			driver_phone = #{phone},
+			driver_email =#{email},
+			driver_license_number =#{driver_license_number}
+		where driver_no=${driver_no}
+	</update>
 </mapper>

@@ -15,6 +15,7 @@
 		inputData("pwd1","${driverDTO.pwd1}");
 		inputData("pwd2","${driverDTO.pwd1}");
 		inputData("name","${driverDTO.name}");
+		inputData("gender","${driverDTO.gender}");
 		inputData("jumin_num1","${driverDTO.jumin_num1}");
 		inputData("jumin_num2","${driverDTO.jumin_num2}");
 		inputData("postal_code","${driverDTO.postal_code}");
@@ -24,21 +25,75 @@
 		inputData("email","${driverDTO.email}");
 		inputData("phone","${driverDTO.phone}");
 		inputData("driver_license_number","${driverDTO.driver_license_number}");
+		inputData("driver_no","${driverDTO.driver_no}");
 	});
 	
 		
 	function goMainPage(){
-		location.replace("/support/adminMainPage.do");
+		location.replace("/support/driverUpDelForm.do");
 
 	}
 	
-	function goDriverRegForm() {
+	function goUpDelProc(upDel) {
+		if(upDel=="del"){
+			document.driverUpDelForm.upDel.value="del";
+			if(confirm("정말 삭제 하시겠습니까?")==false){ 
+				 			return; 
+			} 
+
+		}
+		
+		else{
+			if(confirm("정말 수정 하시겠습니까?")==false){ 
+	 			return; 
+	 		}
+		}
+		alert($("[name=driverUpDelForm]").serialize());
+		$.ajax({
+			url:"/support/adminDrvierUpDelProc.do",
+			type:"post",
+			data: $("[name=driverUpDelForm]").serialize(),
+			datatype:"html",
+			success:function(data){
+				if(upDel=="del")
+				{
+					if(data==1){
+						alert("운전자삭제 성공!");
+						
+
+						location.replace("/support/driverUpDelForm.do");
+					}
+					else{
+						alert("운전자삭제 실패!");
+					}
+				}
+				else{
+					if(data==1){
+						alert("운전자수정 성공!");
+
+						location.replace("/support/driverUpDelForm.do");
+					}
+					else{
+						alert("운전자수정 실패!");
+					}
+				}
+				
+			},
+			error : function(){
+				alert("서버 접속 실패!");
+			}
+			
+		}); 
+
+	}
+	
+	function goUpProc() {
 		alert(1);
-		alert($("[name=driverRegForm]").serialize());
+		alert($("[name=driverUpDelForm]").serialize());
 		$.ajax({
 			url:"/support/adminDriverRegForm.do",
 			type:"post",
-			data: $("[name=driverRegForm]").serialize(),
+			data: $("[name=driverUpDelForm]").serialize(),
 			datatype:"html",
 			
 			success:function(data){
@@ -101,7 +156,7 @@
             <div class="card card-5">
            
                 <div class="card-heading">
-                    <h2 class="title">운전자등록</h2>
+                    <h2 class="title">운전자수정/삭제</h2>
                 </div>
                 <div class="card-body">
                 
@@ -109,7 +164,7 @@
                     
                     <!-- ----------------------------------------------------------------------------------------------- -->
                     
-                      <form name="driverRegForm" method="POST">
+                      <form name="driverUpDelForm" method="POST">
                         
                         <div class="form-row">
                             <div class="name">아이디</div>
@@ -313,21 +368,34 @@
                         
                        <div class="form-row m-b-55">
                                  	 
-                                           <div class="wrap-input40 input-group-desc">
+                                           <div class="wrap-input20 input-group-desc">
                                            
-                            <input type="button" class=" login100-form-btn btn btn--radius-2 btn--red" onclick="goDriverRegForm();" value="가입">
+                            <input type="button" class=" login100-form-btn btn btn--radius-2 btn--blue" onclick="goUpDelProc('up');" value="수정">
                                            <span class="focus-input100"></span>
                                     
                                         </div>
                                  
                                  			  &nbsp;&nbsp;&nbsp;
-                                        <div class="wrap-input40 input-group-desc">
+                                        <div class="wrap-input20 input-group-desc">
                                         
                						 
-                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--green" type="button" onclick="goMainPage();" value="취소">
+                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--red" type="button" onclick="goUpDelProc('del');" value="삭제">
                                <span class="focus-input100"></span>
+                          
+                          </div> 
+                          
+                                 			  &nbsp;&nbsp;&nbsp;
+                                        <div class="wrap-input20 input-group-desc">
+                                        
+               						 
+                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--green" type="button" onclick="goUpDelPage();" value="취소">
+                               <span class="focus-input100"></span>
+                          
+                          </div>               
                           	<input type="hidden" name="admission_code" value="y">
-                          </div>           
+                          	
+                          	<input type="hidden" name="driver_no">
+                          	<input type="hidden" name="upDel" value="up"> 
                        </div>    
                     </form>
                 </div>

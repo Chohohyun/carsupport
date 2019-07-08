@@ -212,4 +212,37 @@ public class AdminController {
 		} 
 		return driverRegCnt;
 	}
+	
+	//**********************************
+		// 운전자 수정 삭제
+		//**********************************
+		@RequestMapping(
+				value="/adminDrvierUpDelProc.do",
+				method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+				)
+		@ResponseBody 
+		public int driverUpDelProc(
+				HttpSession session,HttpServletResponse response,
+				DriverDTO driverDTO,
+				@RequestParam(value="upDel") String upDel
+				) {
+
+			int driverUpDelCnt=0;
+			try {
+				System.out.println(upDel);
+				if(upDel.equals("up")) {
+					driverUpDelCnt = this.adminService.getDriverUpCnt(driverDTO);
+				}
+				else {
+					driverUpDelCnt = this.adminService.getDriverDelCnt(driverDTO);
+				}
+				System.out.println("드라이버 됩니다");
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+				driverUpDelCnt=-1;
+			} 
+			return driverUpDelCnt;
+		}
 }

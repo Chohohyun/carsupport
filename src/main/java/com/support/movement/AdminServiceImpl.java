@@ -79,5 +79,18 @@ public class AdminServiceImpl implements AdminService{
 		DriverDTO driverDTO = this.adminDAO.getDriverDTO(driver_no);
 		return driverDTO;
 	}
+
+	@Override
+	public int getDriverUpCnt(DriverDTO driverDTO) {
+		int driverUpCnt = this.adminDAO.getDriverUpCnt(driverDTO);
+		return driverUpCnt;
+	}
+
+	@Override
+	public int getDriverDelCnt(DriverDTO driverDTO) {
+		int carDriverDelCnt = this.adminDAO.getCarDriverDelCnt(driverDTO);
+		int driverDelCnt = this.adminDAO.getDriverDelCnt(driverDTO);
+		return driverDelCnt;
+	}
 	
 }

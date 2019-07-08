@@ -21,4 +21,10 @@ public interface AdminDAO {
 
 	DriverDTO getDriverDTO(int driver_no);
 
+	int getDriverUpCnt(DriverDTO driverDTO);
+
+	int getDriverDelCnt(DriverDTO driverDTO);
+
+	int getCarDriverDelCnt(DriverDTO driverDTO);
+
 }

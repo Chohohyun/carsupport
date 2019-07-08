@@ -253,6 +253,12 @@ iframe {
   z-index: 1;
   margin-bottom: 10px;
 }
+.wrap-input20 {
+  position: relative;
+  width: 20%;
+  z-index: 1;
+  margin-bottom: 10px;
+}
 
 .wrap-input50 {
   position: relative;

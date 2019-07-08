@@ -72,7 +72,23 @@ public class AdminDAOImpl implements AdminDAO{
 		DriverDTO driverDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getDriverDTO",driver_no);
 		return driverDTO;
 	}
+
+	@Override
+	public int getDriverUpCnt(DriverDTO driverDTO) {
+		int driverUpCnt = this.sqlSession.update("com.support.movement.AdminDAO.getDriverUpCnt",driverDTO);
+		return driverUpCnt;
+	}
+
+	@Override
+	public int getDriverDelCnt(DriverDTO driverDTO) {
+		int driverDelCnt = this.sqlSession.update("com.support.movement.AdminDAO.getDriverDelCnt",driverDTO);
+		return driverDelCnt;
+	}
+
+	@Override
+	public int getCarDriverDelCnt(DriverDTO driverDTO) {
+		int carDriverDelCnt = this.sqlSession.update("com.support.movement.AdminDAO.getCarDriverDelCnt",driverDTO);
+		return carDriverDelCnt;
+	}
 	
-
-
 }

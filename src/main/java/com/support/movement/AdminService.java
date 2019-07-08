@@ -19,4 +19,8 @@ public interface AdminService {
 
 	DriverDTO getDriverDTO(int driver_no);
 
+	int getDriverUpCnt(DriverDTO driverDTO);
+
+	int getDriverDelCnt(DriverDTO driverDTO);
+
 }
