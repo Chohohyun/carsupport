@@ -34,11 +34,18 @@ public class LoginServiceImpl implements LoginService{
 				return 2;
 			}
 		}
+		System.out.println("여기까진간다.?");
 		int userIdCnt =  this.loginDAO.getUserIdCnt(admin_id_pwd);
 		if(userIdCnt==1) {
 			int userCnt = this.loginDAO.getUserCnt(admin_id_pwd);
 			if(userCnt==1) {
-				return 3;
+				int userStatusCnt = this.loginDAO.getUserStatusCnt(admin_id_pwd);
+				if(userStatusCnt==1) {
+					return 3;
+				}
+				else {
+					return -2;
+				}
 			}
 			else {
 				return 4;
@@ -49,7 +56,13 @@ public class LoginServiceImpl implements LoginService{
 		if(driverIdCnt==1) {
 			int driverCnt = this.loginDAO.getDriverCnt(admin_id_pwd);
 			if(driverCnt==1) {
-				return 5;
+				int driverStatusCnt = this.loginDAO.getDriverStatusCnt(admin_id_pwd);
+				if(driverStatusCnt==1) {
+					return 5;
+				}
+				else {
+					return -2;
+				}
 			}
 			else {
 				return 6;

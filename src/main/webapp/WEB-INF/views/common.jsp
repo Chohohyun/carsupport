@@ -46,7 +46,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-    function searchPostal_code() {
+    function searchPostal_code(where) {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -71,10 +71,40 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('postal_code').value = data.zonecode;
-                document.getElementById("road_addr").value = roadAddr;
-                document.getElementById("jibun_addr").value = data.jibunAddress;
-
+                document.getElementById(where+'postal_code').value = data.zonecode;
+                document.getElementById(where+"road_addr").value = roadAddr;
+                document.getElementById(where+"jibun_addr").value = data.jibunAddress;
+                
+               
+              	//주소-좌표 변환 객체를 생성합니다
+        		var geocoder = new kakao.maps.services.Geocoder();
+        		//주소로 좌표를 검색합니다
+        		geocoder.addressSearch(roadAddr, function(result, status) {
+        		
+        		// 정상적으로 검색이 완료됐으면 
+        		 if (status === kakao.maps.services.Status.OK) {
+        		
+        		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        			alert(coords);
+        		    // 결과값으로 받은 위치를 마커로 표시합니다
+        		    var marker = new kakao.maps.Marker({
+        		        map: map,
+        		        position: coords
+        		    });
+        		
+        		    // 인포윈도우로 장소에 대한 설명을 표시합니다
+        		    var infowindow = new kakao.maps.InfoWindow({
+        		        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+        		    });
+        		    infowindow.open(map, marker);
+        		
+        		    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        		    map.setCenter(coords);
+        		}
+        		 else{
+        			 alert(안되네);
+        		 }
+        	});    
                 var guideTextBox = document.getElementById("guide");
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
@@ -93,5 +123,115 @@
             }
         }).open();
     }
+</script>
+
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function searchPostal_code(where) {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById(where+'postal_code').value = data.zonecode;
+                document.getElementById(where+"road_addr").value = roadAddr;
+                document.getElementById(where+"jibun_addr").value = data.jibunAddress;
+                
+                if(where=="start"||where=="end"){
+                	
+               
+	              	//주소-좌표 변환 객체를 생성합니다
+	        		var geocoder = new kakao.maps.services.Geocoder();
+	        		//주소로 좌표를 검색합니다
+	        		geocoder.addressSearch(roadAddr, function(result, status) {
+	        		
+		        		// 정상적으로 검색이 완료됐으면 
+		        		 if (status === kakao.maps.services.Status.OK) {
+		        		
+		        		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		        			alert(coords);
+		        			document.getElementById(where+"Latitude").value = data.jibunAddress;result[0].y;
+		        			document.getElementById(where+"Longitude").value = data.jibunAddress;result[0].x;
+		        		    // 결과값으로 받은 위치를 마커로 표시합니다
+		        		   /*  var marker = new kakao.maps.Marker({
+		        		        map: map,
+		        		        position: coords
+		        		    });
+		        		 */
+		        		    // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        		  /*   var infowindow = new kakao.maps.InfoWindow({
+		        		        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+		        		    });
+		        		    infowindow.open(map, marker); */
+		        		
+		        		    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        		  /*   map.setCenter(coords); */
+		        		}
+		        		 else{
+		        			 alert(안되네);
+		        		 }
+	        		});    
+                }
+        		
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=afb80388cd8571347e7d0d57ac49714a&libraries=services"></script>
+
+
+<script>
+function setCenter() {            
+    // 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = new kakao.maps.LatLng(33.452613, 126.570888);
+    
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);
+}
+
+function panTo() {
+    // 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = new kakao.maps.LatLng(33.450580, 126.574942);
+    
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(moveLatLon);            
+}        
 </script>
 ${warning}

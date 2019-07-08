@@ -56,10 +56,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getUpDelListAllCnt(String id) {
+	public int getDriverUpDelListAllCnt(String id) {
 		int acceptPermit = this.adminDAO.getAcceptPermit(id);
 		if(acceptPermit==1) {
-			int upDelListAllCnt = this.adminDAO.getUpDelListAllCnt();
+			int upDelListAllCnt = this.adminDAO.getDriverUpDelListAllCnt();
 			return upDelListAllCnt;
 		}
 		else {
@@ -68,8 +68,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Map<String, String>> getUpDelList(String id) {
-		List<Map<String, String>> upDelList = this.adminDAO.getUpDelList();
+	public List<Map<String, String>> getDriverUpDelList(String id) {
+		List<Map<String, String>> upDelList = this.adminDAO.getDriverUpDelList();
 		return upDelList;
 	
 	}
@@ -91,6 +91,48 @@ public class AdminServiceImpl implements AdminService{
 		int carDriverDelCnt = this.adminDAO.getCarDriverDelCnt(driverDTO);
 		int driverDelCnt = this.adminDAO.getDriverDelCnt(driverDTO);
 		return driverDelCnt;
+	}
+
+	@Override
+	public int getUserRegCnt(UserDTO userDTO) {
+		int userRegCnt = this.adminDAO.getUserRegCnt(userDTO);
+		return userRegCnt;
+	}
+
+	@Override
+	public int getUserUpDelListAllCnt(String id) {
+		int acceptPermit = this.adminDAO.getAcceptPermit(id);
+		if(acceptPermit==1) {
+			int upDelListAllCnt = this.adminDAO.getUserUpDelListAllCnt();
+			return upDelListAllCnt;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	@Override
+	public List<Map<String, String>> getUserUpDelList(String id) {
+		List<Map<String, String>> upDelList = this.adminDAO.getUserUpDelList();
+		return upDelList;
+	}
+
+	@Override
+	public UserDTO getUserDTO(int user_no) {
+		UserDTO userDTO = this.adminDAO.getUserDTO(user_no);
+		return userDTO;
+	}
+
+	@Override
+	public int getUserUpCnt(UserDTO userDTO) {
+		int userUpCnt = this.adminDAO.getUserUpCnt(userDTO);
+		return userUpCnt;
+	}
+
+	@Override
+	public int getUserDelCnt(UserDTO userDTO) {
+		int userDelCnt = this.adminDAO.getUserDelCnt(userDTO);
+		return userDelCnt;
 	}
 	
 }

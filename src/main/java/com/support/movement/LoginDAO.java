@@ -20,4 +20,8 @@ public interface LoginDAO {
 
 	int getDriverRegCnt(DriverDTO driverDTO);
 
+	int getUserStatusCnt(Map<String, String> admin_id_pwd);
+
+	int getDriverStatusCnt(Map<String, String> admin_id_pwd);
+
 }

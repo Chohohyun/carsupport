@@ -1,6 +1,7 @@
 package com.support.movement;
 
 public class UserDTO {
+	private String user_no;
 	private String id;
 	private String pwd1;
 	private String pwd2;
@@ -113,6 +114,12 @@ public class UserDTO {
 	}
 	public void setWheelchair(String wheelchair) {
 		this.wheelchair = wheelchair;
+	}
+	public String getUser_no() {
+		return user_no;
+	}
+	public void setUser_no(String user_no) {
+		this.user_no = user_no;
 	}
 	
 }

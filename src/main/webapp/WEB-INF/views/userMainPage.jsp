@@ -121,24 +121,7 @@ a:hover { color: white; text-decoration: underline;}
 </style>
 
 <link type="text/css" href="./css/style.css" rel="stylesheet" />
-<script>
-function driverAcceptForm(){
-		location.replace("/support/driverAcceptForm.do");
-	}
 
-	function driverRegForm(){
-		location.replace("/support/driverRegForm.do");
-	}
-	function driverUpDelForm(){
-		location.replace("/support/driverUpDelForm.do");
-	}
-	function userRegForm(){
-		location.replace("/support/userRegForm.do");
-	}
-	function userUpDelForm(){
-		location.replace("/support/userUpDelForm.do");
-	}
-</script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){  
@@ -152,6 +135,15 @@ function driverAcceptForm(){
 		});  
 	  
 	});  
+	function userReservationForm(){
+		location.replace("/support/userReservationForm.do");
+	}
+	function userReservationSituation(){
+		location.replace("/support/userReservationSituation.do");
+	}
+	function userDriverCheck(){
+		location.replace("/support/userDriverCheck.do");
+	}
 </script>
 
 
@@ -186,6 +178,7 @@ function driverAcceptForm(){
 </head>
 
 <body>
+
 <div id="wrap">
 	<div id="header">	
 			<div class="navi_bg">
@@ -196,51 +189,36 @@ function driverAcceptForm(){
 					</li>  
 
 					<li class="navi_set">  
-						<div class="topnav">차량관리</div>
+						<div class="topnav">이용절차</div>
 						<ul class="subnav">  
-							<li><a href="#">차량 등록</a></li>  
-							<li><a href="#">차량 수정/삭제</a></li> 
-							<li><a href="#">차량 정보</a></li>  
-							<li><a href="#">차량별 정비내역</a></li>  
+							<li><a href="#">이용절차</a></li>   
 						</ul>  
 					</li> 
 					
 					<li class="navi_set">  
-						<div class="topnav">운전자관리</div>
+						<div class="topnav">신청</div>
 						<ul class="subnav">  
-								 <li>
-	<a href="javascript:driverAcceptForm();">운전자 승인</a></li>
-		 <li>
-      <a href="javascript:driverRegForm();">운전자 등록</a></li>
-		 <li>
-      <a href="javascript:driverUpDelForm();">운전자 수정/삭제</a></li>  
+							<li><a href="javascript:userReservationForm();">신청하기</a></li>  
+							<li><a href="javascript:userReservationSituation();">신청현황</a></li> 
+							<li><a href="javascript:userDriverCheck();">운전자평가</a></li>  
 						</ul>  
 					</li> 
 
 					<li class="navi_set">  
-						<div class="topnav">회원관리</div>
-						<ul class="subnav">  
-							<li><a href="javascript:userRegForm();">회원 등록</a></li>  
-							<li><a href="javascript:userUpDelForm();">회원 수정/삭제</a></li>  
-						</ul>  
-					</li>
-
-					<li class="navi_set">  
-						<div class="topnav">게시판관리</div>
+						<div class="topnav">게시판</div>
 						<ul class="subnav">  
 							<li><a href="#">Q/A 게시판</a></li>  
-							<li><a href="#">불만게시판</a></li>  
-						</ul>  
-					</li> 
-
-					<li class="navi_set">  
-						<div class="topnav">통계관리</div>
-						<ul class="subnav">  
-							<li><a href="#">차량 통계</a></li>  
-							<li><a href="#">운전자 통계</a></li> 
-							<li><a href="#">회원 통계</a></li>  
+							<li><a href="#">불만사항 게시판</a></li>  
 						</ul>  
 					</li>
+
+					<li class="navi_set">  
+						<div class="topnav">회원정보</div>
+						<ul class="subnav">  
+							<li><a href="#">이용내역</a></li>  
+							<li><a href="#">정보수정</a></li>  
+						</ul>  
+					</li> 
 				
 					<li class="navi_set">  
 						<div class="topnav" onclick="top.location.href='http://blog.naver.com/hyoyeol';">로그아웃</div> 

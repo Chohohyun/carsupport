@@ -118,10 +118,10 @@ public class AdminController {
 			String id = (String) session.getAttribute("id");
 
 
-			int upDelListAllCnt = this.adminService.getUpDelListAllCnt(id);
+			int upDelListAllCnt = this.adminService.getDriverUpDelListAllCnt(id);
 			System.out.println(upDelListAllCnt);
 			if(upDelListAllCnt!=0) {
-				upDelList= this.adminService.getUpDelList(id);
+				upDelList= this.adminService.getDriverUpDelList(id);
 			}
 			mav.addObject("upDelListAllCnt",upDelListAllCnt);
 			mav.addObject("upDelList",upDelList);
@@ -152,6 +152,26 @@ public class AdminController {
 		return mav; 
 	} 
 
+	
+	@RequestMapping(value="/userUpDelDetailForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
+	public ModelAndView userUpDelDetail( 
+			@RequestParam(value="user_no") int user_no, 
+			HttpSession session ) { 
+		// ModelAndView객체 생성하기 
+		// ModelAndView객체에 호출 JSP 페이지명을 저장하기 
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("userUpDelDetailForm.jsp"); 
+		try { 
+
+			System.out.println("userDTO 아주 잘옴");
+			UserDTO userDTO = this.adminService.getUserDTO(user_no); 
+			mav.addObject("userDTO",userDTO); 
+			System.out.println("userDTO 아주 잘옴");
+		}catch(Exception e){ 
+			System.out.println("BoardController.goBoardContentForm(~) 메소드 예외 발생"); 
+		} 
+		return mav; 
+	} 
 	//**********************************
 	// 운전자 승인 작업
 	//**********************************
@@ -212,37 +232,149 @@ public class AdminController {
 		} 
 		return driverRegCnt;
 	}
+
+	//**********************************
+	// 운전자 수정 삭제
+	//**********************************
+	@RequestMapping(
+			value="/adminDrvierUpDelProc.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public int driverUpDelProc(
+			HttpSession session,HttpServletResponse response,
+			DriverDTO driverDTO,
+			@RequestParam(value="upDel") String upDel
+			) {
+
+		int driverUpDelCnt=0;
+		try {
+			System.out.println(upDel);
+			if(upDel.equals("up")) {
+				driverUpDelCnt = this.adminService.getDriverUpCnt(driverDTO);
+			}
+			else {
+				driverUpDelCnt = this.adminService.getDriverDelCnt(driverDTO);
+			}
+			System.out.println("드라이버 됩니다");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+			driverUpDelCnt=-1;
+		} 
+		return driverUpDelCnt;
+	}
+	// 가상주소 /support/userRegForm.do로 접속하면 호출되는 메소드 선언
+	@RequestMapping(value="/userRegForm.do")
+	public ModelAndView userReg(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
+
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userRegForm.jsp");
+		return mav;
+	}
+
+	//**********************************
+	// 유저
+	//**********************************
+	@RequestMapping(
+			value="/adminUserRegForm.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+
+	@ResponseBody 
+	public int driverRegProc(
+			HttpSession session,HttpServletResponse response,
+			UserDTO userDTO
+			) {
+
+		int driverRegCnt=0;
+
+		System.out.println("여기까진 가는건가?");
+		try {
+			session.removeAttribute("uri");
+
+			driverRegCnt = this.adminService.getUserRegCnt(userDTO);
+			System.out.println("드라이버 됩니다");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+			driverRegCnt=-1;
+		} 
+		return driverRegCnt;
+	}
+	// 가상주소 /erp/userUpDelForm.do로 접속하면 호출되는 메소드 선언
+	@RequestMapping(value="/userUpDelForm.do")
+	public ModelAndView userUpDel(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
+
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userUpDelForm.jsp");
+		List<Map<String,String>> upDelList = new ArrayList<Map<String,String>>();
+		try {
+			String id = (String) session.getAttribute("id");
+
+
+			int upDelListAllCnt = this.adminService.getUserUpDelListAllCnt(id);
+			System.out.println(upDelListAllCnt);
+			if(upDelListAllCnt!=0) {
+				upDelList= this.adminService.getUserUpDelList(id);
+			}
+			mav.addObject("upDelListAllCnt",upDelListAllCnt);
+			mav.addObject("upDelList",upDelList);
+
+		}catch (Exception e) {
+			System.out.println("drivetAcceptForm을 불러오는 도중 오류");
+		}
+		return mav;
+	}
 	
 	//**********************************
-		// 운전자 수정 삭제
+		// 유저 수정 삭제
 		//**********************************
 		@RequestMapping(
-				value="/adminDrvierUpDelProc.do",
+				value="/adminUserUpDelProc.do",
 				method = RequestMethod.POST,produces="application/json;charset=UTF-8"
 				)
 		@ResponseBody 
-		public int driverUpDelProc(
+		public int userUpDelProc(
 				HttpSession session,HttpServletResponse response,
-				DriverDTO driverDTO,
+				UserDTO userDTO,
 				@RequestParam(value="upDel") String upDel
 				) {
 
-			int driverUpDelCnt=0;
+			int userUpDelCnt=0;
 			try {
 				System.out.println(upDel);
 				if(upDel.equals("up")) {
-					driverUpDelCnt = this.adminService.getDriverUpCnt(driverDTO);
+					userUpDelCnt = this.adminService.getUserUpCnt(userDTO);
 				}
 				else {
-					driverUpDelCnt = this.adminService.getDriverDelCnt(driverDTO);
+					userUpDelCnt = this.adminService.getUserDelCnt(userDTO);
 				}
 				System.out.println("드라이버 됩니다");
 
 			} catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
-				driverUpDelCnt=-1;
+				userUpDelCnt=-1;
 			} 
-			return driverUpDelCnt;
+			return userUpDelCnt;
 		}
+		
+
 }

@@ -88,4 +88,18 @@ public class LoginDAOImpl implements LoginDAO{
 				"com.support.movement.LoginDAO.getDriverRegCnt",driverDTO);
 		return driverRegCnt;
 	}
+
+	@Override
+	public int getUserStatusCnt(Map<String, String> admin_id_pwd) {
+		int userStatusCnt = this.sqlSession.selectOne(
+				"com.support.movement.LoginDAO.getUserStatusCnt",admin_id_pwd);
+		return userStatusCnt;
+	}
+
+	@Override
+	public int getDriverStatusCnt(Map<String, String> admin_id_pwd) {
+		int driverStatusCnt = this.sqlSession.selectOne(
+				"com.support.movement.LoginDAO.getDriverStatusCnt",admin_id_pwd);
+		return driverStatusCnt;
+	}
 }

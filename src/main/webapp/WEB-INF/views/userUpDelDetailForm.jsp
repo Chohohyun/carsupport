@@ -8,83 +8,78 @@
 <%@include file="common.jsp" %>
 <html>
 <script>
-	$(document).ready(function() {
+	
 		
-
-		document.driverRegForm.style.display="none";
-
+	$(document).ready(function(){
+		inputData("id","${userDTO.id}");
+		inputData("pwd1","${userDTO.pwd1}");
+		inputData("pwd2","${userDTO.pwd1}");
+		inputData("name","${userDTO.name}");
+		inputData("gender","${userDTO.gender}");
+		inputData("jumin_num1","${userDTO.jumin_num1}");
+		inputData("jumin_num2","${userDTO.jumin_num2}");
+		inputData("postal_code","${userDTO.postal_code}");
+		inputData("detail_addr","${userDTO.detail_addr}");
+		inputData("road_addr","${userDTO.road_addr}");
+		inputData("jibun_addr","${userDTO.jibun_addr}");
+		inputData("email","${userDTO.email}");
+		inputData("phone","${userDTO.phone}");
+		inputData("disability_grade","${userDTO.disability_grade}");
+		inputData("disability_type","${userDTO.disability_type}");
+		inputData("wheelchair","${userDTO.wheelchair}");
+		inputData("user_no","${userDTO.user_no}");
 	});
+	
 		
-	function changeToUser(){
+	function goUpDelPage(){
+		location.replace("/support/userUpDelForm.do");
 
-		document.driverRegForm.style.display="none";
-		document.userRegForm.style.display="block";
-
-		$("[name=userRegFormBtn]").removeClass("btn--blue");
-		$("[name=userRegFormBtn]").addClass("btn--red");
-		$("[name=driverRegFormBtn]").removeClass("btn--red");
-		$("[name=driverRegFormBtn]").addClass("btn--blue");
 	}
-	function changeToDriver(){
+	
+	function goUpDelProc(upDel) {
+		if(upDel=="del"){
+			document.userUpDelForm.upDel.value="del";
+			if(confirm("정말 삭제 하시겠습니까?")==false){ 
+				 			return; 
+			} 
 
-		document.userRegForm.style.display="none";
-		document.driverRegForm.style.display="block";
-
-		$("[name=driverRegFormBtn]").removeClass("btn--blue");
-		$("[name=driverRegFormBtn]").addClass("btn--red");
-		$("[name=userRegFormBtn]").removeClass("btn--red");
-		$("[name=userRegFormBtn]").addClass("btn--blue");
-	}
+		}
 		
-	function goLoginForm(){
-		location.replace("/support/loginForm.do");
-
-	}
-	function goUserRegForm() {
-
-		alert(1);
-		 $.ajax({
-			url:"/support/userRegForm.do",
-			type:"post",
-			data: $("[name=userRegForm]").serialize(),
-			datatype:"html",
-			
-			success:function(data){
-				if(data==1){
-					alert("회원가입 성공!");
-					location.replace("/support/loginForm.do");
-
-				}
-				else{
-					alert("회원가입 실패!");
-				}
-			},
-			error : function(){
-				alert("서버 접속 실패!");
-			}
-			
-		}); 
-
-	}
-function goDriverRegForm() {
-		alert(1);
-		alert($("[name=driverRegForm]").serialize());
+		else{
+			if(confirm("정말 수정 하시겠습니까?")==false){ 
+	 			return; 
+	 		}
+		}
+		alert($("[name=userUpDelForm]").serialize());
 		$.ajax({
-			url:"/support/driverRegForm.do",
+			url:"/support/adminUserUpDelProc.do",
 			type:"post",
-			data: $("[name=driverRegForm]").serialize(),
+			data: $("[name=userUpDelForm]").serialize(),
 			datatype:"html",
-			
 			success:function(data){
-				if(data==1){
-					alert("회원가입 성공!");
-					
+				if(upDel=="del")
+				{
+					if(data==1){
+						alert("회원삭제 성공!");
+						
 
-					location.replace("/support/loginForm.do");
+						location.replace("/support/userUpDelForm.do");
+					}
+					else{
+						alert("회원삭제 실패!");
+					}
 				}
 				else{
-					alert("회원가입 실패!");
+					if(data==1){
+						alert("회원수정 성공!");
+
+						location.replace("/support/userUpDelForm.do");
+					}
+					else{
+						alert("회원수정 실패!");
+					}
 				}
+				
 			},
 			error : function(){
 				alert("서버 접속 실패!");
@@ -93,6 +88,9 @@ function goDriverRegForm() {
 		}); 
 
 	}
+	
+	
+
 </script> <!-- Jquery JS-->
    
 <head>
@@ -111,9 +109,8 @@ function goDriverRegForm() {
     <link href="/support/resources/vendor2/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    
-    <link href="/support/resources/css2/main.css" rel="stylesheet" media="all">
     <link href="/support/resources/css/main.css" rel="stylesheet" media="all">
+    <link href="/support/resources/css2/main.css" rel="stylesheet" media="all">
     
     
     
@@ -136,33 +133,15 @@ function goDriverRegForm() {
             <div class="card card-5">
            
                 <div class="card-heading">
-                    <h2 class="title">회원가입</h2>
+                    <h2 class="title">운전자수정/삭제</h2>
                 </div>
                 <div class="card-body">
-                 <center>
-                 <div class="form-row m-b-55">
-                                 	 
-                                           <div class="wrap-input40 input-group-desc">
-                                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--red" name = "userRegFormBtn" onclick="changeToUser();" value="일반회원">
-                                            
-                                           <span class="focus-input100"></span>
-                                    
-                                        </div>
-                                 
-                                 			  &nbsp;&nbsp;&nbsp;
-                                        <div class="wrap-input40 input-group-desc">
-                                        
-               						 <input type="button" class="login100-form-btn btn btn--radius-2 btn--blue" name = "driverRegFormBtn"  onclick="changeToDriver();"value="운전자">
-                                           <span class="focus-input100"></span>
-                                          
-                                        </div>
-                                         
-                            </div>
-               
-                <br>
-                <br>
-                </center>
-                    <form name="userRegForm" method="POST">
+                
+                   
+                    
+                    <!-- ----------------------------------------------------------------------------------------------- -->
+                    
+                      <form name="userUpDelForm" method="POST">
                         
                         <div class="form-row">
                             <div class="name">아이디</div>
@@ -343,7 +322,8 @@ function goDriverRegForm() {
                         </div>
                         
                         
-                       
+                      
+                        
                         <div class="form-row">
                             <div class="name">장애구분</div>
                             <div class="value">
@@ -414,250 +394,33 @@ function goDriverRegForm() {
                    
                         <div class="form-row m-b-55">
                                  	 
-                                           <div class="wrap-input40 input-group-desc">
+                                           <div class="wrap-input20 input-group-desc">
                                            
-                            <input type="button" class=" login100-form-btn btn btn--radius-2 btn--red" onclick="goUserRegForm();" value="가입">
+                            <input type="button" class=" login100-form-btn btn btn--radius-2 btn--blue" onclick="goUpDelProc('up');" value="수정">
                                            <span class="focus-input100"></span>
                                     
                                         </div>
                                  
                                  			  &nbsp;&nbsp;&nbsp;
-                                        <div class="wrap-input40 input-group-desc">
+                                        <div class="wrap-input20 input-group-desc">
                                         
                						 
-                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--green" type="button" onclick="goLoginForm();" value="취소">
+                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--red" type="button" onclick="goUpDelProc('del');" value="삭제">
                                <span class="focus-input100"></span>
-                                          
-                                        </div>
-                                         
                           
-               
-                        <center> </center>
-                        </div>
-                    </form>
-                    
-                    
-                    <!-- ----------------------------------------------------------------------------------------------- -->
-                    
-                      <form name="driverRegForm" method="POST">
-                        
-                        <div class="form-row">
-                            <div class="name">아이디</div>
-                            <div class="value">
-                                <div class="input-group wrap-input100">
-                                    <input class="input100 input--style-5" type="text" name="id" placeholder="아이디">
-                                    
-                                           <span class="focus-input100"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">비밀번호</div>
-                            <div class="value">
-                                <div class="input-group wrap-input100">
-                                    <input class="input100 input--style-5" type="password" name="pwd1" placeholder="비밀번호">
-                                    
-                                           <span class="focus-input100"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="name">비밀번호 확인</div>
-                            <div class="value">
-                                <div class="input-group wrap-input100">
-                                    <input class="input100 input--style-5" type="password" name="pwd2" placeholder="비밀번호 확인">
-                                    
-                                           <span class="focus-input100"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row m-b-55">
-                            <div class="name">이름</div>
-                            <div class="value">
-                                <div class="row row-space">
-                                    <div class="input-group wrap-input100">
-                                       
-                                           <input class="input100 input--style-5" type="text" name="name" placeholder="이름">
-                                           <span class="focus-input100"></span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                         <div class="form-row m-b-55">
-                            <div class="name">성별</div>
-                            <div class="value">
-                                <div class="row row-space">
-                                    <div class="input-group wrap-input100">
-                               			 <label class="radio-container m-r-55">남
-                                   		 <input type="radio" checked="checked" name="gender" value="1">
-                                    		<span class="checkmark"></span>
-                               			 </label>
-                               			 <label class="radio-container m-r-55">여
-                                   		 <input type="radio" checked="checked" name="gender" value="2">
-                                    		<span class="checkmark"></span>
-                               			 </label>
-                                </div>
-                               </div>
-                            </div>
-                        </div>
-                        
-                         <div class="form-row m-b-55">
-                            <div class="name">주민번호</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                 	 
-                                        <div class="wrap-input40 input-group-desc">
-                                            <input class="input100 input--style-5" type="text" name="jumin_num1" placeholder="앞주민번호">
-                                            
-                                           <span class="focus-input100"></span>
-                                    
-                                        </div>
-                                 
+                          </div> 
+                          
                                  			  &nbsp;&nbsp;&nbsp;
-                                        <div class="wrap-input50 input-group-desc">
-                                            <input class="input100 input--style-5" type="password" name="jumin_num2" placeholder="뒷주민번호">
-                                            
-                                           <span class="focus-input100"></span>
-                                          
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                         <div class="form-row m-b-55">
-                            <div class="name">주소</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                 	 
-                                           <div class="wrap-input40 input-group-desc">
-                      						  <input class="input100 input--style-5" id="driverpostal_code"  type="text" name="postal_code" >
-                                            
-                                           <span class="focus-input100"></span>
-                                    
-                                        </div>
-                                 
-                                 			  &nbsp;&nbsp;&nbsp;
-                                        <div class="wrap-input50 input-group-desc">
-                        					<input type="button" class="login100-form-btn btn btn--radius-2 btn--red" onclick="searchPostal_code('driver')" value="주소검색">
-                                            
-                                           <span class="focus-input100"></span>
-                                          
-                                        </div>
-                                         <div class="wrap-input40 input-group-desc">
-                                        
-                       					<input class="input100 input--style-5" id="driverroad_addr"  type="text" name="road_addr" >
-                       					
-                                           <span class="focus-input100"></span>
-                                        
-                                        </div>
-                                        
-                                 			  &nbsp;&nbsp;&nbsp;
-                                          <div class="wrap-input50 input-group-desc">
-                    					<input class="input100 input--style-5" id="driverjibun_addr" type="text" name="jibun_addr" >
-                                            
-                                           <span class="focus-input100"></span>
-                                          
-										<span id="guide" style="color:#999;display:none"></span>
-                                        </div>
-                                        <div class="wrap-input100 input-group-desc">
-                                        
-                       					<input class="input100 input--style-5" id="driverdetail_addr"  type="text" name="detail_addr" >
-                       					
-                                           <span class="focus-input100"></span>
-                                        </div>
-                                
-                                </div>
-                            </div>
-                        </div> 
-                      
-                        
-                         <div class="form-row m-b-55">
-                            <div class="name">휴대폰번호</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                    <!-- <div class="col-3">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code">
-                                            <label class="label--desc">Area Code</label>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-9">
-                                        <div class="input-group-desc wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="phone" placeholder="휴대폰번호">
-                                            
-                                           <span class="focus-input100"></span>
-                                            <!-- <label class="label--desc">Phone Number</label> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row m-b-55">
-                            <div class="name">이메일주소</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                    <!-- <div class="col-3">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code">
-                                            <label class="label--desc">Area Code</label>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-9">
-                                        <div class="input-group-desc  wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="email" placeholder="이메일주소">
-                                            
-                                           <span class="focus-input100"></span>
-                                         <!--    <label class="label--desc">Phone Number</label> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                         <div class="form-row m-b-55">
-                            <div class="name">면허증번호</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                    <!-- <div class="col-3">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code">
-                                            <label class="label--desc">Area Code</label>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-9">
-                                        <div class="input-group-desc wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="driver_license_number" placeholder="면허증번호">
-                                            
-                                           <span class="focus-input100"></span>
-                                            <!-- <label class="label--desc">Phone Number</label> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                       <div class="form-row m-b-55">
-                                 	 
-                                           <div class="wrap-input40 input-group-desc">
-                                           
-                            <input type="button" class=" login100-form-btn btn btn--radius-2 btn--red" onclick="goDriverRegForm();" value="가입">
-                                           <span class="focus-input100"></span>
-                                    
-                                        </div>
-                                 
-                                 			  &nbsp;&nbsp;&nbsp;
-                                        <div class="wrap-input40 input-group-desc">
+                                        <div class="wrap-input20 input-group-desc">
                                         
                						 
-                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--green" type="button" onclick="goLoginForm();" value="취소">
+                            <input type="button" class="login100-form-btn btn btn--radius-2 btn--green" type="button" onclick="goUpDelPage();" value="취소">
                                <span class="focus-input100"></span>
-                          	<input type="hidden" name="admission_code" value="n">
-                          </div>           
+                          
+                          </div>               
+                          	
+                          	<input type="hidden" name="user_no">
+                          	<input type="hidden" name="upDel" value="up"> 
                        </div>    
                     </form>
                 </div>

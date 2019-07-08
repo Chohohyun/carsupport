@@ -13,14 +13,26 @@ public interface AdminService {
 
 	int getDriverRegCnt(DriverDTO driverDTO);
 
-	int getUpDelListAllCnt(String id);
+	int getDriverUpDelListAllCnt(String id);
 
-	List<Map<String, String>> getUpDelList(String id);
+	List<Map<String, String>> getDriverUpDelList(String id);
 
 	DriverDTO getDriverDTO(int driver_no);
 
 	int getDriverUpCnt(DriverDTO driverDTO);
 
 	int getDriverDelCnt(DriverDTO driverDTO);
+
+	int getUserRegCnt(UserDTO userDTO);
+
+	int getUserUpDelListAllCnt(String id);
+
+	List<Map<String, String>> getUserUpDelList(String id);
+
+	UserDTO getUserDTO(int user_no);
+
+	int getUserUpCnt(UserDTO userDTO);
+
+	int getUserDelCnt(UserDTO userDTO);
 
 }

@@ -62,9 +62,16 @@
 					alert("운전자 로그인 성공!");
 					location.replace("/support/driverMainPage.do");
 				}
-				else{
-					alert("로그인 실패!");
+				else if(data==-2){
+					alert("승인되지 않거나 탈퇴한 회원입니다.");
 				}
+				else if(data==2||data==4||data==6){
+					alert("비밀번호가 틀렸습니다.");
+				}
+				else{
+					alert("존재하는 아이디가 없습니다");
+				}
+				
 			},
 			error : function(){
 				alert("서버 접속 실패!");

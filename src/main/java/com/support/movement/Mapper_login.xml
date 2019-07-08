@@ -14,24 +14,36 @@
 		select count(*) from admin where admin_id=#{id} and pwd=#{pwd}
 	</select>
 	
-	<!-- 관리자 로그인 아이디 갯수 -->
+	<!-- 유저 로그인 아이디 갯수 -->
 	<select id="getUserIdCnt" parameterType="hashmap" resultType="int">
 		select count(*) from disability_user where user_id=#{id}
 	</select>
 	
-	<!-- 관리자 로그인 아이디 갯수 -->
-	<select id="getUserCnt" parameterType="hashmap" resultType="int">
-		select count(*) from disability_user where user_id=#{id} and user_pwd={pwd}
+	<!-- 유저 로그인 아이디 갯수 -->
+	<select id="getUserStatusCnt" parameterType="hashmap" resultType="int">
+		select count(*) from disability_user where user_id=#{id} and user_pwd=#{pwd} and admission_code='y'
 	</select>
 	
-	<!-- 관리자 로그인 아이디 갯수 -->
+	
+	<!-- 유저 로그인 아이디 갯수 -->
+	<select id="getUserCnt" parameterType="hashmap" resultType="int">
+		select count(*) from disability_user where user_id=#{id} and user_pwd=#{pwd}
+	</select>
+	
+	<!-- 운전자 로그인 아이디 갯수 -->
 	<select id="getDriverIdCnt" parameterType="hashmap" resultType="int">
 		select count(*) from driver where driver_id=#{id}
 	</select>
 	
-	<!-- 관리자 로그인 아이디 갯수 -->
+	<!-- 운전자 로그인 아이디 갯수 -->
 	<select id="getDriverCnt" parameterType="hashmap" resultType="int">
 		select count(*) from driver where driver_id=#{id} and driver_pwd=#{pwd}
+	</select>
+	
+	
+	<!-- 운전자 로그인 아이디 갯수 -->
+	<select id="getDriverStatusCnt" parameterType="hashmap" resultType="int">
+		select count(*) from driver where driver_id=#{id} and driver_pwd=#{pwd} and admission_code='y'
 	</select>
 	
 	

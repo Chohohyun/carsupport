@@ -37,11 +37,15 @@
 	</select>
 	
 	
-	<select id="getUpDelListAllCnt" resultType="int">
+	<select id="getDriverUpDelListAllCnt" resultType="int">
 		select count(*) from driver where admission_code='y'
 	</select>
 	
-	<select id="getUpDelList" resultType="hashmap">
+	<select id="getUserUpDelListAllCnt" resultType="int">
+		select count(*) from disability_user where admission_code='y'
+	</select>
+	
+	<select id="getDriverUpDelList" resultType="hashmap">
 		select
             driver_no||'' as "driver_no", 
              driver_name as "driver_name", 
@@ -63,6 +67,30 @@
 		
 	</select>
 	
+	
+	<select id="getUserUpDelList" resultType="hashmap">
+		select
+            user_no||'' as "user_no", 
+             user_name as "user_name", 
+             user_id as "user_id", 
+             user_pwd as "user_pwd", 
+             user_gender as "user_gender", 
+             user_jumin_num as "user_jumin_num", 
+             user_postal_code||'' as "user_postal_code", 
+             user_road_addr as "user_road_addr", 
+             user_jibun_addr as "user_jibun_addr", 
+             user_detail_addr as "user_detail_addr", 
+             user_phone as "user_phone",  
+             user_email as "user_email",
+             disability_grade_code as "disability_grade_code",
+             disability_type_code as "disability_type_code",
+             wheelchair as "wheelchair",
+             to_char(user_reg_date,'YYYY-MM-DD') "user_reg_date"
+              
+         from disability_user
+         where admission_code='y' 
+		
+	</select>
 	
 	<update id="getAcceptDriverCnt" parameterType="int">
 		update driver 
@@ -160,4 +188,96 @@
 			driver_license_number =#{driver_license_number}
 		where driver_no=${driver_no}
 	</update>
+	
+	
+	<insert id="getUserRegCnt" parameterType="com.support.movement.UserDTO">
+   insert into disability_user(
+      user_no,
+      user_id,
+      user_pwd,
+      user_name,
+      user_gender,
+      user_jumin_num,
+      user_postal_code,
+      user_road_addr,
+      user_jibun_addr,
+      user_detail_addr,
+      user_phone,
+      user_email,
+      disability_grade_code,
+      disability_type_code,
+      wheelchair
+   ) values (
+   (select nvl(max(user_no),0)+1 from disability_user), 
+   #{id},
+   #{pwd1},
+   #{name},
+   #{gender},
+   '${jumin_num1}${jumin_num2}',
+   #{postal_code},
+   #{road_addr},
+   #{jibun_addr},
+   #{detail_addr},
+   #{phone},
+   #{email},
+   ${disability_type},
+   ${disability_grade},
+   ${wheelchair}
+   )
+         
+   </insert>
+   
+   
+   <select id= "getUserDTO" parameterType="int" resultType="com.support.movement.UserDTO">
+		select
+			user_no||'' as "user_no",
+			user_id as "id",
+			user_pwd as "pwd1",
+			user_name as "name",
+			user_gender as "gender",
+			substr(user_jumin_num,1,6) as "jumin_num1",
+			substr(user_jumin_num,7,7) as "jumin_num2",
+			user_postal_code||'' as "postal_code",
+			user_road_addr as "road_addr",
+			user_jibun_addr as "jibun_addr",
+			user_detail_addr as "detail_addr",
+			user_phone as "phone",
+			user_email as "email",
+			disability_grade_code "disability_grade",
+			disability_type_code "disability_type",
+			wheelchair "wheelchair",
+			admission_code as "admission_code"
+			
+			from disability_user
+			where user_no = #{user_no}
+			 
+	</select>
+	
+	
+	 <update id="getUserDelCnt" parameterType="com.support.movement.UserDTO">
+      update disability_user
+      set admission_code='d'
+      where user_no=${user_no}
+   </update>
+   <update id="getUserUpCnt" parameterType="com.support.movement.UserDTO">
+      update disability_user
+      set 
+         user_id = #{id},
+         user_pwd = #{pwd1},
+         user_name = #{name},
+         user_gender = #{gender},
+         user_jumin_num = '${jumin_num1}${jumin_num2}',
+         user_postal_code = ${postal_code},
+         user_road_addr = #{road_addr},
+         user_jibun_addr = #{jibun_addr},
+         user_detail_addr = #{detail_addr},
+         user_phone = #{phone},
+         user_email = #{email},
+         disability_type_code = ${disability_type},
+         disability_grade_code = ${disability_grade},
+         wheelchair = ${wheelchair}
+      where user_no=${user_no}
+      
+   </update>
+	
 </mapper>

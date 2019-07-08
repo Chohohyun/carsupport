@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.support.movement.UserDAO">
+
+	<select id="getReservationPossibleCnt" parameterType="com.support.movement.UserDAO" resultType="int">
+		select
+			count(*)
+		from reserve_apply_car
+		where car_number in ((select c.car_number from car_info c where c.car_code=${car_code}  )) 
+		and reservation_date=to_date('${car_reservation_date}${car_reservation_hour}','yyyy-mm-dd hh24')
+		and reserve_statue_code=2 		
+		
+	</select>
+	
+	<select id="getPossibleCarCnt" parameterType="com.support.movement.UserDAO" resultType="int">
+		select
+			count(*)
+		from car_info
+		where car_code = ${car_code}
+		and car_driver!=null
+	
+	</select>
+</mapper>

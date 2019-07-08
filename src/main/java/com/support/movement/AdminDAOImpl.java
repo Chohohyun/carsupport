@@ -54,16 +54,16 @@ public class AdminDAOImpl implements AdminDAO{
 	}
 
 	@Override
-	public int getUpDelListAllCnt() {
+	public int getDriverUpDelListAllCnt() {
 		int upDelListAllCnt = this.sqlSession.selectOne(
-				"com.support.movement.AdminDAO.getUpDelListAllCnt");
+				"com.support.movement.AdminDAO.getDriverUpDelListAllCnt");
 		return upDelListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getUpDelList() {
+	public List<Map<String, String>> getDriverUpDelList() {
 		List<Map<String, String>> upDelList = this.sqlSession.selectList(
-				"com.support.movement.AdminDAO.getUpDelList");
+				"com.support.movement.AdminDAO.getDriverUpDelList");
 		return upDelList;
 	}
 
@@ -89,6 +89,45 @@ public class AdminDAOImpl implements AdminDAO{
 	public int getCarDriverDelCnt(DriverDTO driverDTO) {
 		int carDriverDelCnt = this.sqlSession.update("com.support.movement.AdminDAO.getCarDriverDelCnt",driverDTO);
 		return carDriverDelCnt;
+	}
+
+	@Override
+	public int getUserRegCnt(UserDTO userDTO) {
+		int userRegCnt = this.sqlSession.insert(
+				"com.support.movement.AdminDAO.getUserRegCnt",userDTO);
+		return userRegCnt;
+	}
+
+	@Override
+	public int getUserUpDelListAllCnt() {
+		int upDelListAllCnt = this.sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getUserUpDelListAllCnt");
+		return upDelListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getUserUpDelList() {
+		List<Map<String, String>> upDelList = this.sqlSession.selectList(
+				"com.support.movement.AdminDAO.getUserUpDelList");
+		return upDelList;
+	}
+
+	@Override
+	public UserDTO getUserDTO(int user_no) {
+		UserDTO userDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getUserDTO",user_no);
+		return userDTO;
+	}
+
+	@Override
+	public int getUserUpCnt(UserDTO userDTO) {
+		int userUpCnt = this.sqlSession.update("com.support.movement.AdminDAO.getUserUpCnt",userDTO);
+		return userUpCnt;
+	}
+
+	@Override
+	public int getUserDelCnt(UserDTO userDTO) {
+		int userDelCnt = this.sqlSession.update("com.support.movement.AdminDAO.getUserDelCnt",userDTO);
+		return userDelCnt;
 	}
 	
 }
