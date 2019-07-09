@@ -42,6 +42,9 @@
 	}
 	function goUserRegForm() {
 
+		if(confirm("가입하시겠습니까?")==false){ 
+ 			return; 
+		} 
 		alert(1);
 		 $.ajax({
 			url:"/support/userRegForm.do",
@@ -67,6 +70,56 @@
 
 	}
 function goDriverRegForm() {
+		var driverId = $("[name=driverRegForm] [name=id]").val();
+		if(id_check(driverId)==false){
+			alert("올바른 아이디형식이 아닙니다.");
+			$("[name=driverRegForm] [name=id]").focus();
+			return;
+		}
+		
+		var driverPwd = $("[name=driverRegForm] [name=pwd1]").val(); 
+		if(pwd_check(driverPwd)==false){
+			alert("올바른 암호형식이 아닙니다.");
+			$("[name=driverRegForm] [name=pwd]").focus();
+			return;
+		}
+		
+		var pwd1 = $("[name=driverRegForm] [name=pwd1]").val();
+		var pwd2 = $("[name=driverRegForm] [name=pwd2]").val();
+		if(pwd2_check(pwd1,pwd2)==false){
+			$("[name=driverRegForm] [name=pwd2]").val("");
+			$("[name=driverRegForm] [name=pwd2]").focus();
+			return;
+		}
+
+		var name = $("[name=driverRegForm] [name=name]").val();
+		if(name_check(name)==false){
+			alert("올바른 이름형식이 아닙니다.");
+			$("[name=driverRegForm] [name=name]").val("");
+			$("[name=driverRegForm] [name=name]").focus();
+			return;
+		}
+		var gender=$("[name=driverRegForm] [name=gender]:checked").length;
+		if(gender_check(gender)==false){
+			$("[name=driverRegForm] [name=gender]").focus();
+			return;
+		}
+
+		var jumin_num1 = $("[name=driverRegForm] [name=jumin_num1]").val();
+		var jumin_num2 = $("[name=driverRegForm] [name=jumin_num2]").val();
+		alert(1);
+		if(jumin_num_check(jumin_num1,jumin_num2)==false){
+			$("[name=driverRegForm] [name=jumin_num1]").focus();
+			return;
+		}
+		
+		
+		
+		
+		
+		if(confirm("가입하시겠습니까?")==false){ 
+ 			return; 
+		} 
 		alert(1);
 		alert($("[name=driverRegForm]").serialize());
 		$.ajax({

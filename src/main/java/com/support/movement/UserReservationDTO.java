@@ -10,6 +10,10 @@ public class UserReservationDTO {
 	private String car_reservation_hour;
 	private String user_no;
 	private String possibleCarCnt;
+	private String start_detail_addr;
+	private String start_road_addr;
+	private String end_detail_addr;
+	private String end_road_addr;
 	public String getEndLatitude() {
 		return endLatitude;
 	}
@@ -63,6 +67,30 @@ public class UserReservationDTO {
 	}
 	public void setPossibleCarCnt(String possibleCarCnt) {
 		this.possibleCarCnt = possibleCarCnt;
+	}
+	public String getStart_detail_addr() {
+		return start_detail_addr;
+	}
+	public void setStart_detail_addr(String start_detail_addr) {
+		this.start_detail_addr = start_detail_addr;
+	}
+	public String getStart_road_addr() {
+		return start_road_addr;
+	}
+	public void setStart_road_addr(String start_road_addr) {
+		this.start_road_addr = start_road_addr;
+	}
+	public String getEnd_detail_addr() {
+		return end_detail_addr;
+	}
+	public void setEnd_detail_addr(String end_detail_addr) {
+		this.end_detail_addr = end_detail_addr;
+	}
+	public String getEnd_road_addr() {
+		return end_road_addr;
+	}
+	public void setEnd_road_addr(String end_road_addr) {
+		this.end_road_addr = end_road_addr;
 	}
 	
 }

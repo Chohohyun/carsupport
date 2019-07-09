@@ -422,4 +422,34 @@
 		delete from car_maintance_info
 		where car_maintance_info_no=#{car_maintance_info_no}
 	</delete>
+	
+	<select id="getQnaList"  parameterType="int" resultType="java.util.HashMap">
+		select
+			question_no||''		as "question_no"
+			, question_subject	as "question_subject"	
+			, question_content		as "question_content"
+			, question_group_no		as "question_group_no"
+			, question_print_no		as "question_print_no"
+		from question
+		where
+		 question_group_no = #{question_group_no}
+		 
+	</select>
+	
+	<!-- QnA  게시판에 글쓰기 입력하는 insert태그 -->
+	<insert id="insertQna" parameterType="com.support.movement.QnaDTO">
+		insert into question(
+			question_no
+			, question_subject
+			, question_content
+			, question_group_no
+			, question_print_no
+		) values(
+			(select nvl(max(question_no), 0) + 1 from question) 
+			, #{subject}
+			, #{content}
+			, ${question_group_no} 
+			, 0
+		)
+	</insert>
 </mapper>

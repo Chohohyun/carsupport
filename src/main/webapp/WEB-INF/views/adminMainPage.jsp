@@ -122,12 +122,16 @@ a:hover { color: white; text-decoration: underline;}
 
 <link type="text/css" href="./css/style.css" rel="stylesheet" />
 <script>
+
+function adminMainPage(){
+	location.replace("/support/adminMainPage.do")
+}
 function driverAcceptForm(){
 		location.replace("/support/driverAcceptForm.do");
 	}
 
 	function driverRegForm(){
-		location.replace("/support/driverRegForm.do");
+		location.replace("/support/driverRegForm2.do");
 	}
 	function driverUpDelForm(){
 		location.replace("/support/driverUpDelForm.do");
@@ -148,10 +152,21 @@ function driverAcceptForm(){
 	
 	
 	function userRegForm(){
-		location.replace("/support/userRegForm.do");
+		location.replace("/support/userRegForm2.do");
 	}
 	function userUpDelForm(){
 		location.replace("/support/userUpDelForm.do");
+	}
+	
+	
+	// QnA 게시판으로 이동하는 함수
+	function qnaListForm() {
+		location.replace("/support/qnaListForm.do");
+	}
+	
+	function logout(){
+		location.replace("/support/loginForm.do");
+		
 	}
 </script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -207,7 +222,7 @@ function driverAcceptForm(){
 				<div class="nav">  
 
 					<li class="navi_set">  
-						<div class="topnav" onclick="top.location.href='http://blog.naver.com/hyoyeol';">HOME</div>
+						<div class="topnav" onclick="adminMainPage();">HOME</div>
 					</li>  
 
 					<li class="navi_set">  
@@ -243,7 +258,7 @@ function driverAcceptForm(){
 					<li class="navi_set">  
 						<div class="topnav">게시판관리</div>
 						<ul class="subnav">  
-							<li><a href="#">Q/A 게시판</a></li>  
+							<li><a href="javascript:qnaListForm();">Q/A 게시판</a></li>  
 							<li><a href="#">불만게시판</a></li>  
 						</ul>  
 					</li> 
@@ -258,7 +273,7 @@ function driverAcceptForm(){
 					</li>
 				
 					<li class="navi_set">  
-						<div class="topnav" onclick="top.location.href='http://blog.naver.com/hyoyeol';">로그아웃</div> 
+						<div class="topnav" onclick="logout();">로그아웃</div> 
 					</li>
 
 				</div>

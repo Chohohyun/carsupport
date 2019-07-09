@@ -212,4 +212,20 @@ public class AdminServiceImpl implements AdminService{
 		int carMaintanceDeleteCnt = this.adminDAO.getCarMaintancDeleteCnt(car_maintance_info_no);
 		return carMaintanceDeleteCnt;
 	}
+
+	// QnA 게시판 목록 가져오는 메소드
+	@Override
+	public List<Map<String, String>> getQnaList(int question_group_no) {
+		List<Map<String,String>> qnaList = this.adminDAO.getQnaList(question_group_no);
+		return qnaList;
+	}
+
+
+	// QnA 게시판 글 입력 후 성공여부 확인하는 메소드
+	@Override
+	public int insertQna(QnaDTO qnaDTO) {
+
+		int qnaRegCnt = this.adminDAO.insertQna(qnaDTO);
+		return qnaRegCnt;
+	}
 }

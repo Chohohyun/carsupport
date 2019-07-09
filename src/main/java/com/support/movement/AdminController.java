@@ -56,7 +56,7 @@ public class AdminController {
 	}
 
 	// 가상주소 /support/driverRegForm.do로 접속하면 호출되는 메소드 선언
-	@RequestMapping(value="/driverRegForm.do")
+	@RequestMapping(value="/driverRegForm2.do")
 	public ModelAndView driverReg(
 			// HttpSession 객체가 들어올 매개변수 선언
 			// 매개변수에 자료형이 HttpSession이면 웹서버가
@@ -102,9 +102,9 @@ public class AdminController {
 		}
 		return mav;
 	}
-	
-	
-	
+
+
+
 
 	//**********************************
 	// 운전자 수정 및 삭제를 위해 운전자 목록을 불러오는 페이지
@@ -140,7 +140,7 @@ public class AdminController {
 		return mav;
 	}
 
-	
+
 
 	//**********************************
 	// 운전자 목록에서 한명의 운전자를 수정하기 위해 상세보기로 이동
@@ -188,8 +188,8 @@ public class AdminController {
 		} 
 		return mav; 
 	} 
-	
-	
+
+
 	//**********************************
 	// 운전자 승인 작업
 	//**********************************
@@ -220,8 +220,8 @@ public class AdminController {
 		} 
 		return acceptDriverCnt;
 	}
-	
-	
+
+
 	//**********************************
 	// 운전자 가입
 	//**********************************
@@ -285,12 +285,12 @@ public class AdminController {
 		} 
 		return driverUpDelCnt;
 	}
-	
+
 
 	//**********************************
 	// 유저 회원가입 시키기 관리자용
 	//**********************************
-	@RequestMapping(value="/userRegForm.do")
+	@RequestMapping(value="/userRegForm2.do")
 	public ModelAndView userReg(
 			// HttpSession 객체가 들어올 매개변수 선언
 			// 매개변수에 자료형이 HttpSession이면 웹서버가
@@ -335,7 +335,7 @@ public class AdminController {
 		} 
 		return driverRegCnt;
 	}
-	
+
 
 	//**********************************
 	// 유저 수정 삭제를 위해 상세보기로 이동
@@ -696,4 +696,89 @@ public class AdminController {
 
 		return carMaintancDeleteCnt;
 	}
+
+
+	//**********************************
+	// QnA 게시판 목록 가져오기
+	//**********************************
+	@RequestMapping( value="/qnaListForm.do" )  
+	public ModelAndView qnaBoardList (
+			@RequestParam(value="question_group_no", defaultValue="1") int question_group_no 
+			,HttpSession session
+			) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("qnaListForm.jsp");
+
+		try {
+
+			List<Map<String,String>> qnaList = this.adminService.getQnaList(question_group_no );
+			//------------------------------------------------------------------
+			// ModelAndView 객체에  검색 개수, 게시판 검색 목록 저장하기
+			// ModelAndView 객체에 addObject 메소드로 저장된 것은
+			// 추후 HttpServletRequest 객체에 setAttribute 메소드 호출로 다시 재저장 된다
+			mav.addObject("qnaList", qnaList);
+
+		}catch(Exception e) {
+			System.out.println("AdminController.qnaList(~) 메소드 호출 시 에러발생!");
+			System.out.println( e.toString() );
+		}
+		//---------------------
+		// [ModelAndView 객체] 리턴하기
+		//---------------------
+		return mav;
+	}
+
+	//==============================
+	// QnA 게시판 <글쓰기> 화면으로 이동하기 위한 메소드
+	//==============================
+	@RequestMapping( value="/qnaRegForm.do" )
+	public ModelAndView goQnaRegForm(
+
+			){
+		//---------------------
+		// [ModelAndView 객체] 생성하기
+		// [ModelAndView 객체]에 [호출 JSP 페이지명]을 저장하기
+		// [ModelAndView 객체] 리턴하기
+		//---------------------
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("qnaRegForm.jsp");
+		return mav;
+	}
+
+	//=================================
+	// QnA 게시판에 입력한 글을 DB에  꽂아버리는 메소드
+	//=================================
+	@RequestMapping(
+			value="/qnaRegProc.do"
+			,method=RequestMethod.POST
+			,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody
+	public int insertQna(
+			QnaDTO qnaDTO
+			) {
+		// 메소드 첫 줄에 도스창 찍는 명령어 안되면 매개변수 쪽으로 들어오다가 오류 발생 한 것
+		System.out.println("insertQna 메소드 시작. qnaDTO 이상없음");
+
+		//--------------------------------------
+		// 게시판 글 입력하고 [게시판 입력 적용행의 개수] 저장할 변수 선언
+		//--------------------------------------
+		int qnaRegCnt = 0;
+		System.out.println(qnaRegCnt);
+		try {
+			//--------------------------------------
+			// [BoardServiceImpl 객체]의 insertQna 메소드 호출로 게시판 입력하고 [게시판 입력 적용행의 개수] 얻기
+			//--------------------------------------
+			System.out.println("에러 테스트2");
+			qnaRegCnt = this.adminService.insertQna(qnaDTO);
+			System.out.println("에러 테스트3");
+
+		} catch(Exception e) {
+			System.out.println("BoardController.insertQna 메소드에서 에러발생!");
+			qnaRegCnt = -1;
+		}
+		//
+		return qnaRegCnt;
+	}
+
 }

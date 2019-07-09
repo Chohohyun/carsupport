@@ -19,14 +19,25 @@
     <body>
     <center>예약현황<br><br>
        <table border=1	class="" cellpadding=5	cellspacing=0> 
-            <tr><th>번호<th>목적지<th>예약날짜<th>예약상태<th>예약취소
-				<c:forEach items="${userRevList}" var="user" varStatus="loopTagStatus"> 
+            <tr><th>번호<th>출발지<th>목적지<th>예약일시<th>운전자<th>예약결과<th>평점
+				<c:forEach items="${userUtilDetailList}" var="user" varStatus="loopTagStatus"> 
  				<tr style="cursor: pointer"> 
- 					<td>${loopTagStatus.index+1} 							
- 					<td>${user.end_road_addr}
- 					<td>${user.reservation_date}
- 					<td>${user.reserve_status_name} 
- 					<td><input type="button" value="예약취소" onclick="upDelDriver(${user.reserve_apply_car_number})"> 
+ 					<td>${loopTagStatus.index+1}</td> 							
+ 					<td>${user.start_point_longitude}</td>						
+ 					<td>${user.end_point_longitude}</td>
+ 					<td>${user.reservation_date}</td>
+ 					<td>${user.drvier_name}</td>
+ 					<td>${user.reserve_status_name}</td>
+ 					<td>
+ 					<c:choose>
+ 						<c:when test="${user.review_score}=='미평가'">
+ 						<input type="button" value="리뷰남기기" onclick="upDelDriver(${user.reserve_apply_car_number})">
+ 						</c:when>
+ 						<c:otherwise>
+ 						${user.review_score}점
+ 						</c:otherwise>
+ 					</c:choose>
+ 					</td>
  				</c:forEach> 
 
 	  			<form name="upDelDriverForm" method="post" action="/support/driverUpDelDetailForm.do">

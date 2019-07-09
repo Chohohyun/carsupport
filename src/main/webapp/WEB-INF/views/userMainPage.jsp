@@ -135,6 +135,15 @@ a:hover { color: white; text-decoration: underline;}
 		});  
 	  
 	});  
+	function userMainPage(){
+		location.replace("/support/userMainPage.do");
+	}
+	function userUtilizationDetails(){
+		location.replace("/support/userUtilizationDetails.do");
+	}
+	function userUseProcedure(){
+		location.replace("/support/userUseProcedure.do");
+	}
 	function userReservationForm(){
 		location.replace("/support/userReservationForm.do");
 	}
@@ -143,6 +152,19 @@ a:hover { color: white; text-decoration: underline;}
 	}
 	function userDriverCheck(){
 		location.replace("/support/userDriverCheck.do");
+	}
+	function userUpDelForm(){
+		location.replace("/support/userUpDelForm2.do");
+		
+	}
+	
+	function discontentListForm(){
+		location.replace("/support/discontentListForm.do");
+	}
+	
+	function logout(){
+		location.replace("/support/loginForm.do");
+		
 	}
 </script>
 
@@ -185,13 +207,13 @@ a:hover { color: white; text-decoration: underline;}
 				<div class="nav">  
 
 					<li class="navi_set">  
-						<div class="topnav" onclick="top.location.href='http://blog.naver.com/hyoyeol';">HOME</div>
+						<div class="topnav" onclick="userMainPage();">HOME</div>
 					</li>  
 
 					<li class="navi_set">  
 						<div class="topnav">이용절차</div>
 						<ul class="subnav">  
-							<li><a href="#">이용절차</a></li>   
+							<li><a href="javascript:userUseProcedure();">이용절차</a></li>   
 						</ul>  
 					</li> 
 					
@@ -208,20 +230,22 @@ a:hover { color: white; text-decoration: underline;}
 						<div class="topnav">게시판</div>
 						<ul class="subnav">  
 							<li><a href="#">Q/A 게시판</a></li>  
-							<li><a href="#">불만사항 게시판</a></li>  
+							<li><a href="javascript:discontentListForm();">불만사항 게시판</a></li>  
+							
 						</ul>  
 					</li>
 
 					<li class="navi_set">  
 						<div class="topnav">회원정보</div>
 						<ul class="subnav">  
-							<li><a href="#">이용내역</a></li>  
-							<li><a href="#">정보수정</a></li>  
+						
+							<li><a href="javascript:userUtilizationDetails();">이용내역</a></li>  
+							<li><a href="javascript:userUpDelForm();">정보수정</a></li>  
 						</ul>  
 					</li> 
 				
 					<li class="navi_set">  
-						<div class="topnav" onclick="top.location.href='http://blog.naver.com/hyoyeol';">로그아웃</div> 
+						<div class="topnav" onclick="logout();">로그아웃</div> 
 					</li>
 
 				</div>

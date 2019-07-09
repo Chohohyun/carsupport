@@ -53,8 +53,41 @@ public class UserDAOImpl implements UserDAO{
 		System.out.println("여기까진 잘 실행했다는 뜻?");
 		return userRevList;
 	}
+
+	@Override
+	public int getUserUtilDetailListAllCnt(String id) {
+		int userUtilDetailListAllCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserUtilDetailListAllCnt",id);
+		return userUtilDetailListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getUserUtilDetailList(String id) {
+		List<Map<String, String>> userUtilDetailList = this.sqlSession.selectList("com.support.movement.UserDAO.getUserUtilDetailList",id);
+		System.out.println("여기까진 잘 실행했다는 뜻?");
+		return userUtilDetailList;
+	}
+
+	@Override
+	public UserDTO getUserDTO(String id) {
+		UserDTO userDTO = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserDTO",id);
+		return userDTO;
+	}
 	
-	
+	//*********************************************************
+		// [검색한 게시판 목록] 리턴하는 메소드 선언
+		//*********************************************************
+		public List<Map<String,String>> getDiscontentList(){
+			List<Map<String,String>> discontentList = sqlSession.selectList(
+				"com.support.movement.UserDAO.getDiscontentList");
+			return discontentList;
+		}
+		//*********************************************************
+		// [검색한 게시판 목록 개수] 리턴하는 메소드 선언
+		//*********************************************************
+		public int getDiscontentListAllCnt(){
+			int discontentListAllCnt = sqlSession.selectOne("com.support.movement.UserDAO.getDiscontentListAllCnt");
+			return discontentListAllCnt;
+		}
 	
 
 

@@ -65,4 +65,8 @@ public interface AdminDAO {
 
 	int getCarMaintancDeleteCnt(int car_maintance_info_no);
 
+	List<Map<String, String>> getQnaList(int question_group_no);
+
+	int insertQna(QnaDTO qnaDTO);
+
 }

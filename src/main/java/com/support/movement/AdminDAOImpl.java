@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 // Repository를 붙임으로써 DAO 클래스 임을 지정하게 되고, bean 태그로 자동 등록된다.
 @Repository
 public class AdminDAOImpl implements AdminDAO{
-	
+
 	// SqlSessionTemplate 객체를 생성해 속변 sqlSession 에 저장
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -23,7 +23,7 @@ public class AdminDAOImpl implements AdminDAO{
 				"com.support.movement.AdminDAO.getAcceptPermit",id);
 		return acceptPermit;
 	}
-	
+
 	@Override
 	public int getAcceptListAllCnt() {
 		int acceptListAllCnt = this.sqlSession.selectOne(
@@ -143,34 +143,34 @@ public class AdminDAOImpl implements AdminDAO{
 				"com.support.movement.AdminDAO.getCarRegCnt",carDTO);
 		return carRegCnt;
 	}
-	
+
 	@Override
 	public int getCarListAllCnt() {
 		int carListAllCnt = this.sqlSession.selectOne(
 				"com.support.movement.AdminDAO.getCarListAllCnt");
 		return carListAllCnt;
 	}
-	
+
 	@Override
 	public List<Map<String, String>> getCarList() {
 		List<Map<String, String>> carList = this.sqlSession.selectList(
 				"com.support.movement.AdminDAO.getCarList");
 		return carList;
 	}
-	
+
 	@Override
 	public CarDTO getCarDTO(int car_info_no) {
 		CarDTO carDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getCarDTO", car_info_no);
 		return carDTO;
 	}
-	
+
 	@Override
 	public int getCarUpdateCnt(CarDTO carDTO) {
 		int carUpdateCnt = this.sqlSession.update(
 				"com.support.movement.AdminDAO.getCarUpdateCnt", carDTO);
 		return carUpdateCnt;
 	}
-	
+
 	@Override
 	public int getCarDeleteCnt(int car_info_no) {
 		int carDeleteCnt = this.sqlSession.delete(
@@ -183,14 +183,14 @@ public class AdminDAOImpl implements AdminDAO{
 				"com.support.movement.AdminDAO.getCarMaintanceRegCnt",carMaintanceDTO);
 		return carMaintanceRegCnt;
 	}
-	
+
 	@Override
 	public int getCarMaintanceListAllCnt() {
 		int carMaintanceListAllCnt = this.sqlSession.selectOne(
 				"com.support.movement.AdminDAO.getCarMaintanceListAllCnt");
 		return carMaintanceListAllCnt;
 	}
-	
+
 	@Override
 	public List<Map<String, String>> getCarMaintanceList() {
 		List<Map<String, String>> carMaintanceList = this.sqlSession.selectList(
@@ -202,7 +202,7 @@ public class AdminDAOImpl implements AdminDAO{
 		CarMaintanceDTO carMaintanceDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getCarMaintanceDTO", car_maintance_info_no);
 		return carMaintanceDTO;
 	}
-	
+
 
 	@Override
 	public int getCarMaintanceUpdateCnt(CarMaintanceDTO carMaintanceDTO) {
@@ -210,13 +210,35 @@ public class AdminDAOImpl implements AdminDAO{
 				"com.support.movement.AdminDAO.getCarMaintanceUpdateCnt", carMaintanceDTO);
 		return carMaintanceUpdateCnt;
 	}
-	
+
 	@Override
 	public int getCarMaintancDeleteCnt(int car_maintance_info_no) {
 		int carMaintanceDeleteCnt = this.sqlSession.delete(
 				"com.support.movement.AdminDAO.getCarMaintancDeleteCnt", car_maintance_info_no);
 		return carMaintanceDeleteCnt;
 	}
-	
-	
+
+	// QnA 게시판 목록을 가져오는 메소드
+	@Override
+	public List<Map<String, String>> getQnaList(int question_group_no) {
+		List<Map<String,String>>  qnaList = sqlSession.selectList(
+				"com.support.movement.AdminDAO.getQnaList",question_group_no
+				);
+		return qnaList;
+	}
+
+
+	// QnA 게시판 글 입력 후 성공여부를 숫자로 리턴하는 메소드
+	@Override
+	public int insertQna(QnaDTO qnaDTO) {
+
+		int qnaRegCnt = sqlSession.insert(
+				"com.support.movement.AdminDAO.insertQna" 
+				, qnaDTO			
+				);
+		return qnaRegCnt;
+
+	}
+
+
 }

@@ -41,6 +41,10 @@
 			, user_no
 			, reserve_status_code
 			, reserve_count
+			, start_detail_addr
+			, start_road_addr
+			, end_detail_addr
+			, end_road_addr
 		) values (
 			(select nvl(max(reserve_apply_car_number),0)+1 from reserve_apply_car)
 			, to_date('${car_reservation_date}${car_reservation_hour}','YYYYMMDD HH24')
@@ -51,6 +55,10 @@
 			, #{user_no}
 			, 1
 			, #{possibleCarCnt}
+			, #{start_detail_addr}
+			, #{start_road_addr}
+			, #{end_detail_addr}
+			, #{end_road_addr}
 		)	
 	</insert>
 	
@@ -72,11 +80,96 @@
             rac.end_point_latitude||'' as "end_point_latitude",
             decode(rac.car_number,'','미정',rac.car_number)||'' as "car_number",
             decode((select d.driver_name from driver d where rac.driver_no=d.driver_no),'','미정',(select d.driver_name from driver d where rac.driver_no=d.driver_no))||'' as "driver_name",
-            (select crs.reserve_status_name from code_reserve_status crs where crs.reserve_status_code = rac.reserve_status_code)||'' as "reserve_status_name"
+            (select crs.reserve_status_name from code_reserve_status crs where crs.reserve_status_code = rac.reserve_status_code)||'' as "reserve_status_name",
+            start_detail_addr as "start_detail_addr",
+			start_road_addr as "start_road_addr",
+			end_detail_addr as "end_detail_addr",
+			end_road_addr as "end_road_addr"
+            
 		from reserve_apply_car rac
 		where to_char(rac.reservation_date,'yyyymmddhh24') - to_char(sysdate,'yyyymmddhh24') &gt; 0
 		and rac.user_no = (select du.user_no from disability_user du where du.user_id=#{id})
 	</select>
 	
+	<select id ="getUserUtilDetailListAllCnt" parameterType="String" resultType="int">
+		select
+			count(*)
+		from reserve_apply_car
+		where  to_char(sysdate,'yyyymmddhh24') - to_char(reservation_date,'yyyymmddhh24')  &gt; 0
+		and user_no = (select user_no from disability_user where user_id=#{id})
+	</select>
+	
+	<select id ="getUserUtilDetailList" parameterType="String" resultType="hashmap">
+		select
+			rac.reserve_apply_car_number||'' as "reserve_apply_car_number",
+            to_char(rac.reservation_date,'yyyymmddhh24')||'' as "reservation_date",
+            rac.start_point_longitude||'' as "start_point_longitude",
+            rac.start_point_latitude||'' as "start_point_latitude",
+            rac.end_point_longitude||'' as "end_point_longitude",
+            rac.end_point_latitude||'' as "end_point_latitude",
+            decode(rac.car_number,'','미정',rac.car_number)||'' as "car_number",
+            decode((select d.driver_name from driver d where rac.driver_no=d.driver_no),'','미정',(select d.driver_name from driver d where rac.driver_no=d.driver_no))||'' as "driver_name",
+            (select crs.reserve_status_name from code_reserve_status crs where crs.reserve_status_code = rac.reserve_status_code)||'' as "reserve_status_name",
+            decode((select re.review_score from review re where re.reserve_apply_car_number = rac.reserve_apply_car_number),'','미평가',(select re.review_score from review re where re.reserve_apply_car_number = rac.reserve_apply_car_number))||'' as "review_score"
+		from reserve_apply_car rac
+		where to_char(sysdate,'yyyymmddhh24') - to_char(rac.reservation_date,'yyyymmddhh24')  &gt; 0
+		and rac.user_no = (select du.user_no from disability_user du where du.user_id=#{id})
+	</select>
+	
+	
+	<select id= "getUserDTO" parameterType="String" resultType="com.support.movement.UserDTO">
+		select
+			user_no||'' as "user_no",
+			user_id as "id",
+			user_pwd as "pwd1",
+			user_name as "name",
+			user_gender as "gender",
+			substr(user_jumin_num,1,6) as "jumin_num1",
+			substr(user_jumin_num,7,7) as "jumin_num2",
+			user_postal_code||'' as "postal_code",
+			user_road_addr as "road_addr",
+			user_jibun_addr as "jibun_addr",
+			user_detail_addr as "detail_addr",
+			user_phone as "phone",
+			user_email as "email",
+			disability_grade_code "disability_grade",
+			disability_type_code "disability_type",
+			wheelchair "wheelchair",
+			admission_code as "admission_code"
+			
+			from disability_user
+			where user_id = #{id}
+			 
+	</select>
+	
+	
+	
+	<!--********************************************************-->
+	<!-- 게시판 검색하는 select 문을 내포한 select 태그 선언 -->
+	<!--********************************************************-->
+	<select id="getDiscontentList" resultType="hashMap">	
+		select
+				dc.discontent_no||''	as "discontent_no"
+				, dc.discontent_subject	as "discontent_subject"
+				, (select du.user_name from disability_user du where du.user_no=dc.user_no)	as "user_name"
+				, dc.discontent_content	as "discontent_content"
+				, dc.discontent_group_no||''		as "group_no"
+				, dc.discontent_print_no||''		as "print_no"
+				, dc.discontent_print_level||''	as "print_level"
+				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
+				, dc.readcount||''		as "readcount"
+				from discontent dc
+			
+			order by dc.discontent_group_no desc, dc.discontent_print_no asc
+	</select>
+	
+	<select id="getDiscontentListAllCnt" resultType="int">
+		select
+			count(*)
+			from discontent
+			
+		order by discontent_group_no desc, discontent_print_no asc
+	
+	</select>
 	
 </mapper>

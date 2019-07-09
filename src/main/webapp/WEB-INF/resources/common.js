@@ -1,21 +1,263 @@
-//회원가입  ID
-function id_check(idV){
-            try{
-                val = $.trim(idV);
-                if(val==""){
-                    return false;
-                }
+//***************************************************
+// <회원가입>과 <운전자 등록> 시 유효성 체크 함수 
+//***************************************************
 
-                var id_RegExp = new RegExp(/^[a-z][a-z0-9]{5,14}$/).test(val);
-                return id_RegExp;
-
-            }
-            catch(e){
-                alert("id_check()에서 에러발생");
+   // id 유효성 체크 함수(영어 소문자 또는 숫자로 6~15자)
+   function id_check(id){
+       try{
+           /*
+           var val=$("[name='id']").val();
+            */
+           var val = $.trim(id);
+           if(val==""){
+               return false;
+           }
+           var check_RegExp = new RegExp(/^[a-z][a-z0-9]{5,14}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("id_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 암호 유효성 체크 함수(영문 또는 숫자만 6~15자)
+   function pwd_check(pwd){
+       try{
+           /*var val=$("[name='pwd']").val();*/
+           var val = $.trim(pwd);
+           
+           if(val==""){
+               return false;
+           }
+           
+           var check_RegExp = new RegExp(/^[a-z0-9]{6,15}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("pwd_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 암호 재확인하는 유효성 체크 함수
+   function pwd2_check(pwd,pwd2){
+       try{
+           /*var pwd = $("[name = 'pwd']").val();
+           var pwd2 = $("[name = 'pwd2']").val();
+   */
+           if(pwd != pwd2) {
+               alert("암호를 똑같이 입력해주세요.");
+               return false;
+           }   
+           else{
+        	   return true;
+           }
+       }
+       catch(e){
+           alert("pwd_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 이름 유효성 체크 함수(한글만 2~10자 사이)
+   function name_check(name){
+       try{
+          /* var val=$("[name='name']").val();*/
+           var val = $.trim(name);
+           
+           if(val==""){
+               return false;
+           }
+           
+           var check_RegExp = new RegExp(/^[가-힣]{2,10}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("name_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 성별 유효성 체크 함수(성별에 체크가 되었는지 확인)
+   function gender_check(gender){
+       try{
+           
+           
+           if(gender == 0) {
+               alert("성별을 선택해 주세요.");
+               return false;
+           }
+       }
+       catch(e){
+           alert("gender_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 주민번호 유효성 체크 함수
+   function jumin_num_check(num1,num2) {
+       
+	   alert(1);
+	   alert(num1);
+	   alert(num2);
+       var arrNum1 = new Array(); // 주민번호 앞자리숫자 6개를 담을 배열
+       var arrNum2 = new Array(); // 주민번호 뒷자리숫자 7개를 담을 배열
+       alert(2);
+       for (var i=0; i<num1.length; i++) {
+           arrNum1[i] = num1.charAt(i);
+       } // 주민번호 앞자리를 배열에 순서대로 담는다.
+       alert(3);
+       for (var i=0; i<num2.length; i++) {
+           arrNum2[i] = num2.charAt(i);
+       } // 주민번호 뒷자리를 배열에 순서대로 담는다.
+       alert(4);
+       var tempSum=0;
+       alert(5);
+       for (var i=0; i<num1.length; i++) {
+           tempSum += arrNum1[i] * (2+i);
+       } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+       alert(6);
+       for (var i=0; i<num2.length-1; i++) {
+           if(i>=2) {
+               tempSum += arrNum2[i] * i;
+           }
+           else {
+               tempSum += arrNum2[i] * (8+i);
+           }
+       } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+       alert(7);
+       if((11-(tempSum%11))%10!=arrNum2[6]) {
+           alert("올바른 주민번호가 아닙니다.");
+           //num1.value = "";
+           //num2.value = "";
+           return false;
+       }else{/*
+           alert("올바른 주민등록번호 입니다.");*/
+           return true;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 휴대폰 유효성 체크 함수
+   function phone_check(){
+       try{
+           var val=$("[name='phone']").val();
+           val = $.trim(val);
+           
+           if(val==""){
+               return false;
+           }
+   
+           var check_RegExp = new RegExp(/^01[0|1|6|9|7]-[0-9]{3,4}-[0-9]{4}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("phone_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //--------------------------------------------------------------------------
+   // 이메일 유효성 체크 함수(한글만 2~10자 사이)
+   function email_check(){
+       try{
+           var val=$("[name='email']").val();
+           val = $.trim(val);
+           
+           if(val==""){
+               return false;
+           }
+   
+           var check_RegExp = new RegExp(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("email_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //***************************************************
+   // 운전면허 유효성 체크 함수
+   //***************************************************
+   function driver_license_check(){
+       try{
+           var val=$("[name='driver_license_number']").val();
+           val = $.trim(val);
+           
+           if(val==""){
+               return false;
+           }
+           // 강원14충북15충남16전북17전남18경북19경남20제주21대구22인천23대전25울산26
+           var check_RegExp = 
+           new RegExp(/^[서울|11|부산|12|경기|13|강원|14|충북|15|충남|16|전북|17|전남|18|경북|19|경남|20|제주|21|대구|22|인천|23|대전|25|울산|26]{2}-[0-9]{2}-[0-9]{6}-[0-9]{2}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("driver_license_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //***************************************************
+   // // 차량번호판 유효성 체크 함수 
+   //***************************************************
+   function car_number_check(){
+       try{
+           var val=$("[name='car_number']").val();
+           val = $.trim(val);
+           
+           if(val==""){
+               return false;
+           }
+   
+           var check_RegExp = new RegExp(/^d{2}[가|나|다|라|마|거|너|더|러|머|버|서|어|저|고|노|도|로|모|보|소|오|조|구|누|두|루|무|부|수|우|주|바|사|아|자|허|배|호|하\\x20]\\d{4}$/).test(val);
+           return check_RegExp;
+       }
+       catch(e){
+           alert("car_number_check()에서 에러발생");
+           return false;
+       }
+   }
+   
+   //***************************
+   // 주행거리 유효성 체크 함수
+   //***************************
+    function car_distance_check(){
+        
+        try{
+            var val=$("[name='car_distance']").val();
+            val = $.trim(val);
+            
+            if(val==""){
                 return false;
             }
-        }
 
+            var check_RegExp = new RegExp(/^[1-9]{1}[0-9]*$/).test(val);
+            return check_RegExp;
+        }
+        catch(e){
+            alert("car_distance_check()에서 에러발생");
+            return false;
+        }
+    }
+
+// 이 위까지 새로만든 유효성 함수(재영)
+//******************************************************************************************
+    
+    
+    
+    
+    
+    
+    
+    
 //비어있는지 확인
 function is_empty(nameV){
 

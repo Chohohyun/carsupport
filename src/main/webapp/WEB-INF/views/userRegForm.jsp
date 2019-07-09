@@ -6,6 +6,7 @@
 
 <!-- jsp 기술의 한 종류인 include Directive를 이용하여 common.jsp 파일 내의 소스를 삽입하기 -->
 <%@include file="common.jsp" %>
+<%@include file="adminMainPage.jsp" %>
 <html>
 <script>
    

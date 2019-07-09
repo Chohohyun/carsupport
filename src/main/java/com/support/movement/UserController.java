@@ -33,7 +33,23 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	//**********************************
+	// 예약신청 누르면 신청 form양식으로 이동
+	//**********************************
+	@RequestMapping(value="/userUseProcedure.do")
+	public ModelAndView userUseProcedure(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
 
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userUseProcedure.jsp");
+		return mav;
+	}
 
 
 
@@ -72,7 +88,6 @@ public class UserController {
 		mav.setViewName("userReservationForm.jsp");
 		return mav;
 	}
-
 
 
 	//**********************************
@@ -125,13 +140,13 @@ public class UserController {
 
 			int userRevListAllCnt = this.userService.getUserRevListAllCnt(id);
 			System.out.println(userRevListAllCnt);
-			
+
 			userRevList= this.userService.getUserRevList(id);
 			System.out.println(userRevList.size());
 			mav.addObject("userRevListAllCnt",userRevListAllCnt);
 			mav.addObject("userRevList",userRevList);
-			
-			
+
+
 		}catch (Exception e) {
 			System.out.println("drivetAcceptForm을 불러오는 도중 오류");
 		}
@@ -139,4 +154,103 @@ public class UserController {
 	}
 
 
+
+	//**********************************
+	// 유저가 자신의 이용내역 현황을 볼 수 있는 페이지 
+	//**********************************
+	@RequestMapping(value="/userUtilizationDetails.do")
+	public ModelAndView userUtilizationDetails(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
+
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userUtilizationDetails.jsp");
+		List<Map<String,String>> userUtilDetailList = new ArrayList<Map<String,String>>();
+		try {
+			String id = (String) session.getAttribute("id");
+			System.out.println(id);
+
+			int userUtilDetailListAllCnt = this.userService.getUserUtilDetailListAllCnt(id);
+			System.out.println(userUtilDetailListAllCnt);
+
+			userUtilDetailList= this.userService.getUserUtilDetailList(id);
+			mav.addObject("userUtilDetailListAllCnt",userUtilDetailListAllCnt);
+			mav.addObject("userUtilDetailList",userUtilDetailList);
+
+
+		}catch (Exception e) {
+			System.out.println("drivetAcceptForm을 불러오는 도중 오류");
+		}
+		return mav;
+	}
+
+	//**********************************
+	// 유저가 자신의 이용내역 현황을 볼 수 있는 페이지 
+	//**********************************
+	@RequestMapping(value="/userUpDelForm2.do")
+	public ModelAndView userUpDelForm2(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
+
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userUpDelForm2.jsp");
+
+		try {
+			String id = (String) session.getAttribute("id");
+			System.out.println(id);
+			UserDTO userDTO = this.userService.getUserDTO(id); 
+
+			mav.addObject("userDTO",userDTO);
+
+
+		}catch (Exception e) {
+			System.out.println("userUpDelForm2을 불러오는 도중 오류");
+		}
+		return mav;
+	}
+
+
+	//*********************************************************
+	// 가상주소 /boardListForm.do 로 접근하면 호출되는 메소드 선언
+	// 		@RequestMapping 내부에 ,method=RequestMethod.POST 가 없으므로
+	//		가상주소 /boardListForm.do 로 접근 시 get 또는 post 방식 접근 모두 허용한다.
+	//*********************************************************
+	@RequestMapping( value="/discontentListForm.do" )
+	public ModelAndView getDiscontentList(
+			HttpSession session
+			) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("discontentListForm.jsp");
+		try {
+			int discontentListAllCnt = this.userService.getDiscontentListAllCnt();
+			
+			//-----------------------------------------------------
+			List<Map<String,String>> discontentList = this.userService.getDiscontentList();
+			//-----------------------------------------------------
+			
+			//-----------------------------------------------------
+			mav.addObject( "discontentList", discontentList );
+			mav.addObject( "discontentListAllCnt", discontentListAllCnt );
+		}catch(Exception ex) {
+			//-----------------------------------------------------
+			
+			//-----------------------------------------------------
+			System.out.println("UserController.getDiscontentList(~) 메소드 호출 시 에러발생");
+			// System.out.println( ex.toString() ); //에러 찾을 때 유용!
+		}
+		//-----------------------------------------------------
+		
+		//-----------------------------------------------------
+		return mav;
+	}
 }

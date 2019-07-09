@@ -50,6 +50,37 @@ public class UserServiceImpl implements UserService{
 		List<Map<String, String>> userRevList = this.userDAO.getUserRevList(id);
 		return userRevList;
 	}
-	
-	
+
+	@Override
+	public int getUserUtilDetailListAllCnt(String id) {
+		int userUtilDetailListAllCnt = this.userDAO.getUserUtilDetailListAllCnt(id);
+		return userUtilDetailListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getUserUtilDetailList(String id) {
+		List<Map<String, String>> userUtilDetailList = this.userDAO.getUserUtilDetailList(id);
+		return userUtilDetailList;
+	}
+
+	@Override
+	public UserDTO getUserDTO(String id) {
+		UserDTO userDTO = this.userDAO.getUserDTO(id);
+		return userDTO;
+	}
+	//*********************************************************
+	// [검색한 게시판 목록] 리턴하는 메소드 선언
+	//*********************************************************
+	public List<Map<String,String>> getDiscontentList(){
+		List<Map<String,String>> discontentList = this.userDAO.getDiscontentList();
+		return discontentList;
+	}
+	//*********************************************************
+	// [검색한 게시판 목록 개수] 리턴하는 메소드 선언
+	//*********************************************************
+	public int getDiscontentListAllCnt() {
+		int discontentListAllCnt = this.userDAO.getDiscontentListAllCnt();
+		return discontentListAllCnt;
+	}
+
 }
