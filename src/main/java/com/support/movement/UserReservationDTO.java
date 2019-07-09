@@ -8,7 +8,8 @@ public class UserReservationDTO {
 	private String car_code;
 	private String car_reservation_date;
 	private String car_reservation_hour;
-	private String user_id;
+	private String user_no;
+	private String possibleCarCnt;
 	public String getEndLatitude() {
 		return endLatitude;
 	}
@@ -51,11 +52,17 @@ public class UserReservationDTO {
 	public void setCar_reservation_hour(String car_reservation_hour) {
 		this.car_reservation_hour = car_reservation_hour;
 	}
-	public String getUser_id() {
-		return user_id;
+	public String getUser_no() {
+		return user_no;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUser_no(String user_no) {
+		this.user_no=user_no;
+	}
+	public String getPossibleCarCnt() {
+		return possibleCarCnt;
+	}
+	public void setPossibleCarCnt(String possibleCarCnt) {
+		this.possibleCarCnt = possibleCarCnt;
 	}
 	
 }

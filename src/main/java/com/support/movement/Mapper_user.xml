@@ -10,16 +10,73 @@
 		from reserve_apply_car
 		where car_number in ((select c.car_number from car_info c where c.car_code=${car_code}  )) 
 		and reservation_date=to_date('${car_reservation_date}${car_reservation_hour}','yyyy-mm-dd hh24')
-		and reserve_statue_code=2 		
+		and reserve_status_code=2 		
 		
 	</select>
 	
-	<select id="getPossibleCarCnt" parameterType="com.support.movement.UserDAO" resultType="int">
+	<select id="getPossibleCarCnt" parameterType="com.support.movement.UserDAO" resultType="String">
 		select
 			count(*)
 		from car_info
 		where car_code = ${car_code}
-		and car_driver!=null
+		and car_driver is not null
 	
 	</select>
+	
+	<select id="getUserNo" parameterType="String" resultType="String">
+		select
+			user_no
+		from disability_user
+		where user_id = #{user_id}	
+	</select>
+	
+	<insert id="getReservationCheck" parameterType="com.support.movement.UserReservationDTO">
+		insert into reserve_apply_car (
+			reserve_apply_car_number
+			, reservation_date
+			, start_point_longitude
+			, start_point_latitude
+			, end_point_longitude
+			, end_point_latitude
+			, user_no
+			, reserve_status_code
+			, reserve_count
+		) values (
+			(select nvl(max(reserve_apply_car_number),0)+1 from reserve_apply_car)
+			, to_date('${car_reservation_date}${car_reservation_hour}','YYYYMMDD HH24')
+			, #{startLongitude}
+			, #{startLatitude}
+			, #{endLongitude}
+			, #{endLatitude}
+			, #{user_no}
+			, 1
+			, #{possibleCarCnt}
+		)	
+	</insert>
+	
+	<select id ="getUserRevListAllCnt" parameterType="String" resultType="int">
+		select
+			count(*)
+		from reserve_apply_car
+		where to_char(reservation_date,'yyyymmddhh24') - to_char(sysdate,'yyyymmddhh24') &gt; 0
+		and user_no = (select user_no from disability_user where user_id=#{id})
+	</select>
+	
+	<select id ="getUserRevList" parameterType="String" resultType="hashmap">
+		select
+			rac.reserve_apply_car_number||'' as "reserve_apply_car_number",
+            to_char(rac.reservation_date,'yyyymmddhh24')||'' as "reservation_date",
+            rac.start_point_longitude||'' as "start_point_longitude",
+            rac.start_point_latitude||'' as "start_point_latitude",
+            rac.end_point_longitude||'' as "end_point_longitude",
+            rac.end_point_latitude||'' as "end_point_latitude",
+            decode(rac.car_number,'','미정',rac.car_number)||'' as "car_number",
+            decode((select d.driver_name from driver d where rac.driver_no=d.driver_no),'','미정',(select d.driver_name from driver d where rac.driver_no=d.driver_no))||'' as "driver_name",
+            (select crs.reserve_status_name from code_reserve_status crs where crs.reserve_status_code = rac.reserve_status_code)||'' as "reserve_status_name"
+		from reserve_apply_car rac
+		where to_char(rac.reservation_date,'yyyymmddhh24') - to_char(sysdate,'yyyymmddhh24') &gt; 0
+		and rac.user_no = (select du.user_no from disability_user du where du.user_id=#{id})
+	</select>
+	
+	
 </mapper>

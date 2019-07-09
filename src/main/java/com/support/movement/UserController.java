@@ -37,7 +37,9 @@ public class UserController {
 
 
 
-	// 가상주소 /support/userMainPage.do로 접속하면 호출되는 메소드 선언
+	//**********************************
+	// User가 로그인하면 이동하는 페이지
+	//**********************************
 	@RequestMapping(value="/userMainPage.do")
 	public ModelAndView userMain(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -53,7 +55,9 @@ public class UserController {
 		return mav;
 	}
 
-	// 가상주소 /support/userReservationFrom.do로 접속하면 호출되는 메소드 선언
+	//**********************************
+	// 예약신청 누르면 신청 form양식으로 이동
+	//**********************************
 	@RequestMapping(value="/userReservationForm.do")
 	public ModelAndView userReservation(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -72,7 +76,7 @@ public class UserController {
 
 
 	//**********************************
-	// 운전자 수정 삭제
+	// 예약신청 눌렀을 때, 예약가능한지 체크하고 가능하면 신청하기.
 	//**********************************
 	@RequestMapping(
 			value="/reservationCheck.do",
@@ -86,11 +90,10 @@ public class UserController {
 
 		int reservationCheckCnt=0;
 		System.out.println("일단 여기까진 성공한다는것은 아주 좋은 징조");
-		
-		try {
 
-			userReservationDTO.setUser_id((String)session.getAttribute("id"));
-			reservationCheckCnt = this.userService.getReservationCheck(userReservationDTO);
+		try {
+			String userId = (String)session.getAttribute("id");
+			reservationCheckCnt = this.userService.getReservationCheck(userReservationDTO,userId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
@@ -98,4 +101,42 @@ public class UserController {
 		} 
 		return reservationCheckCnt;
 	}
+
+
+	//**********************************
+	// 유저가 자신의 예약 현황을 볼 수 있는 페이지 
+	//**********************************
+	@RequestMapping(value="/userReservationSituation.do")
+	public ModelAndView userReservationSituation(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
+
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userReservationSituation.jsp");
+		List<Map<String,String>> userRevList = new ArrayList<Map<String,String>>();
+		try {
+			String id = (String) session.getAttribute("id");
+			System.out.println(id);
+
+			int userRevListAllCnt = this.userService.getUserRevListAllCnt(id);
+			System.out.println(userRevListAllCnt);
+			
+			userRevList= this.userService.getUserRevList(id);
+			System.out.println(userRevList.size());
+			mav.addObject("userRevListAllCnt",userRevListAllCnt);
+			mav.addObject("userRevList",userRevList);
+			
+			
+		}catch (Exception e) {
+			System.out.println("drivetAcceptForm을 불러오는 도중 오류");
+		}
+		return mav;
+	}
+
+
 }

@@ -1,5 +1,6 @@
 package com.support.movement;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,10 +24,37 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public int getPossibleCarCnt(UserReservationDTO userReservationDTO) {
-		int possibleCarCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getPossibleCarCnt",userReservationDTO);
+	public String getPossibleCarCnt(UserReservationDTO userReservationDTO) {
+		String possibleCarCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getPossibleCarCnt",userReservationDTO);
 		return possibleCarCnt;
 	}
+
+	@Override
+	public int getReservationCheck(UserReservationDTO userReservationDTO) {
+		int reservationCheck = this.sqlSession.insert("com.support.movement.UserDAO.getReservationCheck",userReservationDTO);
+		return reservationCheck;
+	}
+
+	@Override
+	public String getUserNo(String userId) {
+		String userNo = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserNo",userId);
+		return userNo;
+	}
+
+	@Override
+	public int getUserRevListAllCnt(String id) {
+		int userRevListAllCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserRevListAllCnt",id);
+		return userRevListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getUserRevList(String id) {
+		List<Map<String, String>> userRevList = this.sqlSession.selectList("com.support.movement.UserDAO.getUserRevList",id);
+		System.out.println("여기까진 잘 실행했다는 뜻?");
+		return userRevList;
+	}
+	
+	
 	
 
 

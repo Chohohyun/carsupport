@@ -1,5 +1,6 @@
 package com.support.movement;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,31 @@ public class UserServiceImpl implements UserService{
 	private UserDAO userDAO;
 
 	@Override
-	public int getReservationCheck(UserReservationDTO userReservationDTO) {
+	public int getReservationCheck(UserReservationDTO userReservationDTO,String userId) {
 		int reservationPossibleCnt = this.userDAO.getReservationPossibleCnt(userReservationDTO);
-		int possibleCarCnt = this.userDAO.getPossibleCarCnt(userReservationDTO);
-		if(possibleCarCnt>reservationPossibleCnt) {
-			return 1;
+		String possibleCarCnt = this.userDAO.getPossibleCarCnt(userReservationDTO);
+		if(Integer.parseInt(possibleCarCnt)>reservationPossibleCnt) {
+			String user_no = this.userDAO.getUserNo(userId);
+			userReservationDTO.setUser_no(user_no);
+			userReservationDTO.setPossibleCarCnt(possibleCarCnt);
+			int reservationCheckCnt = this.userDAO.getReservationCheck(userReservationDTO);
+			return reservationCheckCnt;
 		}
 		else {
 			return -2;
 		}
+	}
+
+	@Override
+	public int getUserRevListAllCnt(String id) {
+		int userRevListAllCnt = this.userDAO.getUserRevListAllCnt(id);
+		return userRevListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getUserRevList(String id) {
+		List<Map<String, String>> userRevList = this.userDAO.getUserRevList(id);
+		return userRevList;
 	}
 	
 	

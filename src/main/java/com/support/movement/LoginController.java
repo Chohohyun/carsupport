@@ -53,6 +53,11 @@ public class LoginController {
 		return mav;
 	}
 	
+	
+
+	//**********************************
+	// 회원가입으로 이동
+	//**********************************
 	@RequestMapping(value="/regForm.do")
 	public ModelAndView RegForm(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -66,7 +71,10 @@ public class LoginController {
 		mav.setViewName("regForm.jsp");
 		return mav;
 	}
-	
+
+	//**********************************
+	// 로그인 시도
+	//**********************************
 	@RequestMapping(
 			value="/loginProc.do",
 			method=RequestMethod.POST,
@@ -124,7 +132,10 @@ public class LoginController {
 		return admin_idCnt;
 	}
 	
-	
+
+	//**********************************
+	// 유저 회원가입 시도
+	//**********************************
 	@RequestMapping(
 			value="/userRegForm.do",
 			 method = RequestMethod.POST,produces="application/json;charset=UTF-8"

@@ -69,10 +69,17 @@ function reservationCheck() {
 			success:function(data){
 				if(data==1){
 					alert("예약신청 성공!");
+					location.replace("/support/userMainPage.do");
 					
 				}
+				else if(data==0){
+					alert("예약신청 도중 오류발생.");
+				}
+				else if(data==-2){
+					alert("예약가능한 차량이 없습니다. 날짜나 차량종류를 변경해주세요.");
+				}
 				else{
-					alert("예약가능한 차량이 없습니다.");
+					alert("예약실패");
 				}
 			},
 			error : function(){
@@ -302,7 +309,7 @@ function reservationCheck() {
                                             <div class="rs-select2 js-select-simple select--no-search">
                                         	<select name="car_reservation_hour">
                                             <option disabled="disabled" selected="selected" value="">시간을 선택해주세요</option>
-                                            <option value="8">오전8시</option>
+                                            <option value="08">오전8시</option>
 											<option value="10">오전10시</option>
 											<option value="12">오후12시</option>
 											<option value="14">오후2시</option>

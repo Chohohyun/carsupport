@@ -74,7 +74,6 @@
                 document.getElementById(where+'postal_code').value = data.zonecode;
                 document.getElementById(where+"road_addr").value = roadAddr;
                 document.getElementById(where+"jibun_addr").value = data.jibunAddress;
-                
                
               	//주소-좌표 변환 객체를 생성합니다
         		var geocoder = new kakao.maps.services.Geocoder();
@@ -85,7 +84,16 @@
         		 if (status === kakao.maps.services.Status.OK) {
         		
         		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        			alert(coords);
+        			alert(result[0].y);
+        			
+        			alert(result[0].x);
+        			alert(1); 
+                   	if(where=="start"||where=="end"){
+                   		document.getElementById(where+"Latitude").value = result[0].y;
+                   		document.getElementById(where+"Longitude").value = result[0].x;
+                   	}
+                   	
+                   	
         		    // 결과값으로 받은 위치를 마커로 표시합니다
         		    var marker = new kakao.maps.Marker({
         		        map: map,
@@ -168,9 +176,9 @@
 		        		 if (status === kakao.maps.services.Status.OK) {
 		        		
 		        		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		        			alert(coords);
-		        			document.getElementById(where+"Latitude").value = data.jibunAddress;result[0].y;
-		        			document.getElementById(where+"Longitude").value = data.jibunAddress;result[0].x;
+		        			alert(result[0].y);
+		        			document.getElementById(where+"Latitude").value = result[0].y;
+		        			document.getElementById(where+"Longitude").value = result[0].x;
 		        		    // 결과값으로 받은 위치를 마커로 표시합니다
 		        		   /*  var marker = new kakao.maps.Marker({
 		        		        map: map,

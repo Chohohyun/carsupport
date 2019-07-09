@@ -37,7 +37,9 @@ public class AdminController {
 
 
 
-	// 가상주소 /erp/loginForm.do로 접속하면 호출되는 메소드 선언
+	//**********************************
+	// 관리자가 로그인하면 이동하는 페이지
+	//**********************************
 	@RequestMapping(value="/adminMainPage.do")
 	public ModelAndView adminMain(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -100,7 +102,13 @@ public class AdminController {
 		}
 		return mav;
 	}
-	// 가상주소 /erp/driverUpDelForm.do로 접속하면 호출되는 메소드 선언
+	
+	
+	
+
+	//**********************************
+	// 운전자 수정 및 삭제를 위해 운전자 목록을 불러오는 페이지
+	//**********************************
 	@RequestMapping(value="/driverUpDelForm.do")
 	public ModelAndView driverUpDel(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -132,6 +140,11 @@ public class AdminController {
 		return mav;
 	}
 
+	
+
+	//**********************************
+	// 운전자 목록에서 한명의 운전자를 수정하기 위해 상세보기로 이동
+	//**********************************
 	@RequestMapping(value="/driverUpDelDetailForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
 	public ModelAndView driverUpDelDetail( 
 			@RequestParam(value="driver_no") int driver_no, 
@@ -153,6 +166,9 @@ public class AdminController {
 	} 
 
 
+	//**********************************
+	// 유저 목록에서 한명의 유저를 수정하기 위해 상세보기로 이동
+	//**********************************
 	@RequestMapping(value="/userUpDelDetailForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
 	public ModelAndView userUpDelDetail( 
 			@RequestParam(value="user_no") int user_no, 
@@ -172,6 +188,8 @@ public class AdminController {
 		} 
 		return mav; 
 	} 
+	
+	
 	//**********************************
 	// 운전자 승인 작업
 	//**********************************
@@ -202,8 +220,10 @@ public class AdminController {
 		} 
 		return acceptDriverCnt;
 	}
+	
+	
 	//**********************************
-	// 운전자 가입 (재영 작업)
+	// 운전자 가입
 	//**********************************
 	@RequestMapping(
 			value="/adminDriverRegForm.do",
@@ -234,7 +254,7 @@ public class AdminController {
 	}
 
 	//**********************************
-	// 운전자 수정 삭제
+	// 운전자 수정 삭제 시도 
 	//**********************************
 	@RequestMapping(
 			value="/adminDrvierUpDelProc.do",
@@ -265,7 +285,11 @@ public class AdminController {
 		} 
 		return driverUpDelCnt;
 	}
-	// 가상주소 /support/userRegForm.do로 접속하면 호출되는 메소드 선언
+	
+
+	//**********************************
+	// 유저 회원가입 시키기 관리자용
+	//**********************************
 	@RequestMapping(value="/userRegForm.do")
 	public ModelAndView userReg(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -282,7 +306,7 @@ public class AdminController {
 	}
 
 	//**********************************
-	// 유저
+	// 유저 등록 시키기 눌렀을 때
 	//**********************************
 	@RequestMapping(
 			value="/adminUserRegForm.do",
@@ -311,7 +335,11 @@ public class AdminController {
 		} 
 		return driverRegCnt;
 	}
-	// 가상주소 /erp/userUpDelForm.do로 접속하면 호출되는 메소드 선언
+	
+
+	//**********************************
+	// 유저 수정 삭제를 위해 상세보기로 이동
+	//**********************************
 	@RequestMapping(value="/userUpDelForm.do")
 	public ModelAndView userUpDel(
 			// HttpSession 객체가 들어올 매개변수 선언
@@ -344,7 +372,7 @@ public class AdminController {
 	}
 
 	//**********************************
-	// 유저 수정 삭제
+	// 유저 수정 삭제 시도
 	//**********************************
 	@RequestMapping(
 			value="/adminUserUpDelProc.do",
