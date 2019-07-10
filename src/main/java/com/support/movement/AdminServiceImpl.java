@@ -228,4 +228,36 @@ public class AdminServiceImpl implements AdminService{
 		int qnaRegCnt = this.adminDAO.insertQna(qnaDTO);
 		return qnaRegCnt;
 	}
+
+
+	@Override
+	public QnaDTO getQnaDTO(int question_no) {
+
+		QnaDTO qnaDTO = this.adminDAO.getQnaDTO(  question_no );
+		return qnaDTO;
+	}
+
+	@Override
+	public int updateQna(QnaDTO qnaDTO) {
+
+		// 수정할 [게시판] 글을 지금 누군가 삭제했다면 -1 리턴
+		int boardCnt = this.adminDAO.getBoardCnt(qnaDTO);
+		if(boardCnt == 0) { return -1;}
+
+		int updateCnt = this.adminDAO.updateQna(qnaDTO);
+		// System.out.println(updateCnt); 오류 확인시 코드
+		// 게시판 수정 명령 후 수정한 적용 행의 개수 리턴하기
+		return updateCnt;
+	}
+
+	@Override
+	public int deleteQna(QnaDTO qnaDTO) {
+		// 수정할 [게시판] 글을 지금 누군가 삭제했다면 -1 리턴
+		int boardCnt = this.adminDAO.getBoardCnt(qnaDTO);
+		if(boardCnt == 0) { return -1;}
+
+		int deleteCnt = this.adminDAO.deleteQna(qnaDTO);
+		return deleteCnt;
+	}
+
 }

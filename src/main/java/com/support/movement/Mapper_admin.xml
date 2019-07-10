@@ -452,4 +452,35 @@
 			, 0
 		)
 	</insert>
+	
+	<select id= "getQnaDTO" parameterType="int" resultType="com.support.movement.QnaDTO">
+		select
+			question_no||''		as "question_no"
+			, question_subject	as "subject"	
+			, question_content		as "content"
+			, question_group_no		as "question_group_no"
+			, question_print_no		as "question_print_no"
+		from question
+		where
+		 question_no = #{question_no}
+	</select>
+	
+	
+	<update id = "updateQna" parameterType = "com.support.movement.QnaDTO">
+      update question
+      set 
+      	question_subject = #{subject}
+          , question_content = #{content}
+      where 
+      	question_no = #{question_no}
+   </update>
+	
+	
+	<delete id = "deleteQna" parameterType = "com.support.movement.QnaDTO">
+      delete from question		where question_no =  #{question_no}
+   </delete>
+	
+	<select id="getBoardCnt"	parameterType = "com.support.movement.QnaDTO"	 resultType="int">
+   		select 	count(*)	from question		where question_no = #{question_no}
+   </select>
 </mapper>

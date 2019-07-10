@@ -40,6 +40,7 @@
 	
 	     
 	     $(".qna_group").css("cursor","pointer");
+	     $(".content").css("cursor","pointer");   
 	}); 
 
 
@@ -62,6 +63,13 @@
 		document.qnaOptionForm.question_group_no.value=data;
 		document.qnaOptionForm.submit();
 	}
+	
+function goQnaUpDelForm(data) {
+		
+		document.qnaUpDelForm.question_no.value=data;
+		document.qnaUpDelForm.submit();
+	}
+	
 </script>
 
 
@@ -72,7 +80,7 @@
 
 	
 </head>
-
+<body>
 <!---------------------------------------------------------------------------------------------------------- -->
 	<center>
 	<table >
@@ -82,19 +90,19 @@
 			<td><input type="button" value=" 글쓰기 " onclick="goQnaRegForm();">
 	</table><br>
 	
-	<table border=1			cellpadding=5		cellspacing=0 width=500 class="qna_group"	>
+	<table border=1			cellpadding=5		cellspacing=0 width=400 class="qna_group"	>
 		<tr >
 			<td><input type="button"  class ="qna_group" value="공지사항"  onClick="goQnaList('1');">
 			<td><input type="button"  class ="qna_group" 	value="이용관련" onClick="goQnaList('2');">
 			<td><input type="button"  class ="qna_group"  value="사이트관련" onClick="goQnaList('3');">
 	</table><br>
 			
-	<table border=1		class="qnaList"		cellpadding=5		cellspacing=0 width=500 > 
+	<table border=1		class="qnaList"		cellpadding=5		cellspacing=0 width=400 > 
 		<c:forEach items="${requestScope.qnaList}" var="qna" varStatus="loopTagStatus">
 			<tr bgcolor=#FAFAAA>
 				<td align="center">${qna.question_subject }
-			<tr bgcolor="white">
-				<td align="center">${qna.question_content }	
+			<tr bgcolor="white"  onclick="javascript:goQnaUpDelForm(${qna.question_no});">
+				<td align="center" ><textarea name="content"  class = "content"	rows="10"	cols="40">${qna.question_content }</textarea>	
 		</c:forEach>
 	</table>
 			
@@ -106,7 +114,10 @@
 	 <form name="qnaOptionForm" 	method="post" 	action="/support/qnaListForm.do">
 	 	<input type="hidden" 	name="question_group_no">
 	 </form>
+	 
+	 <form name="qnaUpDelForm" 	method="post" 	action="/support/qnaUpDelForm.do">
+	 	<input type="hidden" 	name="question_no">
+	 </form>
 	 </center>
 </body>
-
 </html>

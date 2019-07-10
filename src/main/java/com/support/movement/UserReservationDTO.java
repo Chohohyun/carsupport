@@ -9,7 +9,7 @@ public class UserReservationDTO {
 	private String car_reservation_date;
 	private String car_reservation_hour;
 	private String user_no;
-	private String possibleCarCnt;
+	private int possibleCarCnt;
 	private String start_detail_addr;
 	private String start_road_addr;
 	private String end_detail_addr;
@@ -62,10 +62,10 @@ public class UserReservationDTO {
 	public void setUser_no(String user_no) {
 		this.user_no=user_no;
 	}
-	public String getPossibleCarCnt() {
+	public int getPossibleCarCnt() {
 		return possibleCarCnt;
 	}
-	public void setPossibleCarCnt(String possibleCarCnt) {
+	public void setPossibleCarCnt(int possibleCarCnt) {
 		this.possibleCarCnt = possibleCarCnt;
 	}
 	public String getStart_detail_addr() {

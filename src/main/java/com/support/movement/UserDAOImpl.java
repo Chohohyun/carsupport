@@ -12,20 +12,20 @@ import org.springframework.stereotype.Service;
 // Repository를 붙임으로써 DAO 클래스 임을 지정하게 되고, bean 태그로 자동 등록된다.
 @Repository
 public class UserDAOImpl implements UserDAO{
-	
+
 	// SqlSessionTemplate 객체를 생성해 속변 sqlSession 에 저장
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int getReservationPossibleCnt(UserReservationDTO userReservationDTO) {
-		int reservationPossibleCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getReservationPossibleCnt",userReservationDTO);
-		return reservationPossibleCnt;
+	public int getReservationAlreadyCnt(UserReservationDTO userReservationDTO) {
+		int reservationAlreadyCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getReservationAlreadyCnt",userReservationDTO);
+		return reservationAlreadyCnt;
 	}
 
 	@Override
-	public String getPossibleCarCnt(UserReservationDTO userReservationDTO) {
-		String possibleCarCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getPossibleCarCnt",userReservationDTO);
+	public int getPossibleCarCnt(UserReservationDTO userReservationDTO) {
+		int possibleCarCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getPossibleCarCnt",userReservationDTO);
 		return possibleCarCnt;
 	}
 
@@ -34,6 +34,19 @@ public class UserDAOImpl implements UserDAO{
 		int reservationCheck = this.sqlSession.insert("com.support.movement.UserDAO.getReservationCheck",userReservationDTO);
 		return reservationCheck;
 	}
+
+	@Override
+	public List<String> getDriverList(UserReservationDTO userReservationDTO) {
+		List<String> driverList = this.sqlSession.selectList("com.support.movement.UserDAO.getDriverList",userReservationDTO);
+		return driverList;
+	}
+
+	@Override
+	public int getDriverAcceptList(List<String> driverList) {
+		int driverAcceptList = this.sqlSession.insert("com.support.movement.UserDAO.getDriverAcceptList",driverList);
+		return driverAcceptList;
+	}
+
 
 	@Override
 	public String getUserNo(String userId) {
@@ -46,7 +59,7 @@ public class UserDAOImpl implements UserDAO{
 		int userRevListAllCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserRevListAllCnt",id);
 		return userRevListAllCnt;
 	}
-
+	
 	@Override
 	public List<Map<String, String>> getUserRevList(String id) {
 		List<Map<String, String>> userRevList = this.sqlSession.selectList("com.support.movement.UserDAO.getUserRevList",id);
@@ -72,24 +85,60 @@ public class UserDAOImpl implements UserDAO{
 		UserDTO userDTO = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserDTO",id);
 		return userDTO;
 	}
-	
-	//*********************************************************
-		// [검색한 게시판 목록] 리턴하는 메소드 선언
-		//*********************************************************
-		public List<Map<String,String>> getDiscontentList(){
-			List<Map<String,String>> discontentList = sqlSession.selectList(
-				"com.support.movement.UserDAO.getDiscontentList");
-			return discontentList;
-		}
-		//*********************************************************
-		// [검색한 게시판 목록 개수] 리턴하는 메소드 선언
-		//*********************************************************
-		public int getDiscontentListAllCnt(){
-			int discontentListAllCnt = sqlSession.selectOne("com.support.movement.UserDAO.getDiscontentListAllCnt");
-			return discontentListAllCnt;
-		}
-	
 
+	//*********************************************************
+	// [검색한 게시판 목록] 리턴하는 메소드 선언
+	//*********************************************************
+	public List<Map<String,String>> getDiscontentList(){
+		List<Map<String,String>> discontentList = this.sqlSession.selectList(
+				"com.support.movement.UserDAO.getDiscontentList");
+		return discontentList;
+	}
+	//*********************************************************
+	// [검색한 게시판 목록 개수] 리턴하는 메소드 선언
+	//*********************************************************
+	public int getDiscontentListAllCnt(){
+		int discontentListAllCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getDiscontentListAllCnt");
+		return discontentListAllCnt;
+	}
+
+	@Override
+	public int insertDiscontent(DiscontentDTO discontentDTO) {
+		System.out.println("여기까ㅣㄴ된다.");
+		int insertDiscontentCnt = this.sqlSession.insert("com.support.movement.UserDAO.insertDiscontent",discontentDTO);
+		System.out.println("여기까ㅣㄴ된다.");
+		return insertDiscontentCnt;
+	}
+
+	@Override
+	public DiscontentDTO getDiscontentDTO(int discontent_no) {
+		DiscontentDTO discontentDTO = this.sqlSession.selectOne("com.support.movement.UserDAO.getDiscontentDTO",discontent_no);
+		return discontentDTO;
+	}
+	// 상세보기 들어가면 조회수 증가해버리기
+	@Override
+	public int getReadcountUp(int discontent_no) {
+		int readcountUpCnt = this.sqlSession.update("com.support.movement.UserDAO.getReadcountUp",discontent_no);
+		return readcountUpCnt;
+	}
+
+	@Override
+	public int getDiscontentCnt(DiscontentDTO discontentDTO) {
+		int discontentCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getDiscontentCnt",discontentDTO);
+		return discontentCnt;
+	}
+
+	@Override
+	public int getDiscontentDelCnt(DiscontentDTO discontentDTO) {
+		int discontentDelCnt = this.sqlSession.delete("com.support.movement.UserDAO.getDiscontentDelCnt",discontentDTO);
+		return discontentDelCnt;
+	}
+
+	@Override
+	public int getDiscontentUpCnt(DiscontentDTO discontentDTO) {
+		int discontentUpCnt = this.sqlSession.update("com.support.movement.UserDAO.getDiscontentUpCnt",discontentDTO);
+		return discontentUpCnt;
+	}
 
 
 }

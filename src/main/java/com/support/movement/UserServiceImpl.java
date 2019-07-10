@@ -25,14 +25,27 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int getReservationCheck(UserReservationDTO userReservationDTO,String userId) {
-		int reservationPossibleCnt = this.userDAO.getReservationPossibleCnt(userReservationDTO);
-		String possibleCarCnt = this.userDAO.getPossibleCarCnt(userReservationDTO);
-		if(Integer.parseInt(possibleCarCnt)>reservationPossibleCnt) {
+		int reservationAlreadyCnt = this.userDAO.getReservationAlreadyCnt(userReservationDTO);
+		int CarCnt = this.userDAO.getPossibleCarCnt(userReservationDTO);
+		int possibleCarCnt = CarCnt - reservationAlreadyCnt;
+		System.out.println("여기까진 되자");
+		if(possibleCarCnt > 0) {
 			String user_no = this.userDAO.getUserNo(userId);
+			System.out.println("여기까진 되자");
 			userReservationDTO.setUser_no(user_no);
+			System.out.println("여기까진 되자3");
 			userReservationDTO.setPossibleCarCnt(possibleCarCnt);
+			System.out.println("여기까진 되자4");
+			// 예약 넣기
 			int reservationCheckCnt = this.userDAO.getReservationCheck(userReservationDTO);
-			return reservationCheckCnt;
+			System.out.println("여기까진 되자5");
+			// 운전 가능한 driver 뽑아오기
+			List<String> driverList = this.userDAO.getDriverList(userReservationDTO);
+			System.out.println(driverList);
+			System.out.println("여기까진 되자6");
+			int driverAcceptListCnt = this.userDAO.getDriverAcceptList(driverList);
+			System.out.println("여기까진 되자7");
+			return driverAcceptListCnt;
 		}
 		else {
 			return -2;
@@ -81,6 +94,46 @@ public class UserServiceImpl implements UserService{
 	public int getDiscontentListAllCnt() {
 		int discontentListAllCnt = this.userDAO.getDiscontentListAllCnt();
 		return discontentListAllCnt;
+	}
+
+	@Override
+	public int insertDiscontent(DiscontentDTO discontentDTO) {
+		System.out.println("service층까ㅏ진옴ㄴ");
+		int insertDiscontentCnt = this.userDAO.insertDiscontent(discontentDTO);
+		return insertDiscontentCnt;
+	}
+
+	@Override
+	public DiscontentDTO getDiscontentDTO(int discontent_no) {
+		int readcountUpCnt = this.userDAO.getReadcountUp(discontent_no);
+		DiscontentDTO discontentDTO = this.userDAO.getDiscontentDTO(discontent_no);
+		return discontentDTO;
+	}
+
+	@Override
+	public int getDiscontentUpCnt(DiscontentDTO discontentDTO) {
+		int deleteCnt = this.userDAO.getDiscontentCnt(discontentDTO);
+		
+		if(deleteCnt ==0) {
+			return -1;
+		}
+		else {
+			int discontentUpCnt = this.userDAO.getDiscontentUpCnt(discontentDTO);
+			return discontentUpCnt;
+		}
+		
+	}
+
+	@Override
+	public int getDiscontentDelCnt(DiscontentDTO discontentDTO) {
+		int deleteCnt = this.userDAO.getDiscontentCnt(discontentDTO);
+		if(deleteCnt ==0) {
+			return -1;
+		}
+		else {
+			int discontentDelCnt = this.userDAO.getDiscontentDelCnt(discontentDTO);
+			return discontentDelCnt;
+		}
 	}
 
 }

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.support.movement.UserDAO">
 
-	<select id="getReservationPossibleCnt" parameterType="com.support.movement.UserDAO" resultType="int">
+	<select id="getReservationAlreadyCnt" parameterType="com.support.movement.UserDAO" resultType="int">
 		select
 			count(*)
 		from reserve_apply_car
@@ -14,7 +14,7 @@
 		
 	</select>
 	
-	<select id="getPossibleCarCnt" parameterType="com.support.movement.UserDAO" resultType="String">
+	<select id="getPossibleCarCnt" parameterType="com.support.movement.UserDAO" resultType="int">
 		select
 			count(*)
 		from car_info
@@ -61,7 +61,40 @@
 			, #{end_road_addr}
 		)	
 	</insert>
+	<select id ="getDriverList" parameterType="com.support.movement.UserReservationDTO" resultType="String">
+		select
+			c.car_driver
+		from
+			car_info c
+		where c.car_driver is not null and
+			c.car_code = ${car_code} and
+			c.car_number not in (select car_number from reserve_apply_car where reserve_status_code=2 
+			and reservation_date=to_date('${car_reservation_date}${car_reservation_hour}','yyyy-mm-dd hh24'))
+			
+	</select>
 	
+	<insert id="getDriverAcceptList" parameterType="java.util.List">
+	insert all 
+ 		<foreach collection="list" item="item" index="index" >  
+ 
+ 
+ 		 
+ 		into reserve_accept_list( 
+ 			reserve_accept_list_no, 
+ 			driver_no, 
+			reserve_apply_car_number,
+			reserve_status_code
+ 		)values( 
+ 		(select nvl(max(reserve_accept_list_no),0)+${index}+1 from reserve_accept_list), 
+ 		${item},
+ 		(select max(reserve_apply_car_number) from reserve_apply_car), 
+ 		1 
+ 		) 
+ 		 
+		</foreach> 
+ 	select * from DUAL 
+	
+	</insert>
 	<select id ="getUserRevListAllCnt" parameterType="String" resultType="int">
 		select
 			count(*)
@@ -163,6 +196,7 @@
 			order by dc.discontent_group_no desc, dc.discontent_print_no asc
 	</select>
 	
+	<!-- 불만게시판 글목록가져오기 총개수 -->
 	<select id="getDiscontentListAllCnt" resultType="int">
 		select
 			count(*)
@@ -172,4 +206,71 @@
 	
 	</select>
 	
+	<!-- 불만게시판 글쓰기 -->
+	<insert id ="insertDiscontent" parameterType="com.support.movement.DiscontentDTO">
+		insert into discontent(
+		discontent_no,
+		discontent_subject,
+		discontent_content,
+		discontent_group_no,
+		discontent_print_no,
+		discontent_print_level,
+		readcount,
+		user_no) values(
+		(select nvl(max(discontent_no),0)+1 from discontent),
+		#{discontent_subject},
+		#{discontent_content},
+		(select nvl(max(discontent_group_no),0)+1 from discontent),
+		1,
+		1,
+		0,
+		(select user_no from disability_user where user_id=#{user_id})
+		
+		)
+	
+	</insert>
+	
+	<!-- 불만게시판 상세보기 -->
+	<select id="getDiscontentDTO" parameterType="int" resultType="com.support.movement.DiscontentDTO">
+		select
+				dc.discontent_no||''	as "discontent_no"
+				, dc.discontent_subject	as "discontent_subject"
+				, (select du.user_name from disability_user du where du.user_no=dc.user_no)	as "user_name"
+				, (select du.user_id from disability_user du where du.user_no=dc.user_no) as "user_id"
+				, dc.discontent_content	as "discontent_content"
+				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
+				, dc.readcount||''		as "readcount"
+		from discontent dc
+		where dc.discontent_no=#{discontent_no}
+	</select>
+	
+	<!-- 조회수 증가하기 상세보기 -->
+	<update id="getReadcountUp" parameterType="int">
+	
+		update discontent 
+		set readcount=readcount+1
+		where discontent_no=#{discontent_no}  
+	</update>
+	
+	<select id="getDiscontentCnt" parameterType="com.support.movement.DiscontentDTO" resultType="int">
+		select
+			count(*)
+		from discontent
+		where discontent_no=${discontent_no}
+	</select>
+	
+	<update id="getDiscontentUpCnt" parameterType="com.support.movement.DiscontentDTO">
+		update discontent
+		set
+			discontent_subject=#{discontent_subject},
+			discontent_content=#{discontent_content}
+		where discontent_no=${discontent_no}
+	
+	</update>
+	
+	<delete id="getDiscontentDelCnt" parameterType="com.support.movement.DiscontentDTO">
+		delete 
+		from discontent
+		where discontent_group_no=(select discontent_group_no from discontent where discontent_no = ${discontent_no})
+	</delete>
 </mapper>

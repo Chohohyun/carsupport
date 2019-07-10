@@ -21,4 +21,12 @@ public interface UserService {
 
 	List<Map<String, String>> getDiscontentList();
 
+	int insertDiscontent(DiscontentDTO discontentDTO);
+
+	DiscontentDTO getDiscontentDTO(int discontent_no);
+
+	int getDiscontentUpCnt(DiscontentDTO discontentDTO);
+
+	int getDiscontentDelCnt(DiscontentDTO discontentDTO);
+
 }

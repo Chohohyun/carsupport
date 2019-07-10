@@ -781,4 +781,63 @@ public class AdminController {
 		return qnaRegCnt;
 	}
 
+
+	//****************************************
+	@RequestMapping(
+			value="/qnaUpDelForm.do"
+			, method=RequestMethod.POST
+			, produces="application/json;charset=UTF-8"
+			) 
+	public ModelAndView goQnaUpDelForm( 
+			@RequestParam(value="question_no") int question_no, 
+			HttpSession session ) { 
+
+		// ModelAndView객체 생성하기 
+		// ModelAndView객체에 호출 JSP 페이지명을 저장하기 
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("qnaUpDelForm.jsp"); 
+		try { 
+
+			System.out.println("QnaDTO 아주 잘옴");
+			QnaDTO qnaDTO = this.adminService.getQnaDTO(question_no); 
+			System.out.println(qnaDTO.getContent());
+			mav.addObject("qnaDTO", qnaDTO); 
+			System.out.println("qnaDTO 아주 잘옴");
+		}catch(Exception e){ 
+			System.out.println("BoardController.goQnaUpDelForm() 메소드 예외 발생"); 
+		} 
+		return mav; 
+	} 
+	//******************************************************************************************
+	// support/qnaUpDelProc.do 로 접근하면 호출되는 메소드
+	//******************************************************************************************
+	@RequestMapping(
+			value="/qnaUpDelProc.do"
+			,method=RequestMethod.POST
+			,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody
+	public int qnaUpDelProc(
+			QnaDTO qnaDTO
+			, @RequestParam( value="upDel" ) String upDel
+			) {
+		int qnaUpDelCnt = 0;
+
+		try {
+			// 만약 수정 모드이면 수정 실행하고 수정 적용행의 개수를 저장
+			if( upDel.equals("up") ) {
+				qnaUpDelCnt= this.adminService.updateQna(  qnaDTO );
+			}
+			// 만약 삭제 모드이면 삭제 실행 후 삭제 적용행의 개수를 저장
+			else {
+				qnaUpDelCnt = this.adminService.deleteQna(  qnaDTO );
+
+			}
+		} catch(Exception e) {
+			qnaUpDelCnt = -10;
+			System.out.println("BoardController.qnaUpDelProc(~) 메소드 예외발생");
+		}
+		return qnaUpDelCnt;
+	}
+
 }

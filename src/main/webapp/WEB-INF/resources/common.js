@@ -103,26 +103,24 @@
    // 주민번호 유효성 체크 함수
    function jumin_num_check(num1,num2) {
        
-	   alert(1);
-	   alert(num1);
-	   alert(num2);
+	 
        var arrNum1 = new Array(); // 주민번호 앞자리숫자 6개를 담을 배열
        var arrNum2 = new Array(); // 주민번호 뒷자리숫자 7개를 담을 배열
-       alert(2);
+      
        for (var i=0; i<num1.length; i++) {
            arrNum1[i] = num1.charAt(i);
        } // 주민번호 앞자리를 배열에 순서대로 담는다.
-       alert(3);
+      
        for (var i=0; i<num2.length; i++) {
            arrNum2[i] = num2.charAt(i);
        } // 주민번호 뒷자리를 배열에 순서대로 담는다.
-       alert(4);
+    
        var tempSum=0;
-       alert(5);
+      
        for (var i=0; i<num1.length; i++) {
            tempSum += arrNum1[i] * (2+i);
        } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
-       alert(6);
+      
        for (var i=0; i<num2.length-1; i++) {
            if(i>=2) {
                tempSum += arrNum2[i] * i;
@@ -131,7 +129,7 @@
                tempSum += arrNum2[i] * (8+i);
            }
        } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
-       alert(7);
+   
        if((11-(tempSum%11))%10!=arrNum2[6]) {
            alert("올바른 주민번호가 아닙니다.");
            //num1.value = "";
@@ -145,16 +143,16 @@
    
    //--------------------------------------------------------------------------
    // 휴대폰 유효성 체크 함수
-   function phone_check(){
+   function phone_check(phone){
        try{
-           var val=$("[name='phone']").val();
-           val = $.trim(val);
+           /*var val=$("[name='phone']").val();*/
+           val = $.trim(phone);
            
            if(val==""){
                return false;
            }
    
-           var check_RegExp = new RegExp(/^01[0|1|6|9|7]-[0-9]{3,4}-[0-9]{4}$/).test(val);
+           var check_RegExp = new RegExp(/^01[0|1|6|9|7][0-9]{3,4}[0-9]{4}$/).test(val);
            return check_RegExp;
        }
        catch(e){
@@ -165,10 +163,10 @@
    
    //--------------------------------------------------------------------------
    // 이메일 유효성 체크 함수(한글만 2~10자 사이)
-   function email_check(){
+   function email_check(email){
        try{
-           var val=$("[name='email']").val();
-           val = $.trim(val);
+           /*var val=$("[name='email']").val();*/
+           val = $.trim(email);
            
            if(val==""){
                return false;
@@ -186,10 +184,9 @@
    //***************************************************
    // 운전면허 유효성 체크 함수
    //***************************************************
-   function driver_license_check(){
+   function driver_license_check(license){
        try{
-           var val=$("[name='driver_license_number']").val();
-           val = $.trim(val);
+           val = $.trim(license);
            
            if(val==""){
                return false;
@@ -208,16 +205,15 @@
    //***************************************************
    // // 차량번호판 유효성 체크 함수 
    //***************************************************
-   function car_number_check(){
+   function car_number_check(carNumber){
        try{
-           var val=$("[name='car_number']").val();
-           val = $.trim(val);
+           val = $.trim(carNumber);
            
            if(val==""){
                return false;
            }
-   
-           var check_RegExp = new RegExp(/^d{2}[가|나|다|라|마|거|너|더|러|머|버|서|어|저|고|노|도|로|모|보|소|오|조|구|누|두|루|무|부|수|우|주|바|사|아|자|허|배|호|하\\x20]\\d{4}$/).test(val);
+
+           var check_RegExp = new RegExp(/^[0-9]{2}[가-힣]{1}[0-9]{4}|[가-힣]{1}[0-9]{4}$/).test(val);
            return check_RegExp;
        }
        catch(e){
@@ -229,17 +225,19 @@
    //***************************
    // 주행거리 유효성 체크 함수
    //***************************
-    function car_distance_check(){
+    function car_distance_check(distance){
         
         try{
-            var val=$("[name='car_distance']").val();
-            val = $.trim(val);
+            val = $.trim(distance);
             
             if(val==""){
                 return false;
             }
 
             var check_RegExp = new RegExp(/^[1-9]{1}[0-9]*$/).test(val);
+            if(check_RegExp==false){
+            	check_RegExp = new RegExp(/^0$/).test(val);
+            }
             return check_RegExp;
         }
         catch(e){
@@ -253,8 +251,28 @@
     
     
     
-    
-    
+   
+
+    function is_empty2(name){
+
+    	try{
+    		alert(1);
+    			var tmp=$.trim(name);
+
+        		alert(2);
+    			tmp=tmp.split(" ").join("");
+    			if(tmp!=""){
+    				return true;
+    			}
+
+        		alert(3);
+    		return false;
+    	}catch (e) {
+    		alert("is_empty('"+nameV+"')함수에서 에러 발생!");
+    		return false;
+    	}
+
+    }    
     
     
     

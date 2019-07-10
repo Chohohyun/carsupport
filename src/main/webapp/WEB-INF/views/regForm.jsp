@@ -42,6 +42,83 @@
 	}
 	function goUserRegForm() {
 
+		var driverId = $("[name=userRegForm] [name=id]").val();
+		if(id_check(driverId)==false){
+			alert("올바른 아이디형식이 아닙니다.");
+			$("[name=userRegForm] [name=id]").focus();
+			return;
+		}
+		
+		var driverPwd = $("[name=userRegForm] [name=pwd1]").val(); 
+		if(pwd_check(driverPwd)==false){
+			alert("올바른 암호형식이 아닙니다.");
+			$("[name=userRegForm] [name=pwd]").focus();
+			return;
+		}
+		
+		var pwd1 = $("[name=userRegForm] [name=pwd1]").val();
+		var pwd2 = $("[name=userRegForm] [name=pwd2]").val();
+		if(pwd2_check(pwd1,pwd2)==false){
+			$("[name=userRegForm] [name=pwd2]").val("");
+			$("[name=userRegForm] [name=pwd2]").focus();
+			return;
+		}
+
+		var name = $("[name=userRegForm] [name=name]").val();
+		if(name_check(name)==false){
+			alert("올바른 이름형식이 아닙니다.");
+			$("[name=userRegForm] [name=name]").val("");
+			$("[name=userRegForm] [name=name]").focus();
+			return;
+		}
+		var gender=$("[name=userRegForm] [name=gender]:checked").length;
+		if(gender_check(gender)==false){
+			$("[name=userRegForm] [name=gender]").focus();
+			return;
+		}
+
+		var jumin_num1 = $("[name=userRegForm] [name=jumin_num1]").val();
+		var jumin_num2 = $("[name=userRegForm] [name=jumin_num2]").val();
+	
+		if(jumin_num_check(jumin_num1,jumin_num2)==false){
+			$("[name=userRegForm] [name=jumin_num1]").focus();
+			return;
+		}
+
+		var postal_code = $("[name=userRegForm] [name=postal_code]").val();
+		if(is_empty2(postal_code)==false){
+			alert("주소를 검색해주세요.");
+			return;
+		}
+		var phone = $("[name=userRegForm] [name=phone]").val();
+		if(phone_check(phone)==false){
+			alert("올바른 핸드폰 번호 형식이 아닙니다.");
+			$("[name=userRegForm] [name=phone]").focus();
+			return;
+		}
+		
+		var email = $("[name=userRegForm] [name=email]").val();
+		if(email_check(email)==false){
+			alert("올바른 이메일 형식이 아닙니다.");
+			$("[name=userRegForm] [name=email]").focus();
+			return;
+		}
+		var disability_grade = $("[name=userRegForm] [name=disability_grade]").val();
+		if(is_empty2(disability_grade)==false){
+			alert("장애 등급을 선택해주세요.");
+			$("[name=userRegForm] [name=disability_grade]").focus();
+			return;
+		}
+		var disability_type = $("[name=userRegForm] [name=disability_type]").val();
+		if(is_empty2(disability_type)==false){
+			alert("장애 종류를 선택해주세요.");
+			$("[name=userRegForm] [name=disability_type]").focus();
+			return;
+		}
+		
+		
+		
+		
 		if(confirm("가입하시겠습니까?")==false){ 
  			return; 
 		} 
@@ -113,6 +190,31 @@ function goDriverRegForm() {
 			return;
 		}
 		
+		var phone = $("[name=driverRegForm] [name=phone]").val();
+		if(phone_check(phone)==false){
+			alert("올바른 핸드폰 번호 형식이 아닙니다.");
+			$("[name=driverRegForm] [name=phone]").focus();
+			return;
+		}
+		
+		var postal_code = $("[name=driverRegForm] [name=postal_code]").val();
+		if(is_empty2(postal_code)==false){
+			alert("주소를 검색해주세요.");
+			return;
+		}
+		var email = $("[name=driverRegForm] [name=email]").val();
+		if(email_check(email)==false){
+			alert("올바른 이메일 형식이 아닙니다.");
+			$("[name=driverRegForm] [name=email]").focus();
+			return;
+		}
+		
+		var driver_license_number = $("[name=driverRegForm] [name=driver_license_number]").val();
+		if(driver_license_check(driver_license_number)==false){
+			alert("올바른 운전면허 형식이 아닙니다.");
+			$("[name=driverRegForm] [name=driver_license_number]").focus();
+			return;
+		}
 		
 		
 		
@@ -286,7 +388,7 @@ function goDriverRegForm() {
                                 <div class="row row-refine">
                                  	 
                                         <div class="wrap-input40 input-group-desc">
-                                            <input class="input100 input--style-5" type="text" name="jumin_num1" placeholder="앞주민번호">
+                                            <input class="input100 input--style-5" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" name="jumin_num1" placeholder="앞주민번호">
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -294,7 +396,7 @@ function goDriverRegForm() {
                                  
                                  			  &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
-                                            <input class="input100 input--style-5" type="password" name="jumin_num2" placeholder="뒷주민번호">
+                                            <input class="input100 input--style-5" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="password" name="jumin_num2" placeholder="뒷주민번호">
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -310,7 +412,7 @@ function goDriverRegForm() {
                                 <div class="row row-refine">
                                  	 
                                            <div class="wrap-input40 input-group-desc">
-                      						  <input class="input100 input--style-5" id="userpostal_code"  type="text" name="postal_code" >
+                      						  <input class="input100 input--style-5" id="userpostal_code" onfocus="this.blur();" type="text" name="postal_code" placeholder="주소검색을 눌러주세요." readonly>
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -325,7 +427,7 @@ function goDriverRegForm() {
                                         </div>
                                          <div class="wrap-input40 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="userroad_addr"  type="text" name="road_addr" >
+                       					<input class="input100 input--style-5" id="userroad_addr"  onfocus="this.blur();"  type="text" name="road_addr" placeholder="주소검색을 눌러주세요." readonly>
                        					
                                            <span class="focus-input100"></span>
                                         
@@ -333,7 +435,7 @@ function goDriverRegForm() {
                                         
                                  			  &nbsp;&nbsp;&nbsp;
                                           <div class="wrap-input50 input-group-desc">
-                    					<input class="input100 input--style-5" id="userjibun_addr" type="text" name="jibun_addr" >
+                    					<input class="input100 input--style-5" id="userjibun_addr" onfocus="this.blur();"  type="text" name="jibun_addr" placeholder="주소검색을 눌러주세요." readonly>
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -341,7 +443,7 @@ function goDriverRegForm() {
                                         </div>
                                         <div class="wrap-input100 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="userdetail_addr"  type="text" name="detail_addr" >
+                       					<input class="input100 input--style-5" id="userdetail_addr"  type="text" name="detail_addr" placeholder="상세주소를 입력해주세요.">
                        					
                                            <span class="focus-input100"></span>
                                         </div>
@@ -363,7 +465,7 @@ function goDriverRegForm() {
                                     </div> -->
                                     <div class="col-9">
                                         <div class="input-group-desc wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="phone" placeholder="휴대폰번호">
+                                            <input class="input100 input--style-5" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" name="phone" placeholder="휴대폰번호 숫자만 입력해주세요">
                                             
                                            <span class="focus-input100"></span>
                                             <!-- <label class="label--desc">Phone Number</label> -->
@@ -563,7 +665,7 @@ function goDriverRegForm() {
                                 <div class="row row-refine">
                                  	 
                                         <div class="wrap-input40 input-group-desc">
-                                            <input class="input100 input--style-5" type="text" name="jumin_num1" placeholder="앞주민번호">
+                                            <input class="input100 input--style-5" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" name="jumin_num1" placeholder="앞주민번호">
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -571,7 +673,7 @@ function goDriverRegForm() {
                                  
                                  			  &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
-                                            <input class="input100 input--style-5" type="password" name="jumin_num2" placeholder="뒷주민번호">
+                                            <input class="input100 input--style-5" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="password" name="jumin_num2" placeholder="뒷주민번호">
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -587,7 +689,7 @@ function goDriverRegForm() {
                                 <div class="row row-refine">
                                  	 
                                            <div class="wrap-input40 input-group-desc">
-                      						  <input class="input100 input--style-5" id="driverpostal_code"  type="text" name="postal_code" >
+                      						  <input class="input100 input--style-5" id="driverpostal_code" onfocus="this.blur();"  type="text" name="postal_code" placeholder="주소검색을 눌러주세요." readonly>
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -602,7 +704,7 @@ function goDriverRegForm() {
                                         </div>
                                          <div class="wrap-input40 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="driverroad_addr"  type="text" name="road_addr" >
+                       					<input class="input100 input--style-5" id="driverroad_addr" onfocus="this.blur();"  type="text" name="road_addr" placeholder="주소검색을 눌러주세요." readonly>
                        					
                                            <span class="focus-input100"></span>
                                         
@@ -610,7 +712,7 @@ function goDriverRegForm() {
                                         
                                  			  &nbsp;&nbsp;&nbsp;
                                           <div class="wrap-input50 input-group-desc">
-                    					<input class="input100 input--style-5" id="driverjibun_addr" type="text" name="jibun_addr" >
+                    					<input class="input100 input--style-5" id="driverjibun_addr" onfocus="this.blur();" type="text" name="jibun_addr" placeholder="주소검색을 눌러주세요." readonly>
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -618,7 +720,7 @@ function goDriverRegForm() {
                                         </div>
                                         <div class="wrap-input100 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="driverdetail_addr"  type="text" name="detail_addr" >
+                       					<input class="input100 input--style-5" id="driverdetail_addr"  type="text" name="detail_addr" placeholder="상세주소를 입력해주세요.">
                        					
                                            <span class="focus-input100"></span>
                                         </div>
@@ -640,7 +742,7 @@ function goDriverRegForm() {
                                     </div> -->
                                     <div class="col-9">
                                         <div class="input-group-desc wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="phone" placeholder="휴대폰번호">
+                                            <input class="input100 input--style-5" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" name="phone" placeholder="휴대폰번호 숫자만 입력해주세요">
                                             
                                            <span class="focus-input100"></span>
                                             <!-- <label class="label--desc">Phone Number</label> -->

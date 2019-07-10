@@ -22,6 +22,14 @@
 		
 	})
 	
+	function goDiscontentRegForm(){
+		location.replace("/support/discontentRegForm.do");
+	}
+	
+	function goDiscontentContentForm(data){
+		document.discontentContentForm.discontent_no.value=data;
+		document.discontentContentForm.submit();
+	}
 	
 </script>
 
@@ -32,7 +40,6 @@
 
 	<form name="discontentListForm" method=post action="/support/discontentListForm.do">
 	
-		<input type="text" name="keyword" class="keyword">
 		
 		
 		
@@ -76,7 +83,7 @@
 								<!-- ${(sessionScope.selectPageNo*sessionScope.rowCntPerPage-sessionScope.rowCntPerPage+1+loopTagStatus.index)} -->
 								${discontentListAllCnt-(discontentSearchDTO.selectPageNo*discontentSearchDTO.rowCntPerPage-discontentSearchDTO.rowCntPerPage+1+loopTagStatus.index)+1}
 							<td>${discontent.discontent_subject}					 
-							<td>${discontent.user_id} 
+							<td>${discontent.user_name} 
 							<td>${discontent.reg_date} 
 							<td>${discontent.readcount} <!-- readcount는 BoardDAO에 getBoardList에 while문안에 "readcount" 요고다 -->
 					</c:forEach>

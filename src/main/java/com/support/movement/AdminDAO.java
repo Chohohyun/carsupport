@@ -69,4 +69,12 @@ public interface AdminDAO {
 
 	int insertQna(QnaDTO qnaDTO);
 
+	QnaDTO getQnaDTO(int question_no);
+
+	int getBoardCnt(QnaDTO qnaDTO);
+
+	int updateQna(QnaDTO qnaDTO);
+
+	int deleteQna(QnaDTO qnaDTO);
+
 }

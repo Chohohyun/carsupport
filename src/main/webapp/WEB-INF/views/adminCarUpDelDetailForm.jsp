@@ -29,7 +29,6 @@
     			,type:"post"
     			,datatype: "application/json"
     			,success : function(data){
-    				alert(2);
     				var datalen = data.length;
     				
     				for(var i=0; i<datalen; i++){

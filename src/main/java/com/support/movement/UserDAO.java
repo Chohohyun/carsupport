@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface UserDAO {
 
-	int getReservationPossibleCnt(UserReservationDTO userReservationDTO);
+	int getReservationAlreadyCnt(UserReservationDTO userReservationDTO);
 
-	String getPossibleCarCnt(UserReservationDTO userReservationDTO);
+	int getPossibleCarCnt(UserReservationDTO userReservationDTO);
 
 	int getReservationCheck(UserReservationDTO userReservationDTO);
 
@@ -26,5 +26,23 @@ public interface UserDAO {
 	List<Map<String, String>> getDiscontentList();
 
 	int getDiscontentListAllCnt();
+
+	int insertDiscontent(DiscontentDTO discontentDTO);
+
+	DiscontentDTO getDiscontentDTO(int discontent_no);
+
+	int getReadcountUp(int discontent_no);
+
+	int getDiscontentCnt(DiscontentDTO discontentDTO);
+
+	int getDiscontentDelCnt(DiscontentDTO discontentDTO);
+
+	int getDiscontentUpCnt(DiscontentDTO discontentDTO);
+
+	int getDriverAcceptList(List<String> driverList);
+
+
+	List<String> getDriverList(UserReservationDTO userReservationDTO);
+
 
 }

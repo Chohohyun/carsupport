@@ -65,4 +65,10 @@ public interface AdminService {
 
 	int insertQna(QnaDTO qnaDTO);
 
+	QnaDTO getQnaDTO(int question_no);
+
+	int updateQna(QnaDTO qnaDTO);
+
+	int deleteQna(QnaDTO qnaDTO);
+
 }

@@ -90,6 +90,8 @@ public class UserController {
 	}
 
 
+
+
 	//**********************************
 	// 예약신청 눌렀을 때, 예약가능한지 체크하고 가능하면 신청하기.
 	//**********************************
@@ -221,9 +223,7 @@ public class UserController {
 
 
 	//*********************************************************
-	// 가상주소 /boardListForm.do 로 접근하면 호출되는 메소드 선언
-	// 		@RequestMapping 내부에 ,method=RequestMethod.POST 가 없으므로
-	//		가상주소 /boardListForm.do 로 접근 시 get 또는 post 방식 접근 모두 허용한다.
+	// 불만게시판 클릭하면 불만게시판 리스트 가져오기
 	//*********************************************************
 	@RequestMapping( value="/discontentListForm.do" )
 	public ModelAndView getDiscontentList(
@@ -233,24 +233,165 @@ public class UserController {
 		mav.setViewName("discontentListForm.jsp");
 		try {
 			int discontentListAllCnt = this.userService.getDiscontentListAllCnt();
-			
+
 			//-----------------------------------------------------
 			List<Map<String,String>> discontentList = this.userService.getDiscontentList();
 			//-----------------------------------------------------
-			
+
 			//-----------------------------------------------------
 			mav.addObject( "discontentList", discontentList );
 			mav.addObject( "discontentListAllCnt", discontentListAllCnt );
 		}catch(Exception ex) {
 			//-----------------------------------------------------
-			
+
 			//-----------------------------------------------------
 			System.out.println("UserController.getDiscontentList(~) 메소드 호출 시 에러발생");
 			// System.out.println( ex.toString() ); //에러 찾을 때 유용!
 		}
 		//-----------------------------------------------------
-		
+
 		//-----------------------------------------------------
 		return mav;
+	}
+
+
+	//**********************************
+	// 불만게시판 글쓰기 클릭하면 글쓰기 form으로 이동
+	//**********************************
+	@RequestMapping(value="/discontentRegForm.do")
+	public ModelAndView discontentRegForm(
+			// HttpSession 객체가 들어올 매개변수 선언
+			// 매개변수에 자료형이 HttpSession이면 웹서버가
+			// 생성한 HttpSession 객체가 들어온다.
+			HttpSession session) {
+
+
+		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
+		//session.invalidate();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("discontentRegForm.jsp");
+		return mav;
+	}
+
+
+	//=================================
+	// 불만게시판에 입력한 글을 DB에  꽂아버리는 메소드
+	//=================================
+	@RequestMapping(
+			value="/discontentRegProc.do"
+			,method=RequestMethod.POST
+			,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody
+	public int insertQna(
+			DiscontentDTO discontentDTO,
+			HttpSession session
+			) {
+		// 메소드 첫 줄에 도스창 찍는 명령어 안되면 매개변수 쪽으로 들어오다가 오류 발생 한 것
+		System.out.println("insertQna 메소드 시작. discontentDTO 이상없음");
+
+		//--------------------------------------
+		// 게시판 글 입력하고 [게시판 입력 적용행의 개수] 저장할 변수 선언
+		//--------------------------------------
+		int discontentRegCnt = 0;
+		System.out.println(discontentRegCnt);
+		try {
+			String id = (String)session.getAttribute("id");
+			discontentDTO.setUser_id(id);
+			//--------------------------------------
+			// [BoardServiceImpl 객체]의 insertQna 메소드 호출로 게시판 입력하고 [게시판 입력 적용행의 개수] 얻기
+			//--------------------------------------
+			System.out.println("에러 테스트2");
+			System.out.println(discontentDTO.getDiscontent_content());
+			System.out.println(discontentDTO.getDiscontent_subject());
+
+			System.out.println(discontentDTO.getUser_id());
+			discontentRegCnt = this.userService.insertDiscontent(discontentDTO);
+			System.out.println("에러 테스트3");
+
+		} catch(Exception e) {
+			System.out.println("BoardController.insertQna 메소드에서 에러발생!");
+			discontentRegCnt = -1;
+		}
+		//
+		return discontentRegCnt;
+	}
+
+	//**********************************
+	// 불만게시판 상세보기
+	//**********************************
+	@RequestMapping(value="/discontentContentForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
+	public ModelAndView discontentContent( 
+			@RequestParam(value="discontent_no") int discontent_no, 
+			HttpSession session ) { 
+		// ModelAndView객체 생성하기 
+		// ModelAndView객체에 호출 JSP 페이지명을 저장하기 
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("discontentContentForm.jsp"); 
+		try { 
+
+			System.out.println("driverDTO 아주 잘옴");
+			DiscontentDTO discontentDTO = this.userService.getDiscontentDTO(discontent_no); 
+			mav.addObject("discontentDTO",discontentDTO); 
+			System.out.println("driverDTO 아주 잘옴");
+		}catch(Exception e){ 
+			System.out.println("BoardController.goBoardContentForm(~) 메소드 예외 발생"); 
+		} 
+		return mav; 
+	} 
+
+	//**********************************
+	// 불만게시판 수정삭제폼으로 이동
+	//**********************************
+	@RequestMapping(value="/discontentUpDelForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
+	public ModelAndView discontentUpDel( 
+			@RequestParam(value="discontent_no") int discontent_no, 
+			HttpSession session ) { 
+		// ModelAndView객체 생성하기 
+		// ModelAndView객체에 호출 JSP 페이지명을 저장하기 
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("discontentUpDelForm.jsp"); 
+		try { 
+
+			System.out.println("driverDTO 아주 잘옴");
+			DiscontentDTO discontentDTO = this.userService.getDiscontentDTO(discontent_no); 
+			mav.addObject("discontentDTO",discontentDTO); 
+			System.out.println("driverDTO 아주 잘옴");
+		}catch(Exception e){ 
+			System.out.println("BoardController.goBoardContentForm(~) 메소드 예외 발생"); 
+		} 
+		return mav; 
+	} 
+	//**********************************
+	// 불만게시판 수정 삭제 시도 
+	//**********************************
+	@RequestMapping(
+			value="/discontentUpDelProc.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public int driverUpDelProc(
+			HttpSession session,HttpServletResponse response,
+			DiscontentDTO discontentDTO,
+			@RequestParam(value="upDel") String upDel
+			) {
+
+		int discontentUpDelCnt=0;
+		try {
+			System.out.println(upDel);
+			if(upDel.equals("up")) {
+				discontentUpDelCnt = this.userService.getDiscontentUpCnt(discontentDTO);
+			}
+			else {
+				discontentUpDelCnt = this.userService.getDiscontentDelCnt(discontentDTO);
+			}
+			System.out.println("discontentUpDelCnt 된다 ");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+			discontentUpDelCnt=-3;
+		} 
+		return discontentUpDelCnt;
 	}
 }

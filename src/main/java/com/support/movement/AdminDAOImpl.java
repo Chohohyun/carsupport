@@ -240,5 +240,43 @@ public class AdminDAOImpl implements AdminDAO{
 
 	}
 
+	@Override
+	public QnaDTO getQnaDTO(int question_no) {
+		
+		QnaDTO qnaDTO = this.sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getQnaDTO"
+				, question_no);
+		return qnaDTO;
+	}
+
+	@Override
+	public int getBoardCnt(QnaDTO qnaDTO) {
+		int boardCnt = sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getBoardCnt"  
+				, qnaDTO
+		);
+		return boardCnt;
+	}
+
+	@Override
+	public int updateQna(QnaDTO qnaDTO) {
+		int updateCnt = sqlSession.update(
+				"com.support.movement.AdminDAO.updateQna"  
+				, qnaDTO
+		);
+	
+		return updateCnt;
+	}
+
+	@Override
+	public int deleteQna(QnaDTO qnaDTO) {
+		int deleteCnt = sqlSession.delete(
+				"com.support.movement.AdminDAO.deleteQna"  
+				, qnaDTO
+		);
+	
+		return deleteCnt;
+	}
+
 
 }
