@@ -31,4 +31,6 @@ public interface UserService {
 
 	int getCancelReservation(Map<String, String> paramsMap);
 
+	Map<String, String> getReserveInfo(int reserve_apply_car_number);
+
 }

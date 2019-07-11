@@ -11,7 +11,12 @@
 <script>
 	$(document).ready(function() {
 	});
-
+	function goReviewRegForm(number){
+		alert(1);
+		document.reviewRegForm.reserve_apply_car_number.value=number;
+		document.reviewRegForm.submit();
+		
+	}
 </script>
 <head>
 
@@ -30,8 +35,8 @@
  					<td>${user.reserve_status_name}</td>
  					<td>
  					<c:choose>
- 						<c:when test="${user.review_score}=='미평가'">
- 						<input type="button" value="리뷰남기기" onclick="upDelDriver(${user.reserve_apply_car_number})">
+ 						<c:when test="${user.review_score=='미평가'}">
+ 						<input type="button" value="리뷰남기기" onclick="goReviewRegForm(${user.reserve_apply_car_number});">
  						</c:when>
  						<c:otherwise>
  						${user.review_score}점
@@ -40,8 +45,8 @@
  					</td>
  				</c:forEach> 
 
-	  			<form name="upDelDriverForm" method="post" action="/support/driverUpDelDetailForm.do">
-	  			<input type="hidden" name="driver_no" value="" >
+	  			<form name="reviewRegForm" method="post" action="/support/reviewRegForm.do">
+	  			<input type="hidden" name="reserve_apply_car_number" value="" >
 	  			</form> 
 	</table>
 

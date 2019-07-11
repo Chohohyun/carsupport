@@ -146,6 +146,12 @@ public class UserServiceImpl implements UserService{
 		return cancelRevCnt;
 	}
 
+	@Override
+	public Map<String, String> getReserveInfo(int reserve_apply_car_number) {
+		Map<String,String> map = this.userDAO.getReserveInfo(reserve_apply_car_number);
+		return map;
+	}
+
 	
 
 }

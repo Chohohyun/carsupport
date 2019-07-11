@@ -141,6 +141,8 @@
             rac.start_point_latitude||'' as "start_point_latitude",
             rac.end_point_longitude||'' as "end_point_longitude",
             rac.end_point_latitude||'' as "end_point_latitude",
+            decode(start_road_addr,'','도로명주소없음',start_road_addr)||'' as "start_road_addr",
+            decode(end_road_addr,'','도로명주소없음',end_road_addr)||'' as "end_road_addr",
             decode(rac.car_number,'','미정',rac.car_number)||'' as "car_number",
             decode((select d.driver_name from driver d where rac.driver_no=d.driver_no),'','미정',(select d.driver_name from driver d where rac.driver_no=d.driver_no))||'' as "driver_name",
             (select crs.reserve_status_name from code_reserve_status crs where crs.reserve_status_code = rac.reserve_status_code)||'' as "reserve_status_name",
@@ -149,7 +151,18 @@
 		where to_char(sysdate,'yyyymmddhh24') - to_char(rac.reservation_date,'yyyymmddhh24')  &gt; 0
 		and rac.user_no = (select du.user_no from disability_user du where du.user_id=#{id})
 	</select>
-	
+	<select id ="getReserveInfo" parameterType="int" resultType="hashmap">
+		 
+   		select
+            rac.reserve_apply_car_number||'' as "reserve_apply_car_number",
+            to_char(rac.reservation_date,'yyyy')||'년 '||to_char(rac.reservation_date,'mm')||'월 '||
+            to_char(rac.reservation_date,'dd')||'일 '||to_char(rac.reservation_date,'hh24')||'시 ' as "reservation_date",
+            decode(rac.start_road_addr,'','도로명주소없음',start_road_addr)||'' as "start_road_addr",
+            decode(rac.end_road_addr,'','도로명주소없음',end_road_addr)||'' as "end_road_addr",
+            decode((select d.driver_name from driver d where rac.driver_no=d.driver_no),'','미정',(select d.driver_name from driver d where rac.driver_no=d.driver_no))||'' as "driver_name"
+		from reserve_apply_car rac
+		where rac.reserve_apply_car_number = #{reserve_apply_car_number} 
+	</select>
 	
 	<select id= "getUserDTO" parameterType="String" resultType="com.support.movement.UserDTO">
 		select

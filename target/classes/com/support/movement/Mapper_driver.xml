@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.support.movement.DriverDAO">
+
+	<select id= "getDriverDTO" parameterType="String" resultType="com.support.movement.DriverDTO">
+			select
+			driver_no||'' as "driver_no",
+			driver_id as "id",
+			driver_pwd as "pwd1",
+			driver_name as "name",
+			driver_gender as "gender",
+			substr(driver_jumin_num,1,6) as "jumin_num1",
+			substr(driver_jumin_num,7,7) as "jumin_num2",
+			driver_postal_code||'' as "postal_code",
+			driver_road_addr as "road_addr",
+			driver_jibun_addr as "jibun_addr",
+			driver_detail_addr as "detail_addr",
+			driver_phone as "phone",
+			driver_email as "email",
+			driver_license_number as "driver_license_number",
+			admission_code as "admission_code"
+			
+			from driver
+			where driver_id = #{id}
+			 
+	</select>
+
+</mapper>

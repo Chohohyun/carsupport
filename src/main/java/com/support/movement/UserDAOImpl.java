@@ -153,5 +153,11 @@ public class UserDAOImpl implements UserDAO{
 		return cancelReservationCnt;
 	}
 
+	@Override
+	public Map<String, String> getReserveInfo(int reserve_apply_car_number) {
+		Map<String,String> map = this.sqlSession.selectOne("com.support.movement.UserDAO.getReserveInfo",reserve_apply_car_number);
+		return map;
+	}
+
 
 }

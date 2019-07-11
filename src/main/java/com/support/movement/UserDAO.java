@@ -48,5 +48,7 @@ public interface UserDAO {
 
 	int getCancelAcceptList(Map<String, String> paramsMap);
 
+	Map<String, String> getReserveInfo(int reserve_apply_car_number);
+
 
 }

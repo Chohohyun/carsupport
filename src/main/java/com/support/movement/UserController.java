@@ -170,8 +170,8 @@ public class UserController {
 			) {
 		// 메소드 첫 줄에 도스창 찍는 명령어 안되면 매개변수 쪽으로 들어오다가 오류 발생 한 것
 		System.out.println(paramsMap);
-		
-		
+
+
 		int cancelReserveCnt = 0;
 		try {
 			System.out.println("go");
@@ -219,6 +219,26 @@ public class UserController {
 		}
 		return mav;
 	}
+
+	@RequestMapping(value="/reviewRegForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
+	public ModelAndView reviewRegForm( 
+			@RequestParam(value="reserve_apply_car_number") int reserve_apply_car_number, 
+			HttpSession session ) { 
+		// ModelAndView객체 생성하기 
+		// ModelAndView객체에 호출 JSP 페이지명을 저장하기 
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("reviewRegForm.jsp"); 
+		try { 
+			System.out.println(reserve_apply_car_number);
+			System.out.println("g하이");
+			Map<String,String> map = new HashMap<String,String>();
+			map = this.userService.getReserveInfo(reserve_apply_car_number);
+			mav.addObject("reserveList",map);
+		}catch(Exception e){ 
+			System.out.println("UserController.reviewRegForm(~) 메소드 예외 발생"); 
+		} 
+		return mav; 
+	} 
 
 	//**********************************
 	// 유저가 자신의 이용내역 현황을 볼 수 있는 페이지 
