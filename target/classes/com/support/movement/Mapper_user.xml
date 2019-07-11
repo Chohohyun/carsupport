@@ -117,7 +117,8 @@
             start_detail_addr as "start_detail_addr",
 			start_road_addr as "start_road_addr",
 			end_detail_addr as "end_detail_addr",
-			end_road_addr as "end_road_addr"
+			end_road_addr as "end_road_addr",
+			reserve_status_code||'' as "reserve_status_code"
             
 		from reserve_apply_car rac
 		where to_char(rac.reservation_date,'yyyymmddhh24') - to_char(sysdate,'yyyymmddhh24') &gt; 0
@@ -273,4 +274,18 @@
 		from discontent
 		where discontent_group_no=(select discontent_group_no from discontent where discontent_no = ${discontent_no})
 	</delete>
+	
+	<update id="getCancelReservation" parameterType="hashmap">
+		update reserve_apply_car
+		set reserve_status_code = 4
+		where reserve_apply_car_number = ${reserve_apply_car_number}
+	
+	</update>
+	
+	<update id="getCancelAcceptList" parameterType="hashmap">
+		update reserve_accept_list
+		set reserve_status_code = 4
+		where reserve_apply_car_number = ${reserve_apply_car_number}
+	
+	</update>
 </mapper>

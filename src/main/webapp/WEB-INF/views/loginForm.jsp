@@ -25,6 +25,12 @@
 	function goRegForm(){
 		document.goRegForm.submit();
 	}
+	function goFindIdForm(){
+		document.goFindIdForm.submit();
+	}
+	function goFindPwdForm(){
+		document.goFindPwdForm.submit();
+	}
 	function checkLoginForm() {
 		// 입력된 아이디를 가져와 변수에 저장
 		var id = $(".id").val();
@@ -136,11 +142,14 @@
 					</div>
 
 					<div class="text-center p-t-12">
+						<a class="txt2" href="javascript:goFindIdForm();">
+							아이디 찾기 
+						</a>
 						<span class="txt1">
-							Forgot
+							/
 						</span>
-						<a class="txt2" href="#">
-							Username / Password?
+						<a class="txt2" href="javascript:goFindPwdForm();">
+							비밀번호 찾기
 						</a>
 					</div>
 
@@ -156,6 +165,8 @@
 	</div>
 	
 	<form name="goRegForm" method="get" action="/support/regForm.do"></form>
+	<form name="goFindIdForm" method="get" action="/support/findIdForm.do"></form>
+	<form name="goFindPwdForm" method="get" action="/support/findPwdForm.do"></form>
 	
 
 </body>

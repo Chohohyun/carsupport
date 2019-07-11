@@ -11,7 +11,30 @@
 <script>
 	$(document).ready(function() {
 	});
-
+	function userCancelReservation(number){
+		alert(number);
+		var num = {"reserve_apply_car_number":number};
+		 $.ajax({
+			url:"/support/cancelReservation.do",
+			type:"post",
+			data: num,
+			dataType : 'html' ,
+			
+			success:function(data){
+				if(data==1){
+					alert("예약이 취소되었습니다.");
+					location.replace("/support/userReservationSituation.do");
+				}
+				else{
+					alert("예약을 취소하던 중 오류 발생");
+				}
+			},
+			error : function(){
+				alert("서버 접속 실패!");
+			}
+			
+		}); 
+	}
 </script>
 <head>
 
@@ -26,7 +49,15 @@
  					<td>${user.end_road_addr}
  					<td>${user.reservation_date}
  					<td>${user.reserve_status_name} 
- 					<td><input type="button" value="예약취소" onclick="upDelDriver(${user.reserve_apply_car_number})"> 
+ 					<c:choose>
+ 						<c:when test="${user.reserve_status_code==1 || user.reserve_status_code==2}">
+ 						<td><input type="button" value="예약취소" onclick="userCancelReservation(${user.reserve_apply_car_number});">
+ 						</c:when>
+ 						<c:otherwise>
+ 						
+ 						<td>
+ 						</c:otherwise>
+ 					</c:choose>
  				</c:forEach> 
 
 	  			<form name="upDelDriverForm" method="post" action="/support/driverUpDelDetailForm.do">

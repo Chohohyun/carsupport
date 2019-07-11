@@ -29,4 +29,6 @@ public interface UserService {
 
 	int getDiscontentDelCnt(DiscontentDTO discontentDTO);
 
+	int getCancelReservation(Map<String, String> paramsMap);
+
 }

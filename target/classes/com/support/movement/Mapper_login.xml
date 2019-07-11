@@ -123,4 +123,58 @@
 	</insert>
 	
 	
+	<select id ="findUserCnt" parameterType="hashmap" resultType="int">
+		select
+			count(*)
+		from disability_user
+		where user_name=#{name} and user_phone=#{phone}
+	</select>
+	
+	<select id ="findDriverCnt" parameterType="hashmap" resultType="int">
+		select
+			count(*)
+		from driver
+		where driver_name=#{name} and driver_phone=#{phone}
+	</select>
+	
+	<select id ="findUserId" parameterType="hashmap" resultType="String">
+		select
+			user_id
+		from disability_user
+		where user_name=#{name} and user_phone=#{phone}
+	</select>
+	
+	<select id ="findDriverId" parameterType="hashmap" resultType="String">
+		select
+			driver_id
+		from driver
+		where driver_name=#{name} and driver_phone=#{phone}
+	</select>
+	
+	
+	<select id ="findUserPwdChk" parameterType="hashmap" resultType="int">
+		select
+			count(*)
+		from disability_user
+		where user_id=#{id} and user_email=#{email}
+	</select>
+	
+	<select id ="findDriverPwdChk" parameterType="hashmap" resultType="int">
+		select
+			count(*)
+		from driver
+		where driver_id=#{id} and driver_email=#{email}
+	</select>
+	
+	<update id ="insertRandomPwdUser" parameterType="hashmap">
+		update disability_user 
+		set user_pwd=#{pwd}
+		where user_id=#{id} and user_email=#{email}
+	</update>
+	
+	<update id ="insertRandomPwdDriver" parameterType="hashmap">
+		update driver
+		set driver_pwd=#{pwd}
+		where driver_id=#{id} and driver_email=#{email}
+	</update>
 </mapper>

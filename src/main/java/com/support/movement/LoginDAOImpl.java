@@ -102,4 +102,54 @@ public class LoginDAOImpl implements LoginDAO{
 				"com.support.movement.LoginDAO.getDriverStatusCnt",admin_id_pwd);
 		return driverStatusCnt;
 	}
+
+	@Override
+	public int findUserCnt(Map<String, String> paramsMap) {
+		int findUserCnt = this.sqlSession.selectOne("com.support.movement.LoginDAO.findUserCnt",paramsMap);
+		return findUserCnt;
+	}
+
+	@Override
+	public String findUserId(Map<String, String> paramsMap) {
+		String findUserId = this.sqlSession.selectOne("com.support.movement.LoginDAO.findUserId",paramsMap);
+		return findUserId;
+	}
+
+	@Override
+	public int findDriverCnt(Map<String, String> paramsMap) {
+		int findDriverCnt = this.sqlSession.selectOne("com.support.movement.LoginDAO.findDriverCnt",paramsMap);
+		return findDriverCnt;
+	}
+
+	@Override
+	public String findDriverId(Map<String, String> paramsMap) {
+		String findDriverId = this.sqlSession.selectOne("com.support.movement.LoginDAO.findDriverId",paramsMap);
+		return findDriverId;
+	}
+
+	@Override
+	public int findUserPwdChk(Map<String, String> paramsMap) {
+		int userPwdChk = this.sqlSession.selectOne("com.support.movement.LoginDAO.findUserPwdChk",paramsMap);
+		return userPwdChk;
+	}
+
+	@Override
+	public int findDriverPwdChk(Map<String, String> paramsMap) {
+		int driverPwdChk = this.sqlSession.selectOne("com.support.movement.LoginDAO.findDriverPwdChk",paramsMap);
+		return driverPwdChk;
+	}
+
+	@Override
+	public int insertRandomPwdUser(Map<String, String> paramsMap) {
+		int insertRandomPwdUser = this.sqlSession.update("com.support.movement.LoginDAO.insertRandomPwdUser",paramsMap);
+		return insertRandomPwdUser;
+	}
+
+	@Override
+	public int insertRandomPwdDriver(Map<String, String> paramsMap) {
+		int insertRandomPwdDriver = this.sqlSession.update("com.support.movement.LoginDAO.insertRandomPwdDriver",paramsMap);
+		return insertRandomPwdDriver;
+	}
+
+	
 }

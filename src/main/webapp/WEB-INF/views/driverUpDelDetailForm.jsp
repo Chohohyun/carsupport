@@ -51,7 +51,7 @@
 		}
 		alert($("[name=driverUpDelForm]").serialize());
 		$.ajax({
-			url:"/support/adminDrvierUpDelProc.do",
+			url:"/support/adminDriverUpDelProc.do",
 			type:"post",
 			data: $("[name=driverUpDelForm]").serialize(),
 			datatype:"html",

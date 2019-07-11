@@ -77,6 +77,45 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	    <property name="basePackage" value="com.support.movement.dao" />
 	</bean> 	
+	
+	
+	
+	<!-- gmail -->
+	  <!-- Gmail -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com" />
+    <property name="port" value="587" />
+    <property name="username" value="jjocharito@gmail.com" />
+    <property name="password" value="whckflxh12" />
+    <property name="javaMailProperties">
+    <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+    </props>
+    </property>
+  </bean>
+   <!--  <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="ghgus0947@gmail.com" />
+        <property name="password" value="rlawh2926" />
+       
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+               
+               
+            </props>
+        </property>
+       
+    </bean> -->
+   <!--  <bean id="email" class="spring.board.email.Email">
+    </bean>
+    <bean id="emailSender" class="spring.board.email.EmailSender">
+    </bean> -->
+
 </beans>
 		
 	<!--mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm-->

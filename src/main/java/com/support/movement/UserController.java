@@ -155,7 +155,36 @@ public class UserController {
 		return mav;
 	}
 
+	//=================================
+	// 예약 취소 메소드
+	//=================================
+	@RequestMapping(
+			value="/cancelReservation.do"
+			,method=RequestMethod.POST
+			,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody
+	public int cancelReservation(
+			HttpSession session,
+			@RequestParam Map<String,String> paramsMap
+			) {
+		// 메소드 첫 줄에 도스창 찍는 명령어 안되면 매개변수 쪽으로 들어오다가 오류 발생 한 것
+		System.out.println(paramsMap);
+		
+		
+		int cancelReserveCnt = 0;
+		try {
+			System.out.println("go");
+			cancelReserveCnt = this.userService.getCancelReservation(paramsMap);
 
+		} catch(Exception e) {
+			System.out.println("BoardController.insertQna 메소드에서 에러발생!");
+			System.out.println(e);
+			cancelReserveCnt = -1;
+		}
+		//
+		return cancelReserveCnt;
+	}
 
 	//**********************************
 	// 유저가 자신의 이용내역 현황을 볼 수 있는 페이지 

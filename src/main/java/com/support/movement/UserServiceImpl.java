@@ -136,4 +136,16 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public int getCancelReservation(Map<String, String> paramsMap) {
+		int cancelReserveCnt = this.userDAO.getCancelAcceptList(paramsMap);
+		System.out.println("여긴되고");
+		int cancelRevCnt = this.userDAO.getCancelReservation(paramsMap);
+		System.out.println("여긴되고");
+		
+		return cancelRevCnt;
+	}
+
+	
+
 }

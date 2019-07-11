@@ -257,7 +257,7 @@ public class AdminController {
 	// 운전자 수정 삭제 시도 
 	//**********************************
 	@RequestMapping(
-			value="/adminDrvierUpDelProc.do",
+			value="/adminDriverUpDelProc.do",
 			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
 			)
 	@ResponseBody 

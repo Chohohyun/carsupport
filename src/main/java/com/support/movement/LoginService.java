@@ -9,4 +9,8 @@ public interface LoginService {
 	int getUserRegCnt(UserDTO userDTO);
 
 	int getDriverRegCnt(DriverDTO driverDTO);
+
+	String getId(Map<String, String> paramsMap);
+
+	int getPwdInfoChk(Map<String, String> paramsMap);
 }

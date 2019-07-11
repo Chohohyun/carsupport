@@ -24,4 +24,21 @@ public interface LoginDAO {
 
 	int getDriverStatusCnt(Map<String, String> admin_id_pwd);
 
+	int findUserCnt(Map<String, String> paramsMap);
+
+	String findUserId(Map<String, String> paramsMap);
+
+	int findDriverCnt(Map<String, String> paramsMap);
+
+	String findDriverId(Map<String, String> paramsMap);
+
+	int findUserPwdChk(Map<String, String> paramsMap);
+
+	int findDriverPwdChk(Map<String, String> paramsMap);
+
+	int insertRandomPwdUser(Map<String, String> paramsMap);
+
+	int insertRandomPwdDriver(Map<String, String> paramsMap);
+
+
 }

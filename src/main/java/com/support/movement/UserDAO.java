@@ -44,5 +44,9 @@ public interface UserDAO {
 
 	List<String> getDriverList(UserReservationDTO userReservationDTO);
 
+	int getCancelReservation(Map<String, String> paramsMap);
+
+	int getCancelAcceptList(Map<String, String> paramsMap);
+
 
 }

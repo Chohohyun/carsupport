@@ -141,4 +141,17 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 
+	@Override
+	public int getCancelReservation(Map<String, String> paramsMap) {
+		int cancelRevCnt = this.sqlSession.update("com.support.movement.UserDAO.getCancelReservation",paramsMap);
+		return cancelRevCnt;
+	}
+
+	@Override
+	public int getCancelAcceptList(Map<String, String> paramsMap) {
+		int cancelReservationCnt = this.sqlSession.update("com.support.movement.UserDAO.getCancelAcceptList",paramsMap);
+		return cancelReservationCnt;
+	}
+
+
 }

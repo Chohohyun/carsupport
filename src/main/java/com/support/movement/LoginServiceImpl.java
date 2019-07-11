@@ -84,5 +84,44 @@ public class LoginServiceImpl implements LoginService{
 		int driverRegCnt = this.loginDAO.getDriverRegCnt(driverDTO);
 		return driverRegCnt;
 	}
-	
+
+	@Override
+	public String getId(Map<String, String> paramsMap) {
+		int userCnt = this.loginDAO.findUserCnt(paramsMap);
+		if(userCnt==1) {
+			System.out.println("잘넘어가네");
+			String id = this.loginDAO.findUserId(paramsMap);
+			System.out.println(id+"일로옴");
+			return id;
+		}
+		else {
+			int driverCnt = this.loginDAO.findDriverCnt(paramsMap);
+			if(driverCnt==1) {
+
+				String id = this.loginDAO.findDriverId(paramsMap);
+				
+				return id;
+			}
+
+		}
+		return null;
+	}
+
+	@Override
+	public int getPwdInfoChk(Map<String, String> paramsMap) {
+		int userPwdCnk = this.loginDAO.findUserPwdChk(paramsMap);
+		if(userPwdCnk==1) {
+			int userRandomPwd = this.loginDAO.insertRandomPwdUser(paramsMap);
+			return userRandomPwd;
+		}
+		else {
+			int driverPwdChk = this.loginDAO.findDriverPwdChk(paramsMap);
+			if(driverPwdChk==1) {
+				int driverRandomPwd = this.loginDAO.insertRandomPwdDriver(paramsMap);
+				return driverRandomPwd;
+			}
+		}
+		return 0;
+	}
+
 }
