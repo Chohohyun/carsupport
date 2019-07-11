@@ -29,4 +29,22 @@ public class DriverServiceImpl implements DriverService{
 		return driverDTO;
 	}
 
+	@Override
+	public CarDTO getDriverCarInfo(String id) {
+		CarDTO carDTO =  this.driverDAO.getDriverCarInfo(id);
+		return carDTO;
+	}
+
+	@Override
+	public int getDriveListAllCnt(String id) {
+		int driveListAllCnt = this.driverDAO.getDriveListAllCnt(id);
+		return driveListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getDriveList(String id) {
+		List<Map<String, String>> driveList = this.driverDAO.getDriveList(id);
+		return driveList;
+	}
+
 }

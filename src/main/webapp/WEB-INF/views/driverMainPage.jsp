@@ -138,7 +138,15 @@ a:hover { color: white; text-decoration: underline;}
 	function driverMainPage(){
 		location.replace("/support/driverMainPage.do");
 	}
-	
+	function driverCarInfo(){
+		location.replace("/support/driverCarInfo.do");
+	}
+	function driverHistory(){
+		location.replace("/support/driverHistory.do");
+	}
+	function driverReservationSituation(){
+		location.replace("/support/driverReservationSituation.do");
+	}
 	function driverUpDelForm(){
 		location.replace("/support/driverUpDelForm2.do");
 	}
@@ -194,7 +202,7 @@ a:hover { color: white; text-decoration: underline;}
 					<li class="navi_set">  
 						<div class="topnav">차량정보</div>
 						<ul class="subnav">  
-							<li><a href="#">차량정보</a></li>   
+							<li><a href="javascript:driverCarInfo();">차량정보</a></li>   
 						</ul>  
 					</li> 
 					
@@ -202,14 +210,14 @@ a:hover { color: white; text-decoration: underline;}
 					<li class="navi_set">  
 						<div class="topnav">주행기록</div>
 						<ul class="subnav">  
-							<li><a href="#">주행기록</a></li>    
+							<li><a href="javascript:driverHistory();">주행기록</a></li>    
 						</ul>  
 					</li> 
 
 					<li class="navi_set">  
 						<div class="topnav">예약현황</div>
 						<ul class="subnav">  
-							<li><a href="#">예약현황</a></li>  
+							<li><a href="javascript:driverReservationSituation();">예약현황</a></li>  
 							
 						</ul>  
 					</li>

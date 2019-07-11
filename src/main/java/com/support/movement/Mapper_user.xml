@@ -136,7 +136,8 @@
 	<select id ="getUserUtilDetailList" parameterType="String" resultType="hashmap">
 		select
 			rac.reserve_apply_car_number||'' as "reserve_apply_car_number",
-            to_char(rac.reservation_date,'yyyymmddhh24')||'' as "reservation_date",
+            to_char(rac.reservation_date,'yyyy')||'년 '||to_char(rac.reservation_date,'mm')||'월 '||
+            to_char(rac.reservation_date,'dd')||'일 '||to_char(rac.reservation_date,'hh24')||'시 ' as "reservation_date",
             rac.start_point_longitude||'' as "start_point_longitude",
             rac.start_point_latitude||'' as "start_point_latitude",
             rac.end_point_longitude||'' as "end_point_longitude",

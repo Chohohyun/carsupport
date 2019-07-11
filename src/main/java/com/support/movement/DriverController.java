@@ -53,6 +53,60 @@ public class DriverController {
 	}
 
 	//**********************************
+	// Driver가 차량정보 누르면 차량정보 form양식으로 이동
+	//**********************************
+
+	@RequestMapping(value="/driverCarInfo.do")
+	public ModelAndView driverCarInfo(
+
+			HttpSession session) {
+
+		String id = (String) session.getAttribute("id");
+		ModelAndView mav = new ModelAndView();
+
+		CarDTO carDTO = this.driverService.getDriverCarInfo(id);
+
+		mav.addObject("carDTO",carDTO);
+		mav.setViewName("driverCarInfoUpDelForm.jsp");
+		return mav;
+	}
+
+	//**********************************
+	// Driver가 주행기록 누르면 신청 form양식으로 이동
+	//**********************************
+	@RequestMapping(value="/driverHistory.do")
+	public ModelAndView userReservation(
+
+			HttpSession session) {
+
+		String id = (String) session.getAttribute("id");
+		List<Map<String,String>> driveList = new ArrayList<Map<String,String>>();
+
+		ModelAndView mav = new ModelAndView();
+
+		int driveListAllCnt = 0;
+
+
+		try {
+			driveListAllCnt = this.driverService.getDriveListAllCnt(id);
+			System.out.println(driveListAllCnt);
+			if(driveListAllCnt>0) {
+				driveList= this.driverService.getDriveList(id);
+			}
+
+			mav.addObject("driveListAllCnt",driveListAllCnt);
+			mav.addObject("driveList",driveList);
+		} catch (Exception e) {
+
+		}
+
+
+		mav.setViewName("driveListForm.jsp");
+		return mav;
+	}
+
+
+	//**********************************
 	// 운전자가 자기 회원정보를 볼 수 있는 페이지 
 	//**********************************
 	@RequestMapping(value="/driverUpDelForm2.do")

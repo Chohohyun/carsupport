@@ -9,4 +9,10 @@ public interface DriverService {
 
 	DriverDTO getDriverDTO(String id);
 
+	CarDTO getDriverCarInfo(String id);
+
+	int getDriveListAllCnt(String id);
+
+	List<Map<String, String>> getDriveList(String id);
+
 }

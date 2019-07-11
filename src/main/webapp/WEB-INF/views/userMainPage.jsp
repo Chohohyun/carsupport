@@ -158,6 +158,10 @@ a:hover { color: white; text-decoration: underline;}
 		
 	}
 	
+	function qnaListForm(){
+		location.replace("/support/qnaListForm.do");
+	}
+	
 	function discontentListForm(){
 		location.replace("/support/discontentListForm.do");
 	}
@@ -229,7 +233,7 @@ a:hover { color: white; text-decoration: underline;}
 					<li class="navi_set">  
 						<div class="topnav">게시판</div>
 						<ul class="subnav">  
-							<li><a href="#">Q/A 게시판</a></li>  
+							<li><a href="javascript:qnaListForm();">Q/A 게시판</a></li>  
 							<li><a href="javascript:discontentListForm();">불만사항 게시판</a></li>  
 							
 						</ul>  

@@ -5,8 +5,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- jsp 기술의 한 종류인 include Directive를 이용하여 common.jsp 파일 내의 소스를 삽입하기 -->
-<%@include file="common.jsp" %>
-<%@include file="userMainPage.jsp" %>
+<%@include file="common.jsp"%>
+<%@include file="userMainPage.jsp"%>
+<%@include file="table.jsp"%>
+
 <html>
 <script>
 	$(document).ready(function() {
@@ -21,35 +23,72 @@
 <head>
 
 </head>
-    <body>
-    <center>예약현황<br><br>
-       <table border=1	class="" cellpadding=5	cellspacing=0> 
-            <tr><th>번호<th>출발지<th>목적지<th>예약일시<th>운전자<th>예약결과<th>평점
-				<c:forEach items="${userUtilDetailList}" var="user" varStatus="loopTagStatus"> 
- 				<tr style="cursor: pointer"> 
- 					<td>${loopTagStatus.index+1}</td> 							
- 					<td>${user.start_point_longitude}</td>						
- 					<td>${user.end_point_longitude}</td>
- 					<td>${user.reservation_date}</td>
- 					<td>${user.drvier_name}</td>
- 					<td>${user.reserve_status_name}</td>
- 					<td>
- 					<c:choose>
- 						<c:when test="${user.review_score=='미평가'}">
- 						<input type="button" value="리뷰남기기" onclick="goReviewRegForm(${user.reserve_apply_car_number});">
- 						</c:when>
- 						<c:otherwise>
- 						${user.review_score}점
- 						</c:otherwise>
- 					</c:choose>
- 					</td>
- 				</c:forEach> 
+<body>
+	<div class="page-wrapper bg-jy p-t-45 p-b-50">
+		<div class="wrapper wrapper--w960">
+			<div class="card card-5">
+				<div class="card-heading">
+					<h2 class="title">이용내역</h2>
+				</div>
+				<div class="card-bodyTable">
+					<div class="limiter">
+						<div class="container-table100">
+							<div class="wrap-table100">
+								<div class="table100">
+									<table>
+										<thead>
+											<tr class="table100-head">
+												<th class="column1">번호</th>
+												<th class="column2">출발지</th>
+												<th class="column3">도착지</th>
+												<th class="column4">예약일시</th>
+												<th class="column5">운전자</th>
+												<th class="column6">예약상태</th>
+												<th class="column7">평점</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${userUtilDetailList}" var="user"
+												varStatus="loopTagStatus">
+												<tr>
+													<td>${loopTagStatus.index+1}</td>
+													<td>${user.start_road_addr}</td>
+													<td>${user.end_road_addr}</td>
+													<td>${user.reservation_date}</td>
+													<td>${user.drvier_name}</td>
+													<td>${user.reserve_status_name}</td>
 
-	  			<form name="reviewRegForm" method="post" action="/support/reviewRegForm.do">
-	  			<input type="hidden" name="reserve_apply_car_number" value="" >
-	  			</form> 
-	</table>
+													<c:choose>
+														<c:when test="${user.review_score=='미평가'}">
+															<td><input type="button" value="리뷰남기기"
+																onclick="goReviewRegForm(${user.reserve_apply_car_number});">
+															</td>
+														</c:when>
+														<c:otherwise>
+															<td>${user.review_score}점</td>
 
-</center>
-    </body>
-    </html>
+														</c:otherwise>
+													</c:choose>
+												</tr>
+											</c:forEach>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<form name="reviewRegForm" method="post"
+		action="/support/reviewRegForm.do">
+		<input type="hidden" name="reserve_apply_car_number" value="">
+	</form>
+
+
+</body>
+</html>

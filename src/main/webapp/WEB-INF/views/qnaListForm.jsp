@@ -1,11 +1,12 @@
 <!-- JSP 기술의 한종류인 [Page Directive]를 이용해서 현 JSP 페이지 처리 -->
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- common.jsp 소스 파일 가져오기 [Include Directive] 기술-->
-<!--  여러 JSP 페이지에 공통으로 들어갈 코드가 있다면 이 방법을 사용한다--> 
-<%@include file="common.jsp" %>
-<%@include file="adminMainPage.jsp" %>
+<!--  여러 JSP 페이지에 공통으로 들어갈 코드가 있다면 이 방법을 사용한다-->
+<%@include file="common.jsp"%>
+<%@include file="adminMainPage.jsp"%>
 
 
 <!-- 게시판 화면을 구성하는 태그 -->
@@ -34,7 +35,7 @@
 	    trOddObj.css("cursor", "pointer");
 	    
 	     trObj.filter(":even").click(function () {  
-	    	   trEvenObj.hide();
+	    	trEvenObj.hide();
 	        $(this).next().show();
 	    });  
 	
@@ -65,7 +66,20 @@
 	}
 	
 function goQnaUpDelForm(data) {
+		if("${sessionScope.id}"!='abc'){
+			
+			  // id = movieList 를 가진 태그를 관리하는 jQuery 객체의 메위주를 변수 tableObj 에 저장
+		    var tableObj = $(".qnaList");
 		
+		    // id = movieList 를 가진 태그 내부에 모든 tr을 관리 jQuery 객체 생성해 변수 trObj에 저장
+		    // var trObj = $("#movieList tr")
+		    var trObj = tableObj.find("tr");
+			 var trEvenObj = trObj.filter(":odd");
+			    //-------------------------------------------------------------------------------------
+			    // 짝수번째 tr 감추기
+			trEvenObj.hide();
+			return;
+		}
 		document.qnaUpDelForm.question_no.value=data;
 		document.qnaUpDelForm.submit();
 	}
@@ -78,46 +92,61 @@ function goQnaUpDelForm(data) {
 
 
 
-	
+
 </head>
 <body>
-<!---------------------------------------------------------------------------------------------------------- -->
+	<!---------------------------------------------------------------------------------------------------------- -->
 	<center>
-	<table >
-		<tr >
-			<td>QnA 게시판<br><br>
-		<tr>
-			<td><input type="button" value=" 글쓰기 " onclick="goQnaRegForm();">
-	</table><br>
-	
-	<table border=1			cellpadding=5		cellspacing=0 width=400 class="qna_group"	>
-		<tr >
-			<td><input type="button"  class ="qna_group" value="공지사항"  onClick="goQnaList('1');">
-			<td><input type="button"  class ="qna_group" 	value="이용관련" onClick="goQnaList('2');">
-			<td><input type="button"  class ="qna_group"  value="사이트관련" onClick="goQnaList('3');">
-	</table><br>
-			
-	<table border=1		class="qnaList"		cellpadding=5		cellspacing=0 width=400 > 
-		<c:forEach items="${requestScope.qnaList}" var="qna" varStatus="loopTagStatus">
-			<tr bgcolor=#FAFAAA>
-				<td align="center">${qna.question_subject }
-			<tr bgcolor="white"  onclick="javascript:goQnaUpDelForm(${qna.question_no});">
-				<td align="center" ><textarea name="content"  class = "content"	rows="10"	cols="40">${qna.question_content }</textarea>	
-		</c:forEach>
-	</table>
-			
-	
-	<!-- [QnA 글쓰기 화면] 으로 이동하는 form 태그  -->
-	<!-- 이동시 form 태그안의 모든 입력 양식이 파라미터 값으로 전송된다. -->
-	<form name="qnaRegForm" method="post" action="/support/qnaRegForm.do">
-	</form>	
-	 <form name="qnaOptionForm" 	method="post" 	action="/support/qnaListForm.do">
-	 	<input type="hidden" 	name="question_group_no">
-	 </form>
-	 
-	 <form name="qnaUpDelForm" 	method="post" 	action="/support/qnaUpDelForm.do">
-	 	<input type="hidden" 	name="question_no">
-	 </form>
-	 </center>
+		<table>
+			<tr>
+				<td>QnA 게시판<br>
+				<br>
+			<tr>
+				<c:if test="{sessionScope.id=='abc'}">
+					<td><input type="button" value=" 글쓰기 "
+						onclick="goQnaRegForm();">
+				</c:if>
+		</table>
+		<br>
+
+		<table border=1 cellpadding=5 cellspacing=0 width=400
+			class="qna_group">
+			<tr>
+				<td><input type="button" class="qna_group" value="공지사항"
+					onClick="goQnaList('1');">
+				<td><input type="button" class="qna_group" value="이용관련"
+					onClick="goQnaList('2');">
+				<td><input type="button" class="qna_group" value="사이트관련"
+					onClick="goQnaList('3');">
+		</table>
+		<br>
+
+		<table border=1 class="qnaList" cellpadding=5 cellspacing=0 width=400>
+			<c:forEach items="${requestScope.qnaList}" var="qna"
+				varStatus="loopTagStatus">
+				<tr bgcolor=#FAFAAA>
+					<td align="center">${qna.question_subject }
+				<tr bgcolor="white"
+					onclick="javascript:goQnaUpDelForm(${qna.question_no});">
+					<td align="center"><textarea name="content" class="content"
+							rows="10" cols="40">${qna.question_content }</textarea>
+			</c:forEach>
+		</table>
+
+
+		<!-- [QnA 글쓰기 화면] 으로 이동하는 form 태그  -->
+		<!-- 이동시 form 태그안의 모든 입력 양식이 파라미터 값으로 전송된다. -->
+		<form name="qnaRegForm" method="post" action="/support/qnaRegForm.do">
+		</form>
+		<form name="qnaOptionForm" method="post"
+			action="/support/qnaListForm.do">
+			<input type="hidden" name="question_group_no">
+		</form>
+
+		<form name="qnaUpDelForm" method="post"
+			action="/support/qnaUpDelForm.do">
+			<input type="hidden" name="question_no">
+		</form>
+	</center>
 </body>
 </html>

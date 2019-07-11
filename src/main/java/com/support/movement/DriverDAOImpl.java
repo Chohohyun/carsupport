@@ -24,5 +24,19 @@ public class DriverDAOImpl implements DriverDAO{
 		DriverDTO driverDTO = this.sqlSession.selectOne("com.support.movement.DriverDAO.getDriverDTO",id);
 		return driverDTO;
 	}
-
+	@Override
+	public CarDTO getDriverCarInfo(String id) {
+		CarDTO carDTO =  this.sqlSession.selectOne("com.support.movement.DriverDAO.getDriverCarInfo",id);
+		return carDTO;
+	}
+	@Override
+	public int getDriveListAllCnt(String id) {
+		int driveListAllCnt = this.sqlSession.selectOne("com.support.movement.DriverDAO.getDriveListAllCnt",id);
+		return driveListAllCnt;
+	}
+	@Override
+	public List<Map<String, String>> getDriveList(String id) {
+		 List<Map<String, String>> driveList =  this.sqlSession.selectList("com.support.movement.DriverDAO.getDriveList",id);
+			return driveList;
+	}
 }

@@ -270,8 +270,12 @@ h6 {
 /* ==========================================================================
    #BACKGROUND
    ========================================================================== */
+.bg-jy {
+	background #E0F8EC;
+}
+
 .bg-blue {
-  background: #2c6ed5;
+  background: #E0F8E6;
 }
 
 .bg-red {
@@ -362,6 +366,9 @@ h6 {
    ========================================================================== */
 .wrapper {
   margin: 0 auto;
+}
+.wrapper--w1280 {
+  max-width: 1280px;
 }
 
 .wrapper--w960 {
@@ -760,6 +767,12 @@ input {
 .card-5 .card-body {
   padding: 52px 85px;
   padding-bottom: 73px;
+  background: #fff;
+}
+.card-bodyTable{
+  padding: 52px 85px;
+  padding-bottom: 73px;
+  
 }
 
 @media (max-width: 767px) {

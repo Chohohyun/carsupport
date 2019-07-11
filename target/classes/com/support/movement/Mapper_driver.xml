@@ -4,27 +4,71 @@
 
 <mapper namespace="com.support.movement.DriverDAO">
 
-	<select id= "getDriverDTO" parameterType="String" resultType="com.support.movement.DriverDTO">
-			select
-			driver_no||'' as "driver_no",
-			driver_id as "id",
-			driver_pwd as "pwd1",
-			driver_name as "name",
-			driver_gender as "gender",
-			substr(driver_jumin_num,1,6) as "jumin_num1",
-			substr(driver_jumin_num,7,7) as "jumin_num2",
-			driver_postal_code||'' as "postal_code",
-			driver_road_addr as "road_addr",
-			driver_jibun_addr as "jibun_addr",
-			driver_detail_addr as "detail_addr",
-			driver_phone as "phone",
-			driver_email as "email",
-			driver_license_number as "driver_license_number",
-			admission_code as "admission_code"
-			
-			from driver
-			where driver_id = #{id}
-			 
+	<select id="getDriverDTO" parameterType="String"
+		resultType="com.support.movement.DriverDTO">
+		select
+		driver_no||'' as "driver_no",
+		driver_id as "id",
+		driver_pwd as "pwd1",
+		driver_name as "name",
+		driver_gender as "gender",
+		substr(driver_jumin_num,1,6) as "jumin_num1",
+		substr(driver_jumin_num,7,7) as "jumin_num2",
+		driver_postal_code||'' as "postal_code",
+		driver_road_addr as "road_addr",
+		driver_jibun_addr as "jibun_addr",
+		driver_detail_addr as "detail_addr",
+		driver_phone as "phone",
+		driver_email as "email",
+		driver_license_number as "driver_license_number",
+		admission_code as "admission_code"
+
+		from driver
+		where driver_id = #{id}
+
 	</select>
 
+	<select id="getDriveList" parameterType="String" resultType="hashmap">
+		select
+			RESERVE_APPLY_CAR_NUMBER as "RESERVE_APPLY_CAR_NUMBER"
+			,to_char( RESERVATION_DATE, 'YYYYMMDD' ) as "RESERVATION_DATE"
+			,START_POINT_LONGITUDE as "START_POINT_LONGITUDE"
+			,START_POINT_LATITUDE as "START_POINT_LATITUDE"
+			,END_POINT_LONGITUDE as "END_POINT_LONGITUDE"
+			,END_POINT_LATITUDE as "END_POINT_LATITUDE"
+			,to_char( RESERVATION_DATE, 'HH24:MI:SS' ) as "START_TIME"
+			,to_char( RESERVATION_DATE, 'HH24:MI:SS' ) as "FINISH_TIME"
+			
+			
+			,CAR_NUMBER as "CAR_NUMBER"
+
+			,RESERVE_COUNT as "RESERVE_COUNT"
+			,USER_NO as "USER_NO"
+			,DRIVER_NO as "DRIVER_NO"
+			,START_ROAD_ADDR as "START_ROAD_ADDR"
+			,START_DETAIL_ADDR as "START_DETAIL_ADDR"
+			,END_ROAD_ADDR as "END_ROAD_ADDR"
+			,END_DETAIL_ADDR as "END_DETAIL_ADDR"
+		from RESERVE_APPLY_CAR
+		where driver_no=(select driver_no from driver where driver_id=#{id}) and RESERVE_STATUS_CODE='5'
+	</select>
+	
+	
+	<select id="getDriveListAllCnt" parameterType="String" resultType="int">		
+		select 
+			count(*)	
+		from RESERVE_APPLY_CAR
+		where driver_no=(select driver_no from driver where driver_id=#{id}) and RESERVE_STATUS_CODE='5'
+	</select>
+	<select id="getDriverCarInfo" parameterType="String"
+		resultType="com.support.movement.CarDTO">
+		select
+		car_number||'' as "car_number"
+		,CAR_YEAR||'' as "car_year"
+		, CAR_DISTANCE||'' "car_distance"
+		, (select CAR_TYPE from code_car where CAR_CODE=(select car_code from car_info where car_driver=(select driver_no from driver where driver_id=#{id}) ) )||'' as "car_code"
+		from car_info
+		where
+		car_driver=(select driver_no from driver where driver_id=#{id})
+	</select>
 </mapper>
