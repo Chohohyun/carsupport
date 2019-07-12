@@ -306,7 +306,7 @@ public class LoginController {
 			System.out.println("LoginController.loginProc(~) 에서 에러 발생");
 
 		} 
-		
+
 		return pwdInfoChk;
 	}
 
@@ -320,16 +320,106 @@ public class LoginController {
 				'm','n','o','p','q','r','s','t','u','v','w','x','y','z',
 				'A','B','C','D','E','F','G','H','I','J','K','L',
 				'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-		
+
 		StringBuffer sb = new StringBuffer();
 		for(int i=0;i<num;i++) {
 			index = (int)(charset.length * Math.random());
 			sb.append(charset[index]);
-			
-			
+
+
 		}
 		return sb.toString();
 	}
+
+
+	private String getRandomEmail(int num) {
+		int index = 0;
+		char[] charset = new char[] {
+				'0','1','2','3','4','5','6','7','8','9'};
+
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<num;i++) {
+			index = (int)(charset.length * Math.random());
+			sb.append(charset[index]);
+
+
+		}
+		return sb.toString();
+	}
+	//**********************************
+	// 이메일
+	//**********************************
+	@RequestMapping(
+			value="/checkEmail.do",
+			method=RequestMethod.POST,
+			produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public int checkEmail(
+			HttpServletRequest request,HttpSession session,HttpServletResponse response,
+			@RequestParam Map<String,String> paramsMap
+			) {
+		System.out.println(paramsMap);
+		String authenticationNumber = getRandomEmail(6);
+		paramsMap.put("authenticationNumber", authenticationNumber);
+		int emailChk = 0;
+		try {
+			emailChk = this.loginService.sendEmailCheck(paramsMap);
+			if(emailChk==1){
+				String setfrom = "jjocharito@gmail.com";
+				String tomail = paramsMap.get("email"); // 받는 사람 이메일
+				String title = "교통약자지원센터 회원가입 이메일 인증번호 안내 메일입니다."; // 제목
+				String content = "이메일 인증번호는 ["+authenticationNumber+"] 입니다.\n"
+						+ "인증번호입력칸에 해당 인증번호를 입력하시고 버튼을 클릭해주세요. "; // 내용
+
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message,true, "UTF-8");
+
+				messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+				messageHelper.setTo(tomail); // 받는사람 이메일
+				messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+				messageHelper.setText(content); // 메일 내용
+
+				mailSender.send(message);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			System.out.println("LoginController.loginProc(~) 에서 에러 발생");
+			emailChk=-1;
+
+		} 
+
+		return emailChk;
+	}
+
+	//**********************************
+	// 이메일
+	//**********************************
+	@RequestMapping(
+			value="/checkEmailAuth.do",
+			method=RequestMethod.POST,
+			produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public int checkEmailAuth(
+			HttpServletRequest request,HttpSession session,HttpServletResponse response,
+			@RequestParam Map<String,String> paramsMap
+			) {
+		System.out.println(paramsMap);
+		int emailChk = 0;
+		try {
+			emailChk = this.loginService.emailAuthCheck(paramsMap);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			System.out.println("LoginController.loginProc(~) 에서 에러 발생");
+			emailChk=-1;
+
+		} 
+
+		return emailChk;
+	}
+
 	
 
 }

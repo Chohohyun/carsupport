@@ -124,4 +124,24 @@ public class LoginServiceImpl implements LoginService{
 		return 0;
 	}
 
+	@Override
+	public int sendEmailCheck(Map<String, String> paramsMap) {
+		int checkEmail = this.loginDAO.getCheckEmail(paramsMap);
+		if(checkEmail==0) {
+			int sendEmailChk = this.loginDAO.insertSendEmail(paramsMap);
+			return sendEmailChk;
+			
+		}
+		else {
+			int sendEmailUp = this.loginDAO.updateSendEmail(paramsMap);
+			return sendEmailUp;
+		}
+	}
+
+	@Override
+	public int emailAuthCheck(Map<String, String> paramsMap) {
+		int emailAuthCheck = this.loginDAO.emailAuthCheck(paramsMap);
+		return emailAuthCheck;
+	}
+
 }

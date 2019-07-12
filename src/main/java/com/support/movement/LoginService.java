@@ -13,4 +13,8 @@ public interface LoginService {
 	String getId(Map<String, String> paramsMap);
 
 	int getPwdInfoChk(Map<String, String> paramsMap);
+
+	int sendEmailCheck(Map<String, String> paramsMap);
+
+	int emailAuthCheck(Map<String, String> paramsMap);
 }

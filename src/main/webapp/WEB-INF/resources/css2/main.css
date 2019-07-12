@@ -428,6 +428,12 @@ h6 {
   background: #57b846;
 }
 
+
+.btn--gray {
+  background: #A9A9A9;
+}
+
+
 .btn--green:hover {
   background: #4dae3c;
 }

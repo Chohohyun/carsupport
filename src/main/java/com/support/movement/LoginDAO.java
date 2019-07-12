@@ -40,5 +40,13 @@ public interface LoginDAO {
 
 	int insertRandomPwdDriver(Map<String, String> paramsMap);
 
+	int getCheckEmail(Map<String, String> paramsMap);
+
+	int insertSendEmail(Map<String, String> paramsMap);
+
+	int updateSendEmail(Map<String, String> paramsMap);
+
+	int emailAuthCheck(Map<String, String> paramsMap);
+
 
 }

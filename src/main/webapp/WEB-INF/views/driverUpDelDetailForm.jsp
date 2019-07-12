@@ -12,6 +12,11 @@
 	
 		
 	$(document).ready(function(){
+		
+
+		$("#driverEmailBtn").attr("disabled",true); 
+
+		$("#driverEmail").hide();
 		inputData("id","${driverDTO.id}");
 		inputData("pwd1","${driverDTO.pwd1}");
 		inputData("pwd2","${driverDTO.pwd1}");
@@ -29,7 +34,77 @@
 		inputData("driver_no","${driverDTO.driver_no}");
 	});
 	
-		
+	function checkSameEmail(){
+		var email = $("[name=driverUpDelForm] [name=email]").val();
+		var value = $("[name=driverUpDelForm] [name=emailCheck]").val();
+		if(value==2){
+			return;
+		}
+		else if(email=="${driverDTO.email}"){
+			$("#driverEmail").hide();
+			$("#driverEmailBtn").removeClass("btn--red");
+			$("#driverEmailBtn").addClass("btn--gray");
+			$("#driverEmailBtn").attr("disabled",true); 
+			$("[name=driverUpDelForm] [name=emailCheck]").val(1);
+		}
+		else{
+			$("#driverEmailBtn").removeClass("btn--gray");
+			$("#driverEmailBtn").addClass("btn--red");
+			$("#driverEmailBtn").attr("disabled",false); 
+			$("[name=driverUpDelForm] [name=emailCheck]").val(0);
+		}
+	}
+	
+	function acceptEmail(type){
+		var email = $("[name="+type+"UpDelForm] [name=email]").val();
+		if(email_check(email)==false){
+			alert("올바른 이메일 형식이 아닙니다.");
+			$("[name="+type+"RegForm] [name=email]").focus();
+			return;
+		}
+		$.ajax({
+			url:"/support/checkEmail.do",
+			type:"post",
+			data: $("[name="+type+"UpDelForm] [name=email]").serialize(),
+			datatype:"html",
+			
+			success:function(data){
+				if(data==1){
+					alert("인증번호 전송 완료");
+					
+					if(type=='user'){
+
+						$("#userEmail").show();
+						document.userRegForm.AuthenticationNumber.style.display="block";
+						document.userRegForm.AuthenticationNumberBtn.style.display="block";
+						var elem = document.getElementById("userEmailBtn"); 
+						elem.value = "재전송";
+						return;
+					}
+					if(type=='driver'){
+						alert(type);
+						$("#driverEmail").show();
+						document.driverUpDelForm.AuthenticationNumber.style.display="block";
+						document.driverUpDelForm.AuthenticationNumberBtn.style.display="block";
+						var elem = document.getElementById("driverEmailBtn"); 
+						elem.value = "재전송";
+						return;
+					}
+				}
+				else if(data==0){
+					alert("인증번호 db 문제실패");
+				}
+				else{
+
+					alert("인증번호 전송실패");
+				}
+			},
+			error : function(){
+				alert("서버 접속 실패!");
+			}
+			
+		}); 
+	}
 	function goMainPage(){
 		location.replace("/support/driverUpDelForm.do");
 
@@ -45,6 +120,81 @@
 		}
 		
 		else{
+
+			var value = $("[name=driverUpDelForm] [name=emailCheck]").val();
+			if(value==0){
+				alert("이메일이 변경되었습니다. 인증해주세요.");
+				return;
+			}
+			
+			var driverId = $("[name=driverUpDelForm] [name=id]").val();
+			if(id_check(driverId)==false){
+				alert("올바른 아이디형식이 아닙니다.");
+				$("[name=driverUpDelForm] [name=id]").focus();
+				return;
+			}
+			
+			var driverPwd = $("[name=driverUpDelForm] [name=pwd1]").val(); 
+			if(pwd_check(driverPwd)==false){
+				alert("올바른 암호형식이 아닙니다.");
+				$("[name=driverUpDelForm] [name=pwd]").focus();
+				return;
+			}
+			
+			var pwd1 = $("[name=driverUpDelForm] [name=pwd1]").val();
+			var pwd2 = $("[name=driverUpDelForm] [name=pwd2]").val();
+			if(pwd2_check(pwd1,pwd2)==false){
+				$("[name=driverUpDelForm] [name=pwd2]").val("");
+				$("[name=driverUpDelForm] [name=pwd2]").focus();
+				return;
+			}
+
+			var name = $("[name=driverUpDelForm] [name=name]").val();
+			if(name_check(name)==false){
+				alert("올바른 이름형식이 아닙니다.");
+				$("[name=driverUpDelForm] [name=name]").val("");
+				$("[name=driverUpDelForm] [name=name]").focus();
+				return;
+			}
+			var gender=$("[name=driverUpDelForm] [name=gender]:checked").length;
+			if(gender_check(gender)==false){
+				$("[name=driverUpDelForm] [name=gender]").focus();
+				return;
+			}
+
+			var jumin_num1 = $("[name=driverUpDelForm] [name=jumin_num1]").val();
+			var jumin_num2 = $("[name=driverUpDelForm] [name=jumin_num2]").val();
+			alert(1);
+			if(jumin_num_check(jumin_num1,jumin_num2)==false){
+				$("[name=driverUpDelForm] [name=jumin_num1]").focus();
+				return;
+			}
+			
+			var phone = $("[name=driverUpDelForm] [name=phone]").val();
+			if(phone_check(phone)==false){
+				alert("올바른 핸드폰 번호 형식이 아닙니다.");
+				$("[name=driverUpDelForm] [name=phone]").focus();
+				return;
+			}
+			
+			var postal_code = $("[name=driverUpDelForm] [name=postal_code]").val();
+			if(is_empty2(postal_code)==false){
+				alert("주소를 검색해주세요.");
+				return;
+			}
+			var email = $("[name=driverUpDelForm] [name=email]").val();
+			if(email_check(email)==false){
+				alert("올바른 이메일 형식이 아닙니다.");
+				$("[name=driverUpDelForm] [name=email]").focus();
+				return;
+			}
+			
+			var driver_license_number = $("[name=driverUpDelForm] [name=driver_license_number]").val();
+			if(driver_license_check(driver_license_number)==false){
+				alert("올바른 운전면허 형식이 아닙니다.");
+				$("[name=driverUpDelForm] [name=driver_license_number]").focus();
+				return;
+			}
 			if(confirm("정말 수정 하시겠습니까?")==false){ 
 	 			return; 
 	 		}
@@ -87,25 +237,48 @@
 		}); 
 
 	}
-	
-	function goUpProc() {
-		alert(1);
-		alert($("[name=driverUpDelForm]").serialize());
+	function checkAuthenticationNumber(type){
+		var email = $("[name="+type+"UpDelForm] [name=email]").val();
+		
+		var authenticationNumber = $("[name="+type+"UpDelForm] [name=AuthenticationNumber]").val();
+		var map = {'email':email,'authenticationNumber':authenticationNumber};
 		$.ajax({
-			url:"/support/adminDriverRegForm.do",
+			url:"/support/checkEmailAuth.do",
 			type:"post",
-			data: $("[name=driverUpDelForm]").serialize(),
+			data: map,
 			datatype:"html",
 			
 			success:function(data){
 				if(data==1){
-					alert("운전자등록 성공!");
-					
-
-					location.replace("/support/adminMainPage.do");
+					alert("인증번호 확인 완료");
+					if(type=='user'){
+						$("#userEmail").hide();
+						$("#userEmailText").attr("readonly",true); 
+						$("#userEmailBtn").attr("disabled",true); 
+						$("#userEmailBtn").removeClass("btn--red");
+						$("#userEmailBtn").addClass("btn--gray");
+						document.userRegForm.emailCheck.value="1";
+						return;
+					}
+					else{
+						$("#driverEmail").hide();
+						$("#driverEmailText").attr("readonly",true); 
+						$("#driverEmailBtn").attr("disabled",true);
+						 
+						$("#driverEmailBtn").attr("disabled",true);
+						$("#driverEmailBtn").removeClass("btn--red");
+						$("#driverEmailBtn").addClass("btn--gray");
+						document.driverUpDelForm.emailCheck.value="2";
+						return;
+					}
+				}
+				else if(data==0){
+					alert("인증번호가 틀립니다. 다시확인해주세요.");
+					return;
 				}
 				else{
-					alert("운전자등록 실패!");
+
+					alert("인증번호 전송실패");
 				}
 			},
 			error : function(){
@@ -113,8 +286,10 @@
 			}
 			
 		}); 
-
+	
+		
 	}
+	
 </script> <!-- Jquery JS-->
    
 <head>
@@ -171,7 +346,7 @@
                             <div class="name">아이디</div>
                             <div class="value">
                                 <div class="input-group wrap-input100">
-                                    <input class="input100 input--style-5" type="text" name="id" placeholder="아이디" >
+                                    <input class="input100 input--style-5" type="text" name="id" placeholder="아이디" readonly>
                                     
                                            <span class="focus-input100"></span>
                                 </div>
@@ -252,7 +427,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                     
                         
                          <div class="form-row m-b-55">
                             <div class="name">주소</div>
@@ -260,7 +435,9 @@
                                 <div class="row row-refine">
                                  	 
                                            <div class="wrap-input40 input-group-desc">
-                      						  <input class="input100 input--style-5" id="drvierpostal_code"  type="text" name="postal_code" >
+                                       
+											
+                      						  <input class="input100 input--style-5" id="drvierpostal_code"  onfocus="this.blur();" type="text" name="postal_code" placeholder="주소검색을 눌러주세요." readonly>
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -268,6 +445,8 @@
                                  
                                  			  &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
+                                        
+											
                         					<input type="button" class="login100-form-btn btn btn--radius-2 btn--red" onclick="searchPostal_code('drvier')" value="주소검색">
                                             
                                            <span class="focus-input100"></span>
@@ -275,7 +454,8 @@
                                         </div>
                                          <div class="wrap-input40 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="drvierroad_addr"  type="text" name="road_addr" >
+										
+                       					<input class="input100 input--style-5" id="drvierroad_addr" onfocus="this.blur();" placeholder="주소검색을 눌러주세요." readonly type="text" name="road_addr" >
                        					
                                            <span class="focus-input100"></span>
                                         
@@ -283,7 +463,7 @@
                                         
                                  			  &nbsp;&nbsp;&nbsp;
                                           <div class="wrap-input50 input-group-desc">
-                    					<input class="input100 input--style-5" id="drvierjibun_addr" type="text" name="jibun_addr" >
+                    					<input class="input100 input--style-5" id="drvierjibun_addr" onfocus="this.blur();" type="text" name="jibun_addr" readonly>
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -324,26 +504,56 @@
                         </div>
                         
                         <div class="form-row m-b-55">
-                            <div class="name">이메일주소</div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                    <!-- <div class="col-3">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code">
-                                            <label class="label--desc">Area Code</label>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-9">
-                                        <div class="input-group-desc  wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="email" placeholder="이메일주소">
-                                            
-                                           <span class="focus-input100"></span>
-                                         <!--    <label class="label--desc">Phone Number</label> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+							<div class="name">이메일주소</div>
+							<div class="value">
+								<div class="row row-refine">
+
+									<div class="wrap-input50 input-group-desc">
+										<input class="input100 input--style-5" id="driverEmailText"
+											type="text" name="email" placeholder="이메일주소" onkeyup="checkSameEmail();"> <span
+											class="focus-input100"></span>
+
+									</div>
+
+									&nbsp;&nbsp;&nbsp;
+									<div class="wrap-input40 input-group-desc">
+
+										<input type="button" name="checkEmailBtn" id="driverEmailBtn"
+											class="login100-form-btn btn btn--radius-2 btn--gray"
+											onclick="acceptEmail('driver')" value="인증번호받기"> <span
+											class="focus-input100"></span>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-row m-b-55" id="driverEmail">
+							<div class="name">인증번호</div>
+							<div class="value">
+								<div class="row row-refine">
+
+									<div class="wrap-input50 input-group-desc">
+										<input class="input100 input--style-5" type="text"
+											name="AuthenticationNumber" placeholder="인증번호입력"> <span
+											class="focus-input100"></span>
+
+									</div>
+
+									&nbsp;&nbsp;&nbsp;
+									<div class="wrap-input40 input-group-desc">
+
+										<input type="button" name="AuthenticationNumberBtn"
+											class="login100-form-btn btn btn--radius-2 btn--red"
+											onclick="checkAuthenticationNumber('driver')" value="확인">
+										<span class="focus-input100"></span>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<input type="hidden" name="emailCheck" value="1">
+
                         
                          <div class="form-row m-b-55">
                             <div class="name">면허증번호</div>

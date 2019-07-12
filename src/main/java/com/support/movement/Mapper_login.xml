@@ -177,4 +177,33 @@
 		set driver_pwd=#{pwd}
 		where driver_id=#{id} and driver_email=#{email}
 	</update>
+	
+	<select id ="getCheckEmail" parameterType="hashmap" resultType="int">
+	
+		select
+			count(*)
+		from emailcheck
+		where email=#{email}
+	</select>
+	
+	<insert id ="insertSendEmail" parameterType="hashmap" >
+		insert into emailcheck(
+		emailcheck_no,email,email_auth_number) values((select nvl(max(emailcheck_no),0)+1 from emailcheck),#{email},#{authenticationNumber})
+	
+	</insert>
+	
+	<update id="updateSendEmail" parameterType="hashmap" >
+		update emailcheck
+		set email_auth_number = #{authenticationNumber}
+		where email=#{email}
+	</update>
+	
+	
+	<select id="emailAuthCheck" parameterType="hashmap" resultType="int">
+		select
+			count(*)
+		from emailcheck
+		where email=#{email} and email_auth_number = #{authenticationNumber}
+		
+	</select>
 </mapper>

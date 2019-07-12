@@ -151,5 +151,29 @@ public class LoginDAOImpl implements LoginDAO{
 		return insertRandomPwdDriver;
 	}
 
+	@Override
+	public int getCheckEmail(Map<String, String> paramsMap) {
+		int checkEmail = this.sqlSession.selectOne("com.support.movement.LoginDAO.getCheckEmail",paramsMap);
+		return checkEmail;
+	}
+
+	@Override
+	public int insertSendEmail(Map<String, String> paramsMap) {
+		int insertEmail = this.sqlSession.insert("com.support.movement.LoginDAO.insertSendEmail",paramsMap);
+		return insertEmail;
+	}
+
+	@Override
+	public int updateSendEmail(Map<String, String> paramsMap) {
+		int updateEmail = this.sqlSession.update("com.support.movement.LoginDAO.updateSendEmail",paramsMap);
+		return updateEmail;
+	}
+
+	@Override
+	public int emailAuthCheck(Map<String, String> paramsMap) {
+		int emailChk = this.sqlSession.selectOne("com.support.movement.LoginDAO.emailAuthCheck",paramsMap);
+		return emailChk;
+	}
+
 	
 }
