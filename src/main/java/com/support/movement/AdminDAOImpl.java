@@ -278,5 +278,85 @@ public class AdminDAOImpl implements AdminDAO{
 		return deleteCnt;
 	}
 
+	@Override
+	public int getAdminDiscontentListAllCnt() {
+		int adminDiscontentListAllCnt = this.sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getAdminDiscontentListAllCnt"
+				);
+		return adminDiscontentListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getAdminDiscontentList() {
+		List<Map<String,String>> adminDiscontentList = this.sqlSession.selectList(
+				"com.support.movement.AdminDAO.getAdminDiscontentList"
+				);
+		return adminDiscontentList;
+	}
+
+	@Override
+	public int getReadcountUp(int adminDiscontent_no) {
+		int readcountUpCnt = this.sqlSession.update("com.support.movement.AdminDAO.getReadcountUp", adminDiscontent_no);
+		return readcountUpCnt;
+	}
+
+	@Override
+	public DiscontentDTO getDiscontentDTO(int adminDiscontent_no) {
+		DiscontentDTO discontentDTO = this.sqlSession.selectOne("com.support.movement.AdminDAO.getDiscontentDTO", adminDiscontent_no);
+		return discontentDTO;
+	}
+
+	@Override
+	public int updatePrint_no(DiscontentDTO discontentDTO) {
+		int updatePrint_noCnt = sqlSession.update(
+				"com.support.movement.AdminDAO.updatePrint_no"  // 실행할 SQL 구문의 위치 지정
+				, discontentDTO												// 실행할 SQL 구문에서 사용할 데이터 
+		);
+		
+		return updatePrint_noCnt;
+	}
+
+	@Override
+	public int insertAdminDiscontent(DiscontentDTO discontentDTO) {
+		int DiscontentRegCnt = sqlSession.insert(
+				"com.support.movement.AdminDAO.insertAdminDiscontent" 
+				, discontentDTO			
+		);
+		return DiscontentRegCnt;
+	}
+
+	@Override
+	public int getDiscontentCnt(DiscontentDTO discontentDTO) {
+		int discontentCnt = this.sqlSession.selectOne(
+				"com.support.movement.AdminDAO.getDiscontentCnt"
+				, discontentDTO
+				);
+		return discontentCnt;
+	}
+
+	@Override
+	public int getDiscontentUpCnt(DiscontentDTO discontentDTO) {
+		int discontentUpCnt = this.sqlSession.update(
+				"com.support.movement.AdminDAO.getDiscontentUpCnt"
+				, discontentDTO
+				);
+		return discontentUpCnt;
+	}
+
+	@Override
+	public int getDiscontentDelCnt(DiscontentDTO discontentDTO) {
+		int discontentDelCnt = this.sqlSession.delete(
+				"com.support.movement.AdminDAO.getDiscontentDelCnt"
+				, discontentDTO
+				);
+		return discontentDelCnt;
+	}
+
+	@Override
+	public int getGroupCnt(Map<String, String> paramsMap) {
+		int groupCnt = this.sqlSession.selectOne("com.support.movement.AdminDAO.getGroupCnt",paramsMap);
+		return groupCnt;
+	}
+
 
 }

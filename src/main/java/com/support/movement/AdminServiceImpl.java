@@ -260,4 +260,72 @@ public class AdminServiceImpl implements AdminService{
 		return deleteCnt;
 	}
 
+	@Override
+	public int getAdminDiscontentListAllCnt() {
+		int adminDiscontentListAllCnt = this.adminDAO.getAdminDiscontentListAllCnt();
+		return adminDiscontentListAllCnt;
+	}
+
+	@Override
+	public List<Map<String, String>> getAdminDiscontentList() {
+		List<Map<String,String>> adminDiscontentList = this.adminDAO.getAdminDiscontentList();
+		// System.out.println("서비스까지 오나");
+		return adminDiscontentList;
+	}
+
+	@Override
+	public DiscontentDTO getDiscontentDTO(int adminDiscontent_no) {
+		int readcountUpCnt = this.adminDAO.getReadcountUp(adminDiscontent_no);
+
+		DiscontentDTO discontentDTO = this.adminDAO.getDiscontentDTO(adminDiscontent_no);
+		return discontentDTO;
+	}
+
+	@Override
+	public int insertAdminDiscontent(DiscontentDTO discontentDTO) {
+
+		String discontent_no = discontentDTO.getDiscontent_no();
+		
+		if( discontent_no != null && discontent_no.length() > 0 ) {
+			// 출력 순서 번호를 1증가 시키고 수정행의 적용 개수를 리턴
+			// 새롭게 게시판 글이 입력된 후 이후의 글들은 출력 순서 번호를 1씩 증가
+			int updatePrint_noCnt = this.adminDAO.updatePrint_no(discontentDTO);
+		}
+		
+		// 한개 게시판 글 입력 후 입력 적용 행의 개수 리턴하기
+		int DiscontentRegCnt = this.adminDAO.insertAdminDiscontent(discontentDTO);
+		return DiscontentRegCnt;
+	}
+
+	@Override
+	public int getDiscontentUpCnt(DiscontentDTO discontentDTO) {
+		int deleteCnt = this.adminDAO.getDiscontentCnt(discontentDTO);
+		
+		if(deleteCnt ==0) {
+			return -1;
+		}
+		else {
+			int discontentUpCnt = this.adminDAO.getDiscontentUpCnt(discontentDTO);
+			return discontentUpCnt;
+		}
+	}
+
+	@Override
+	public int getDiscontentDelCnt(DiscontentDTO discontentDTO) {
+		int deleteCnt = this.adminDAO.getDiscontentCnt(discontentDTO);
+		if(deleteCnt ==0) {
+			return -1;
+		}
+		else {
+			int discontentDelCnt = this.adminDAO.getDiscontentDelCnt(discontentDTO);
+			return discontentDelCnt;
+		}
+	}
+
+	@Override
+	public int getGroupCnt(Map<String, String> paramsMap) {
+		int groupCnt = this.adminDAO.getGroupCnt(paramsMap);
+		return groupCnt;
+	}
+
 }

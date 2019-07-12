@@ -483,4 +483,116 @@
 	<select id="getBoardCnt"	parameterType = "com.support.movement.QnaDTO"	 resultType="int">
    		select 	count(*)	from question		where question_no = #{question_no}
    </select>
+   
+   <!-- 불만게시판 [글목록 총개수] 가져오기  -->
+	<select id="getAdminDiscontentListAllCnt" resultType="int">
+		select
+			count(*)
+			from discontent
+			
+		order by discontent_group_no desc, discontent_print_no asc
+	
+	</select>
+   
+   <!-- 불만게시판의 글을 싹 다 가져오기  -->
+   <select id="getAdminDiscontentList" resultType="hashMap">	
+		select
+				dc.discontent_no||''	as "discontent_no"
+				, dc.discontent_subject	as "discontent_subject"
+				, (select du.user_name from disability_user du where du.user_no=dc.user_no)	as "user_name"
+				, dc.discontent_content	as "discontent_content"
+				, dc.discontent_group_no||''		as "group_no"
+				, dc.discontent_print_no||''		as "print_no"
+				, dc.discontent_print_level||''	as "print_level"
+				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
+				, dc.readcount||''		as "readcount"
+				, dc.admin_name as "admin_name"
+				, dc.discontent_print_no||'' as "print_no"
+				from discontent dc
+			
+			order by dc.discontent_group_no desc, dc.discontent_print_no asc
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="getReadcountUp" parameterType="int">
+		update discontent 
+		set readcount=readcount+1
+		where discontent_no=#{adminDiscontent_no}  
+	</update>
+   
+   
+   <!-- 불만게시판 상세보기 -->
+	<select id="getDiscontentDTO" parameterType="int" resultType="com.support.movement.DiscontentDTO">
+		select
+				dc.discontent_no||''	as "discontent_no"
+				, dc.discontent_subject	as "discontent_subject"
+				, (select du.user_name from disability_user du where du.user_no=dc.user_no)	as "user_name"
+				, (select du.user_id from disability_user du where du.user_no=dc.user_no) as "user_id"
+				, dc.discontent_content	as "discontent_content"
+				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
+				, dc.readcount||''		as "readcount"
+				, dc.discontent_print_no||'' as "print_no"
+				, dc.admin_name||'' as "admin_name"
+		from discontent dc
+		where dc.discontent_no=#{adminDiscontent_no}
+	</select>
+	
+	<update id="updatePrint_no" parameterType="com.support.movement.DiscontentDTO"> 
+		update discontent
+		set discontent_print_no = discontent_print_no+1
+		where discontent_group_no=(select discontent_group_no from discontent where discontent_no=${discontent_no})
+			and discontent_print_no>(select discontent_print_no from discontent where discontent_no=${discontent_no})
+	</update>
+	<insert id ="insertAdminDiscontent" parameterType="com.support.movement.DiscontentDTO">
+		insert into discontent(
+		discontent_no,
+		discontent_subject,
+		discontent_content,
+		discontent_group_no,
+		discontent_print_no,
+		discontent_print_level,
+		readcount,
+		admin_name) values(
+		(select nvl(max(discontent_no),0)+1 from discontent),
+		#{discontent_subject},
+		#{discontent_content},
+		(select discontent_group_no from discontent  where discontent_no=${discontent_no}),
+		2,
+		2,
+		0,
+		'관리자'
+		)
+	
+	</insert>
+	
+   <!-- 답글 수정삭제 -->
+   <select id="getDiscontentCnt" parameterType="com.support.movement.DiscontentDTO" resultType="int">
+		select
+			count(*)
+		from discontent
+		where discontent_no=${discontent_no}
+	</select>
+   
+   
+   <update id="getDiscontentUpCnt" parameterType="com.support.movement.DiscontentDTO">
+		update discontent
+		set
+			discontent_subject=#{discontent_subject},
+			discontent_content=#{discontent_content}
+		where discontent_no=${discontent_no}
+	</update>
+	
+	<delete id="getDiscontentDelCnt" parameterType="com.support.movement.DiscontentDTO">
+		delete 
+		from discontent
+		where discontent_no=${discontent_no}
+	</delete>
+	
+	<select id="getGroupCnt" parameterType="hashMap" resultType="int">
+		select
+			count(*)
+		from discontent ds
+		where ds.discontent_group_no = (select ds2.discontent_group_no from discontent ds2 where ds2.discontent_no=${discontent_no})
+
+	</select>
 </mapper>

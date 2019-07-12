@@ -158,7 +158,10 @@ function driverAcceptForm(){
 		location.replace("/support/userUpDelForm.do");
 	}
 	
-	
+	// 불만 게시판으로 이동하는 함수(관리자)
+	function adminDiscontentListForm() {
+		location.replace("/support/adminDiscontentListForm.do");
+	}
 	// QnA 게시판으로 이동하는 함수
 	function qnaListForm() {
 		location.replace("/support/qnaListForm.do");
@@ -259,7 +262,7 @@ function driverAcceptForm(){
 						<div class="topnav">게시판관리</div>
 						<ul class="subnav">  
 							<li><a href="javascript:qnaListForm();">Q/A 게시판</a></li>  
-							<li><a href="#">불만게시판</a></li>  
+							<li><a href="javascript:adminDiscontentListForm();">불만게시판</a></li>  
 						</ul>  
 					</li> 
 

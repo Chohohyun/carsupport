@@ -82,8 +82,23 @@
 							<td>
 								<!-- ${(sessionScope.selectPageNo*sessionScope.rowCntPerPage-sessionScope.rowCntPerPage+1+loopTagStatus.index)} -->
 								${discontentListAllCnt-(discontentSearchDTO.selectPageNo*discontentSearchDTO.rowCntPerPage-discontentSearchDTO.rowCntPerPage+1+loopTagStatus.index)+1}
-							<td>${discontent.discontent_subject}					 
-							<td>${discontent.user_name} 
+							<td>
+								<c:if test="${discontent.print_no > 1 }">
+										<c:forEach begin="1" end="${discontent.print_no }">
+											&nbsp;
+										</c:forEach>
+										답변:
+									</c:if>
+									${discontent.discontent_subject}
+										<c:choose>
+												<c:when test="${discontent.print_no==1}">
+												<td>${discontent.user_name}
+												</c:when>
+
+												<c:otherwise>
+												<td>${discontent.admin_name}
+												</c:otherwise>
+											</c:choose>		
 							<td>${discontent.reg_date} 
 							<td>${discontent.readcount} <!-- readcount는 BoardDAO에 getBoardList에 while문안에 "readcount" 요고다 -->
 					</c:forEach>

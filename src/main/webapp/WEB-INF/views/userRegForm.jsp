@@ -189,7 +189,7 @@ function goUserRegForm() {
                                 <div class="row row-refine">
                                      
                                            <div class="wrap-input40 input-group-desc">
-                                          <input class="input100 input--style-5" id="postal_code"  type="text" name="postal_code" >
+                                          <input class="input100 input--style-5" id="userpostal_code"  type="text" name="postal_code" >
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -197,14 +197,14 @@ function goUserRegForm() {
                                  
                                             &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
-                                       <input type="button" class="login100-form-btn btn btn--radius-2 btn--red" onclick="searchPostal_code()" value="주소검색">
+                                       <input type="button" class="login100-form-btn btn btn--radius-2 btn--red" onclick="searchPostal_code('user')" value="주소검색">
                                             
                                            <span class="focus-input100"></span>
                                           
                                         </div>
                                          <div class="wrap-input40 input-group-desc">
                                         
-                                      <input class="input100 input--style-5" id="road_addr"  type="text" name="road_addr" >
+                                      <input class="input100 input--style-5" id="userroad_addr"  type="text" name="road_addr" >
                                       
                                            <span class="focus-input100"></span>
                                         
@@ -212,7 +212,7 @@ function goUserRegForm() {
                                         
                                             &nbsp;&nbsp;&nbsp;
                                           <div class="wrap-input50 input-group-desc">
-                                   <input class="input100 input--style-5" id="jibun_addr" type="text" name="jibun_addr" >
+                                   <input class="input100 input--style-5" id="userjibun_addr" type="text" name="jibun_addr" >
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -220,7 +220,7 @@ function goUserRegForm() {
                                         </div>
                                         <div class="wrap-input100 input-group-desc">
                                         
-                                      <input class="input100 input--style-5" id="detail_addr"  type="text" name="detail_addr" >
+                                      <input class="input100 input--style-5" id="userdetail_addr"  type="text" name="detail_addr" >
                                       
                                            <span class="focus-input100"></span>
                                         </div>

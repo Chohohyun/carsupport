@@ -206,6 +206,8 @@
 				, dc.discontent_print_level||''	as "print_level"
 				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
 				, dc.readcount||''		as "readcount"
+				, dc.admin_name as "admin_name"
+				, dc.discontent_print_no||'' as "print_no"
 				from discontent dc
 			
 			order by dc.discontent_group_no desc, dc.discontent_print_no asc
@@ -255,6 +257,8 @@
 				, dc.discontent_content	as "discontent_content"
 				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
 				, dc.readcount||''		as "readcount"
+				, dc.admin_name as "admin_name"
+				, dc.discontent_print_no||'' as "print_no"
 		from discontent dc
 		where dc.discontent_no=#{discontent_no}
 	</select>

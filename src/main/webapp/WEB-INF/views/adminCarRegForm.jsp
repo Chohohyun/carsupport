@@ -19,7 +19,7 @@
 				,success : function(data){
 					
 					var datalen = data.length;
-					
+					alert(datalen);
 					for(var i=0; i<datalen; i++){
 						driverList[i] = data[i].driver_name;
 						var option = $("<option value="+data[i].driver_no+">"+driverList[i]+"</option>");

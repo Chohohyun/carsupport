@@ -46,7 +46,14 @@
             <td   width=150>${discontentDTO.readcount}
          <tr align="center">
             <th bgcolor="${headerColor}" width=60> 작성자
+            <c:if test="${discontentDTO.print_no==1}">
             <td>${discontentDTO.user_name}
+            </td>
+            </c:if>
+            <c:if test="${discontentDTO.print_no==2}">
+            <td>${discontentDTO.admin_name}
+            </td>
+            </c:if>
             <th bgcolor="${headerColor}" width=60> 작성일
             <td>${discontentDTO.reg_date}
          <tr>
@@ -60,9 +67,20 @@
       <table><tr height=3><td></table>
       
       <input type="hidden"      name="discontent_no"   value="${discontentDTO.discontent_no}">
-      
-      <input type="button"   value="수정/삭제"   onClick="goDiscontentUpDelForm();">
-      <input type="button"   value="글목록보기"   onClick="document.discontentListForm.submit();">
+      <c:choose>
+      		<c:when test="${discontentDTO.print_no==1}">
+      	
+      			<input type="button"   value="수정/삭제"   onClick="goDiscontentUpDelForm();">
+      			<input type="button"   value="글목록보기"   onClick="document.discontentListForm.submit();">
+      		
+      			</c:when>
+      		
+      		<c:otherwise>
+     
+      			<input type="button"   value="글목록보기"   onClick="document.discontentListForm.submit();">
+      		
+      		</c:otherwise>
+      </c:choose>
       
    </form>
    <!-- 이전 페이지에서 온 게시판 선택 페이지 번호를 저장한 hidden 태그 출력하고 [게시판 목록]  화면으로 이동하는 form태그 선언-->

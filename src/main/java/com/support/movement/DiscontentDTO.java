@@ -8,6 +8,8 @@ public class DiscontentDTO {
 	private String user_name;
 	private String readcount;
 	private String reg_date;
+	private String print_no;
+	private String admin_name;
 	
 	public String getUser_name() {
 		return user_name;
@@ -50,6 +52,18 @@ public class DiscontentDTO {
 	}
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
+	}
+	public String getAdmin_name() {
+		return admin_name;
+	}
+	public void setAdmin_name(String admin_name) {
+		this.admin_name = admin_name;
+	}
+	public String getPrint_no() {
+		return print_no;
+	}
+	public void setPrint_no(String print_no) {
+		this.print_no = print_no;
 	}
 	
 }

@@ -378,9 +378,9 @@ public class UserController {
 		ModelAndView mav = new ModelAndView(); 
 		mav.setViewName("discontentContentForm.jsp"); 
 		try { 
-
 			System.out.println("driverDTO 아주 잘옴");
 			DiscontentDTO discontentDTO = this.userService.getDiscontentDTO(discontent_no); 
+			System.out.println(discontentDTO.getAdmin_name());
 			mav.addObject("discontentDTO",discontentDTO); 
 			System.out.println("driverDTO 아주 잘옴");
 		}catch(Exception e){ 
