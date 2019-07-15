@@ -99,16 +99,16 @@ public class AdminDAOImpl implements AdminDAO{
 	}
 
 	@Override
-	public int getUserUpDelListAllCnt() {
+	public int getUserUpDelListAllCnt(UserSearchDTO userSearchDTO) {
 		int upDelListAllCnt = this.sqlSession.selectOne(
-				"com.support.movement.AdminDAO.getUserUpDelListAllCnt");
+				"com.support.movement.AdminDAO.getUserUpDelListAllCnt",userSearchDTO);
 		return upDelListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getUserUpDelList() {
+	public List<Map<String, String>> getUserUpDelList(UserSearchDTO userSearchDTO) {
 		List<Map<String, String>> upDelList = this.sqlSession.selectList(
-				"com.support.movement.AdminDAO.getUserUpDelList");
+				"com.support.movement.AdminDAO.getUserUpDelList",userSearchDTO);
 		return upDelList;
 	}
 

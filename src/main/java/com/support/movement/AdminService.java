@@ -25,9 +25,9 @@ public interface AdminService {
 
 	int getUserRegCnt(UserDTO userDTO);
 
-	int getUserUpDelListAllCnt(String id);
+	int getUserUpDelListAllCnt(String id,UserSearchDTO userSearchDTO);
 
-	List<Map<String, String>> getUserUpDelList(String id);
+	List<Map<String, String>> getUserUpDelList(String id,UserSearchDTO userSearchDTO);
 
 	UserDTO getUserDTO(int user_no);
 

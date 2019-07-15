@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="common.jsp"%>
-<%@include file="userMainPage.jsp"%>
+<%@include file="adminMainPage.jsp"%>
 
 
 <html>
@@ -44,7 +44,7 @@
 		<table border=0>
 			<tr>
 				<td align=right>[검색 총 개수] :
-					${requestScope.discontentListAllCnt}&nbsp;&nbsp;&nbsp;&nbsp;
+					${requestScope.adminDiscontentListAllCnt}&nbsp;&nbsp;&nbsp;&nbsp;
 			<tr>
 				<td>
 					<table border=0 class="discontentList tbcss2" cellpadding=5

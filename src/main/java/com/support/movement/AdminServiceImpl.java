@@ -101,10 +101,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getUserUpDelListAllCnt(String id) {
+	public int getUserUpDelListAllCnt(String id,UserSearchDTO userSearchDTO) {
 		int acceptPermit = this.adminDAO.getAcceptPermit(id);
 		if(acceptPermit==1) {
-			int upDelListAllCnt = this.adminDAO.getUserUpDelListAllCnt();
+			int upDelListAllCnt = this.adminDAO.getUserUpDelListAllCnt(userSearchDTO);
 			return upDelListAllCnt;
 		}
 		else {
@@ -113,8 +113,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Map<String, String>> getUserUpDelList(String id) {
-		List<Map<String, String>> upDelList = this.adminDAO.getUserUpDelList();
+	public List<Map<String, String>> getUserUpDelList(String id,UserSearchDTO userSearchDTO) {
+		List<Map<String, String>> upDelList = this.adminDAO.getUserUpDelList(userSearchDTO);
 		return upDelList;
 	}
 

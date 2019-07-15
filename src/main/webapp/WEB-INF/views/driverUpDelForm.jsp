@@ -139,8 +139,7 @@ $(document).ready(function() {
 			</table>
 			<input type="button" value="검색" onClick="goSearch();"> <input
 				type="button" value="전부검색" onClick="goSearchAll();"> <input
-				type="reset" value="초기화"> <input type="button" value="등록"
-				onClick="goContactRegForm();">
+				type="reset" value="초기화"> 
 
 		</form>
 		<br> <br>
@@ -178,10 +177,7 @@ $(document).ready(function() {
 		</table>
 
 		<br> ${requestScope.upDelListAllCnt==0? '  검색된 글이 없습니다.  ':''}
-		<form name="selectPage" method="post"
-			action="/support/driverAcceptForm.do">
-			<input type="hidden" name="selectPageNo">
-		</form>
+		
 		<form name="upDelDriverForm" method="post"
 			action="/support/driverUpDelDetailForm.do">
 			<input type="hidden" name="driver_no" value="">

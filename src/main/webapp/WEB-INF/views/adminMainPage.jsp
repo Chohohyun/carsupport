@@ -155,8 +155,8 @@ function adminMainPage(){
 	function userRegForm(){
 		location.replace("/support/userRegForm2.do");
 	}
-	function userUpDelForm(){
-		location.replace("/support/userUpDelForm.do");
+	function goUserUpDelForm(){
+		document.userUpDelForm.submit();
 	}
 	
 	// 불만 게시판으로 이동하는 함수(관리자)
@@ -255,7 +255,7 @@ function adminMainPage(){
 						<div class="topnav">회원관리</div>
 						<ul class="subnav">  
 							<li><a href="javascript:userRegForm();">회원 등록</a></li>  
-							<li><a href="javascript:userUpDelForm();">회원 수정/삭제</a></li>  
+							<li><a href="javascript:goUserUpDelForm();">회원 수정/삭제</a></li>  
 						</ul>  
 					</li>
 
@@ -298,6 +298,10 @@ function adminMainPage(){
 </form>
 
 <form name="driverUpDelForm" method="post" action="/support/driverUpDelForm.do">
+</form>
+
+
+<form name="userUpDelForm" method="post" action="/support/userUpDelForm.do">
 </form>
 
 

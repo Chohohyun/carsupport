@@ -29,9 +29,9 @@ public interface AdminDAO {
 
 	int getUserRegCnt(UserDTO userDTO);
 
-	int getUserUpDelListAllCnt();
+	int getUserUpDelListAllCnt(UserSearchDTO userSearchDTO);
 
-	List<Map<String, String>> getUserUpDelList();
+	List<Map<String, String>> getUserUpDelList(UserSearchDTO userSearchDTO);
 
 	UserDTO getUserDTO(int user_no);
 

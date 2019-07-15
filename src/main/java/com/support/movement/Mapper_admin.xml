@@ -84,9 +84,48 @@
 		</if> 
 	</select>
 	
-	<select id="getUserUpDelListAllCnt" resultType="int">
-		select count(*) from disability_user where admission_code='y'
+	<select id="getUserUpDelListAllCnt" parameterType="com.support.movement.UserSearchDTO"  resultType="int">
+		select count(*) from disability_user u where u.admission_code='y'
+		<if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(u.user_id) like upper( '%${keyword}%')
+						 or upper(u.user_name) like upper( '%${keyword}%')
+						 or upper(u.user_road_addr) like upper( '%${keyword}%')
+						 or upper(u.user_jibun_addr) like upper( '%${keyword}%')
+						 or upper(u.user_phone) like upper( '%${keyword}%')
+						 or upper(u.user_email) like upper( '%${keyword}%')
+						 or upper(to_char(u.user_reg_date,'YYYYMMDD')) like upper( '%${keyword}%')
+						 
+				)
+		</if>
+		<if test="gender!=null"> 
 		
+				and(
+			 	substr(u.user_jumin_num,7,1) in (
+				<foreach collection="gender" item="item" index="index">
+					<if test="index>0">
+						, 
+					</if>
+					<choose>
+						<when test="item.equals('male')">
+					 		1 ,3
+						</when>
+						<when test="item.equals('female')">
+					 		2 , 4
+						</when>
+					</choose> 
+				</foreach>
+				))  
+		</if> 
+		<if test="(disability_type!=null and disability_type.length()>0)">
+			and u.disability_type_code=${disability_type}
+		
+		</if>
+		
+		<if test="(disability_grade!=null and disability_grade.length()>0)">
+			and u.disability_grade_code=${disability_grade}
+		
+		</if>
 	</select>
 	
 	<select id="getDriverUpDelList" parameterType="com.support.movement.DriverSearchDTO"  resultType="hashmap">
@@ -153,28 +192,78 @@
 	</select>
 	
 	
-	<select id="getUserUpDelList" resultType="hashmap">
+	<select id="getUserUpDelList" parameterType="com.support.movement.UserSearchDTO"  resultType="hashmap">
+		<if test="selectPageNo>0">
+		select 
+			*
+		from (select zzz.*, rownum||'' RNUM from (
+		</if>
 		select
-            user_no||'' as "user_no", 
-             user_name as "user_name", 
-             user_id as "user_id", 
-             user_pwd as "user_pwd", 
-             user_gender as "user_gender", 
-             user_jumin_num as "user_jumin_num", 
-             user_postal_code||'' as "user_postal_code", 
-             user_road_addr as "user_road_addr", 
-             user_jibun_addr as "user_jibun_addr", 
-             user_detail_addr as "user_detail_addr", 
-             user_phone as "user_phone",  
-             user_email as "user_email",
-             disability_grade_code as "disability_grade_code",
-             disability_type_code as "disability_type_code",
-             wheelchair as "wheelchair",
-             to_char(user_reg_date,'YYYY-MM-DD') "user_reg_date"
+            u.user_no||'' as "user_no", 
+             u.user_name as "user_name", 
+             u.user_id as "user_id", 
+             u.user_pwd as "user_pwd", 
+             u.user_gender as "user_gender", 
+             u.user_jumin_num as "user_jumin_num", 
+             u.user_postal_code||'' as "user_postal_code", 
+             u.user_road_addr as "user_road_addr", 
+             u.user_jibun_addr as "user_jibun_addr", 
+             u.user_detail_addr as "user_detail_addr", 
+             u.user_phone as "user_phone",  
+             u.user_email as "user_email",
+             u.disability_grade_code as "disability_grade_code",
+             u.disability_type_code as "disability_type_code",
+             u.wheelchair as "wheelchair",
+             to_char(u.user_reg_date,'YYYY-MM-DD') "user_reg_date"
               
-         from disability_user
-         where admission_code='y' 
+         from disability_user u
+         where u.admission_code='y' 
+         <if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(u.user_id) like upper( '%${keyword}%')
+						 or upper(u.user_name) like upper( '%${keyword}%')
+						 or upper(u.user_road_addr) like upper( '%${keyword}%')
+						 or upper(u.user_jibun_addr) like upper( '%${keyword}%')
+						 or upper(u.user_phone) like upper( '%${keyword}%')
+						 or upper(u.user_email) like upper( '%${keyword}%')
+						 or upper(to_char(u.user_reg_date,'YYYYMMDD')) like upper( '%${keyword}%')
+						 
+				)
+		</if>
+		<if test="gender!=null"> 
 		
+				and(
+			 	substr(u.user_jumin_num,7,1) in (
+				<foreach collection="gender" item="item" index="index">
+					<if test="index>0">
+						, 
+					</if>
+					<choose>
+						<when test="item.equals('male')">
+					 		1 ,3
+						</when>
+						<when test="item.equals('female')">
+					 		2 , 4
+						</when>
+					</choose> 
+				</foreach>
+				))  
+		</if> 
+		<if test="(disability_type!=null and disability_type.length()>0)">
+			and u.disability_type_code=${disability_type}
+		
+		</if>
+		
+		<if test="(disability_grade!=null and disability_grade.length()>0)">
+			and u.disability_grade_code=${disability_grade}
+		
+		</if>
+		
+		<if test="selectPageNo>0">
+		<![CDATA[
+		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
+		 ]]>
+		 </if>
 	</select>
 	
 	<update id="getAcceptDriverCnt" parameterType="int">

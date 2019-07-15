@@ -143,7 +143,6 @@ public class AdminController {
 				driverSearchDTO.setSelectPageNo(1);
 			}
 			System.out.println("여기?");
-			System.out.println(driverSearchDTO.getGender()[0]);
 			int upDelListAllCnt = this.adminService.getDriverUpDelListAllCnt(id,driverSearchDTO);
 			System.out.println(upDelListAllCnt);
 			if(upDelListAllCnt!=0) {
@@ -359,14 +358,15 @@ public class AdminController {
 	//**********************************
 	// 유저 수정 삭제를 위해 상세보기로 이동
 	//**********************************
-	@RequestMapping(value="/userUpDelForm.do")
+	@RequestMapping(
+			value="/userUpDelForm.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
 	public ModelAndView userUpDel(
-			// HttpSession 객체가 들어올 매개변수 선언
-			// 매개변수에 자료형이 HttpSession이면 웹서버가
-			// 생성한 HttpSession 객체가 들어온다.
-			HttpSession session) {
-
-
+			HttpSession session, HttpServletResponse response,
+			UserSearchDTO userSearchDTO
+			){
 		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
 		//session.invalidate();
 		ModelAndView mav = new ModelAndView();
@@ -374,18 +374,21 @@ public class AdminController {
 		List<Map<String,String>> upDelList = new ArrayList<Map<String,String>>();
 		try {
 			String id = (String) session.getAttribute("id");
+			if(userSearchDTO.getSelectPageNo()==0) {
+				userSearchDTO.setSelectPageNo(1);
+			}
 
-
-			int upDelListAllCnt = this.adminService.getUserUpDelListAllCnt(id);
+			int upDelListAllCnt = this.adminService.getUserUpDelListAllCnt(id,userSearchDTO);
 			System.out.println(upDelListAllCnt);
 			if(upDelListAllCnt!=0) {
-				upDelList= this.adminService.getUserUpDelList(id);
+				upDelList= this.adminService.getUserUpDelList(id,userSearchDTO);
 			}
+			mav.addObject("userSearchDTO",userSearchDTO);
 			mav.addObject("upDelListAllCnt",upDelListAllCnt);
 			mav.addObject("upDelList",upDelList);
 
 		}catch (Exception e) {
-			System.out.println("drivetAcceptForm을 불러오는 도중 오류");
+			System.out.println("userUpDel을 불러오는 도중 오류");
 		}
 		return mav;
 	}
