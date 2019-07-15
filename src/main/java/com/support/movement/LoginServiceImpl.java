@@ -144,4 +144,28 @@ public class LoginServiceImpl implements LoginService{
 		return emailAuthCheck;
 	}
 
+	@Override
+	public int getIdChk(Map<String, String> paramsMap) {
+		int adminInChk = this.loginDAO.checkAdminId(paramsMap);
+		if(adminInChk==0) {
+			int userIdChk = this.loginDAO.checkUserId(paramsMap);
+			if(userIdChk==0) {
+				int driverIdChk = this.loginDAO.checkDriverId(paramsMap);
+				if(driverIdChk==0) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+				
+			}
+			else {
+				return 1;
+			}
+		}
+		else {
+			return 1;
+		}
+	}
+
 }

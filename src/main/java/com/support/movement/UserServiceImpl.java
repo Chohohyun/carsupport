@@ -152,6 +152,12 @@ public class UserServiceImpl implements UserService{
 		return map;
 	}
 
+	@Override
+	public int insertReview(ReviewDTO reviewDTO) {
+		int reviewRegCnt = 0;
+		return reviewRegCnt;
+	}
+
 	
 
 }

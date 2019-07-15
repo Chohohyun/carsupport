@@ -33,4 +33,6 @@ public interface UserService {
 
 	Map<String, String> getReserveInfo(int reserve_apply_car_number);
 
+	int insertReview(ReviewDTO reviewDTO);
+
 }

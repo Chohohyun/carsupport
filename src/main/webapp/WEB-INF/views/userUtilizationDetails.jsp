@@ -55,7 +55,7 @@
 													<td>${user.start_road_addr}</td>
 													<td>${user.end_road_addr}</td>
 													<td>${user.reservation_date}</td>
-													<td>${user.drvier_name}</td>
+													<td>${user.driver_name}</td>
 													<td>${user.reserve_status_name}</td>
 
 													<c:choose>

@@ -443,4 +443,42 @@ public class UserController {
 		} 
 		return discontentUpDelCnt;
 	}
+
+
+	//********************************
+	//리뷰 시작하자
+	//********************************
+	//=================================
+	// 불만게시판에 입력한 글을 DB에  꽂아버리는 메소드
+	//=================================
+	@RequestMapping(
+			value="/reviewRegProc.do"
+			,method=RequestMethod.POST
+			,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody
+	public int reviewRegProc(
+			ReviewDTO reviewDTO,
+			HttpSession session
+			) {
+		// 메소드 첫 줄에 도스창 찍는 명령어 안되면 매개변수 쪽으로 들어오다가 오류 발생 한 것
+		System.out.println("reviewRegProc 메소드 시작. reviewDTO 이상없음");
+
+		//--------------------------------------
+		// 게시판 글 입력하고 [게시판 입력 적용행의 개수] 저장할 변수 선언
+		//--------------------------------------
+		int reviewRegCnt = 0;
+		System.out.println(reviewRegCnt);
+		try {
+			reviewRegCnt = this.userService.insertReview(reviewDTO);
+			System.out.println("에러 테스트3");
+
+		} catch(Exception e) {
+			System.out.println("BoardController.insertQna 메소드에서 에러발생!");
+			reviewRegCnt = -1;
+		}
+		//
+		return reviewRegCnt;
+	}
+
 }

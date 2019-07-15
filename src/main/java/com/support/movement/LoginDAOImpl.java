@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 // Repository를 붙임으로써 DAO 클래스 임을 지정하게 되고, bean 태그로 자동 등록된다.
 @Repository
 public class LoginDAOImpl implements LoginDAO{
-	
+
 	// SqlSessionTemplate 객체를 생성해 속변 sqlSession 에 저장
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 
 
 
@@ -30,7 +30,7 @@ public class LoginDAOImpl implements LoginDAO{
 	// 로그인 아이디와 패스워드가 관리자 테이블에서 일치하는지 확인하는 메소드
 	@Override
 	public int getAdminCnt(Map<String,String> admin_id_pwd) {
-		
+
 		int adminCnt = this.sqlSession.selectOne(
 				"com.support.movement.LoginDAO.getAdminCnt",
 				admin_id_pwd);
@@ -79,7 +79,7 @@ public class LoginDAOImpl implements LoginDAO{
 				"com.support.movement.LoginDAO.getUserRegCnt",userDTO);
 		return userRegCnt;
 	}
-	
+
 
 	// 운전자 가입 메소드
 	@Override
@@ -174,6 +174,23 @@ public class LoginDAOImpl implements LoginDAO{
 		int emailChk = this.sqlSession.selectOne("com.support.movement.LoginDAO.emailAuthCheck",paramsMap);
 		return emailChk;
 	}
+	//**********************************
+	// 아이디 중복 체크 시도
+	//**********************************
+	@Override
+	public int checkAdminId(Map<String, String> paramsMap) {
+		int adminIdCnt = this.sqlSession.selectOne("com.support.movement.LoginDAO.checkAdminId",paramsMap); 
+		return adminIdCnt;
+	}
+	@Override
+	public int checkUserId(Map<String, String> paramsMap) {
+		int userIdCnt = this.sqlSession.selectOne("com.support.movement.LoginDAO.checkUserId",paramsMap); 
+		return userIdCnt;
+	}
+	@Override
+	public int checkDriverId(Map<String, String> paramsMap) {
+		int driverIdCnt = this.sqlSession.selectOne("com.support.movement.LoginDAO.checkDriverId",paramsMap); 
+		return driverIdCnt;
+	}
 
-	
 }

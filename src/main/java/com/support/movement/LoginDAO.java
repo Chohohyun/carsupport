@@ -48,5 +48,11 @@ public interface LoginDAO {
 
 	int emailAuthCheck(Map<String, String> paramsMap);
 
+	int checkAdminId(Map<String, String> paramsMap);
+
+	int checkUserId(Map<String, String> paramsMap);
+
+	int checkDriverId(Map<String, String> paramsMap);
+
 
 }

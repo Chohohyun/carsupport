@@ -343,20 +343,24 @@ function acceptEmail(type){
                         <div class="form-row">
                             <div class="name">아이디</div>
                             <div class="value">
+                            <div class="row row-refine">
                                 <div class="input-group wrap-input100">
                                     <input class="input100 input--style-5" type="text" name="id" placeholder="아이디" readonly>
                                     
                                            <span class="focus-input100"></span>
+                                           </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="name">비밀번호</div>
                             <div class="value">
+                            <div class="row row-refine">
                                 <div class="input-group wrap-input100">
                                     <input class="input100 input--style-5" type="password" name="pwd1" placeholder="비밀번호">
                                     
                                            <span class="focus-input100"></span>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -364,22 +368,26 @@ function acceptEmail(type){
                         <div class="form-row">
                             <div class="name">비밀번호 확인</div>
                             <div class="value">
+                            <div class="row row-refine">
                                 <div class="input-group wrap-input100">
                                     <input class="input100 input--style-5" type="password" name="pwd2" placeholder="비밀번호 확인">
                                     
                                            <span class="focus-input100"></span>
+                                </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row m-b-55">
                             <div class="name">이름</div>
                             <div class="value">
+                            <div class="row row-refine">	
                                 <div class="row row-space">
                                     <div class="input-group wrap-input100">
                                        
                                            <input class="input100 input--style-5" type="text" name="name" placeholder="이름">
                                            <span class="focus-input100"></span>
                                         
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -388,6 +396,7 @@ function acceptEmail(type){
                          <div class="form-row m-b-55">
                             <div class="name">성별</div>
                             <div class="value">
+                            <div class="row row-refine">
                                 <div class="row row-space">
                                     <div class="input-group wrap-input100">
                                			 <label class="radio-container m-r-55">남
@@ -398,6 +407,7 @@ function acceptEmail(type){
                                    		 <input type="radio" checked="checked" name="gender" value="2">
                                     		<span class="checkmark"></span>
                                			 </label>
+                                </div>
                                 </div>
                                </div>
                             </div>

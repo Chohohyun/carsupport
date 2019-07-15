@@ -6,255 +6,230 @@
 
 <!-- jsp 기술의 한 종류인 include Directive를 이용하여 common.jsp 파일 내의 소스를 삽입하기 -->
 <%@include file="common.jsp" %>
+
 <html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<style type="text/css">
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css); 
+<meta charset="utf-8">
+<title>서울시각장애인 생활이동지원센터</title>
+<!-- CSS -->
+<link rel="stylesheet" href="code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href="/support/resources/cssUserMain/bootstrap.min.css" rel="stylesheet">
+<link href="/support/resources/cssUserMain/kbucall_web.css" rel="stylesheet">
 
-body, div, ul, li, table, tr, td, th{margin:0px; padding:0px;}
 
-ul, li{list-style:none;}
+<link type="text/css" href="/support/resources/cssUserMain/style.css" rel="stylesheet" />
+<!-- javascript -->
+<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script type="text/javascript" src="/support/resources/jsUserMain/common/jquery.js"></script>
+<script type="text/javascript" src="/support/resources/jsUserMain/common/jquery.cookie.js"></script>	
+<script type="text/javascript" src="/support/resources/jsUserMain/common/jquery-ui.custom.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-135363789-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-body {
-	font-family: NanumGothic, '나눔고딕', NanumGothicWeb, "Malgun Gothic",Gulim,sans-serif;
-	/*background: #ddd;*/
-	font-size:10px;
-}
-
-#wrap {
-	width:100%;
-	position: relative;
-}
-
-#header {
-	width:100%;
-	background:#000;
-
-}
-
-/*
-style 소스의 type = text를 제어하는 css로 한다.
-a:link : 클릭하지 않은 링크
-a:visited : 한번 클릭했던 혹은 다녀갔던 링크
-a:hover : 링크를 클릭하려고 마우스를 가져갔을 때
-decoration : 밑줄
-none : 없는 상태
-underline : 있는 상태
-a:active : 링크부분에서 마우스를 누르고 있는 동안의 상태*/
-
-a:link { color: white; text-decoration: none;}
-a:visited { color: white; text-decoration: none;}
-a:hover { color: white; text-decoration: underline;}
-
-/*네비게이션 색상*/
-
-.navi_bg{
-	background:#222;
-}
-
-/*네비게이션 전체 영역 제어*/
-
-.nav {
-	height:35px;
-	list-style: none;
-	width:840px;
-	margin:auto;
-	background: #222;
-	font-size: 12px;
-	color:#fff;
-}
-
-/*주메뉴 영역 제어*/
-
-.topnav{
-	text-align:center;
-	width:100px;
-	height:15px;
-	cursor:pointer;
-	font-weight:bold;
-}
-
-/*주메뉴 마우스 오버시*/
-
-.topnav:hover{
-	color:#d3d3d3;
-}
-
-/*주메뉴,서브메뉴 한묶음 제어*/
-
-.navi_set{
-	float: left;
-	padding:10px;
-	position: relative;
-}
-
-/*서브메뉴 전체영역 제어*/
-
-.subnav{
-	position: absolute;
-	left: 0; top: 35px;
-	background: #333;
-	display: none;
-
-}
-
-/*서브메뉴 한칸 제어*/
-
-.subnav li{
-	padding:10px;
-	width:100px;
-	text-align:center;
-	border-bottom:1px solid #222;
-	border-top:1px solid #444;
-	cursor:pointer;
-}
-
-/*서브메뉴 마우스 오버시*/
-
-.subnav li:hover{
-	background:#555;
-}
-
-</style>
-
-<link type="text/css" href="./css/style.css" rel="stylesheet" />
-
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+  gtag('config', 'UA-135363789-1');
+</script>
 <script type="text/javascript">
-	$(document).ready(function(){  
-	  
-		$(".topnav").hover(function() { //마우스를 topnav에 오버시
-			$(this).parent().find(".subnav").slideDown('normal').show(); //subnav가 내려옴.
-			$(this).parent().hover(function() {  
-			}, function(){  
-				$(this).parent().find(".subnav").slideUp('fast'); //subnav에서 마우스 벗어났을 시 원위치시킴  
-			});  
-		});  
-	  
-	});  
-	function userMainPage(){
-		location.replace("/support/userMainPage.do");
-	}
-	function userUtilizationDetails(){
-		location.replace("/support/userUtilizationDetails.do");
-	}
-	function userUseProcedure(){
-		location.replace("/support/userUseProcedure.do");
-	}
-	function userReservationForm(){
-		location.replace("/support/userReservationForm.do");
-	}
-	function userReservationSituation(){
-		location.replace("/support/userReservationSituation.do");
-	}
-	function userDriverCheck(){
-		location.replace("/support/userDriverCheck.do");
-	}
-	function userUpDelForm(){
-		location.replace("/support/userUpDelForm2.do");
-		
+	function menuLink(link_url) {
+		location.href = link_url;
 	}
 	
-	function qnaListForm(){
-		location.replace("/support/qnaListForm.do");
-	}
-	
-	function discontentListForm(){
-		location.replace("/support/discontentListForm.do");
-	}
-	
-	function logout(){
-		location.replace("/support/loginForm.do");
-		
+	function contents_link(contents_no) {
+		location.href = "/contents.do?contents_no="+contents_no;
 	}
 </script>
 
-
- <!-- Title Page-->
-    <title>회원가입</title>
-
-    <!-- Icons font CSS-->
-    <link href="/support/resources/vendor2/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="/support/resources/vendor2/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="/support/resources/vendor2/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="/support/resources/vendor2/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="/support/resources/css/main.css" rel="stylesheet" media="all">
-    <link href="/support/resources/css2/main.css" rel="stylesheet" media="all">
-    
-    
-    
-	<link rel="icon" type="image/png" href="/support/resources/images/icons/favicon.ico"/>
-	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/support/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/animate/animate.css">
-	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/css-hamburgers/hamburgers.min.css">
-	<link rel="stylesheet" type="text/css" href="/support/resources/vendor/select2/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/support/resources/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/support/resources/css/main.css">
-    
 </head>
 
-<body>
-
-<div id="wrap">
-	<div id="header">	
-			<div class="navi_bg">
-				<div class="nav">  
-
-					<li class="navi_set">  
-						<div class="topnav" onclick="userMainPage();">HOME</div>
-					</li>  
-
-					<li class="navi_set">  
-						<div class="topnav">이용절차</div>
-						<ul class="subnav">  
-							<li><a href="javascript:userUseProcedure();">이용절차</a></li>   
-						</ul>  
-					</li> 
-					
-					<li class="navi_set">  
-						<div class="topnav">신청</div>
-						<ul class="subnav">  
-							<li><a href="javascript:userReservationForm();">신청하기</a></li>  
-							<li><a href="javascript:userReservationSituation();">신청현황</a></li> 
-							<li><a href="javascript:userDriverCheck();">운전자평가</a></li>  
-						</ul>  
-					</li> 
-
-					<li class="navi_set">  
-						<div class="topnav">게시판</div>
-						<ul class="subnav">  
-							<li><a href="javascript:qnaListForm();">Q/A 게시판</a></li>  
-							<li><a href="javascript:discontentListForm();">불만사항 게시판</a></li>  
-							
-						</ul>  
-					</li>
-
-					<li class="navi_set">  
-						<div class="topnav">회원정보</div>
-						<ul class="subnav">  
-						
-							<li><a href="javascript:userUtilizationDetails();">이용내역</a></li>  
-							<li><a href="javascript:userUpDelForm();">정보수정</a></li>  
-						</ul>  
-					</li> 
-				
-					<li class="navi_set">  
-						<div class="topnav" onclick="logout();">로그아웃</div> 
-					</li>
-
-				</div>
-			</div>
+<body>	
+	<div id="skipToContent">
+		<a href="#container">본문 바로가기</a>
+		
 	</div>
-</div>  
+	<!-- 헤더 -->
+	<header id="header_wrap">
+		<section>
+			<a href="/" class="header_logo" title="서울시각장애인 생활이동지원센터"><img src="/support/resources/imagesUserMain/img_logo.png" alt="서울시각장애인 생활이동지원센터 로고"></a>
+			<nav class="header_nav">
+				<ul class="header_quick">
+					<li><a href="/order/main.do?menu_no=3&amp;c_no=13" title="인터넷접수">인터넷접수</a></li>
+					
+						
+													
+							<li><a href="/login.do" title="로그인">로그인</a></li>
+						
+					
+				</ul>
+				<ul class="header_menu">
+		
+					<li>
+					
+						
+						
+							<a href="/sub.do?menu_no=1&amp;c_no=6" title="센터소개">센터소개</a>
+						
+											
+					</li>
+		
+					<li>
+					
+						
+						
+							<a href="/sub.do?menu_no=3&amp;c_no=15" title="장애인 복지콜">장애인 복지콜</a>
+						
+											
+					</li>
+		
+					<li>
+					
+						
+						
+							<a href="/sub.do?menu_no=5&amp;c_no=21" title="장애인 바우처택시">장애인 바우처택시</a>
+						
+											
+					</li>
+		
+					<li>
+					
+						
+						
+							<a href="/sub.do?menu_no=4&amp;c_no=16" title="참여/열린마당">참여/열린마당</a>
+						
+											
+					</li>
+		
+				</ul>
+			</nav>
+		</section>
+	</header>
+	<!--// 헤더 -->
+
+	
+	
+<script type="text/javascript">
+	$(function() {
+		
+	});
+
+	function mainLink(url) {
+		location.href = url;
+	}
+</script>
+		<!-- 메인 -->
+		<main id="main_wrap">
+			<!-- 메인 비주얼 영역 -->
+			<article class="main_visual_wrap" style="background: #0d1f3d url('/support/resources/banner/main/20190425104951720') center top no-repeat;">
+				<section class="main_visual">
+					<div class="main_msg">
+						<p>시각장애인의 생활이동편의와 발이 되겠습니다.</p>
+						<h2>서울시각장애인 생활·이동지원센터 </h2>						
+						<div class="main_call">
+							<ul>
+								<li>신청접수 : 02-2092-0000<a href="tel:02-2092-0000" title="신청접수  02-2092-0000 전화연결"><img src="/support/resources/imagesUserMain/icon_call.png" alt="장애인복지콜 신청접수"></a></li>
+								<li>1600-4477<a href="tel:1600-4477" title="신청접수  1600-4477 전화연결"><img src="/support/resources/imagesUserMain/icon_call.png" alt="장애인복지콜 신청접수"></a></li>
+							</ul>						
+						</div>
+					</div>
+				</section>
+			</article>
+			<!--// 메인 비주얼 영역 -->
+
+			<!-- 메인 컨텐츠 영역 -->
+			<article id="container" tabindex="0" class="main_contents" title="본문">
+				<nav class="main_menu">
+					<ul>
+						<li class="menu_btn_method"><a href="javascript:void(0);" onclick="mainLink('/order/main.do?menu_no=3&amp;c_no=13'); return false;" title="이용안내">이용안내</a></li>
+						<li class="menu_btn_method"><a href="javascript:void(0);" onclick="mainLink('/sub.do?menu_no=3&amp;c_no=12');" title="예약방법">예약방법</a></li>
+						<li class="menu_btn_call"><a href="javascript:void(0);" onclick="mainLink('/sub.do?menu_no=3&amp;c_no=12');" title="예약하기">예약하기</a></li>
+						<li class="menu_btn_voucher"><a href="javascript:void(0);" onclick="mainLink('/sub.do?menu_no=5&amp;c_no=21');" title="이용현황">이용현황</a></li>
+					</ul>
+				</nav>
+				<section class="main_notice">
+					<div class="main_notice_l">
+						<span class="notice_header">공지사항<a href="/board.do?menu_no=4&amp;c_no=16" title="공지사항">전체보기</a></span>
+						<ul>
+							
+								
+									
+										<li><a href="/board/view.do?menu_no=4&amp;c_no=16&amp;b_c_no=132">서울시각장애인생활이동지원센터 관제원 모집(~7/12)</a><span>06/28</span></li>
+									
+										<li><a href="/board/view.do?menu_no=4&amp;c_no=16&amp;b_c_no=124">2019년 상반기 장애인 바우처택시 신청접수 안내 </a><span>04/10</span></li>
+									
+										<li><a href="/board/view.do?menu_no=4&amp;c_no=16&amp;b_c_no=129">서울시각장애인생활이동지원센터 예약 합승제 시범 실시 안내</a><span>06/04</span></li>
+									
+										<li><a href="/board/view.do?menu_no=4&amp;c_no=16&amp;b_c_no=128">서울시각장애인생활이동지원센터 운전원 모집(~6/12)</a><span>05/21</span></li>
+									
+										<li><a href="/board/view.do?menu_no=4&amp;c_no=16&amp;b_c_no=121">2018년 서울시각장애인생활.이동지원센터 세입.세출결산서</a><span>03/25</span></li>
+									
+								
+								
+							
+						</ul>
+					</div>
+					<div class="main_notice_r">
+						<span class="notice_header">센터소식<a href="/board.do?menu_no=4&amp;c_no=39" title="센터소식">전체보기</a></span>
+						<ul>
+							
+								
+								
+									<li>등록된 글이 없습니다.</li>
+								
+							
+						</ul>
+					</div>
+				</section>
+			</article>
+			<!--// 메인 게시판 영역 -->
+
+			<!-- 메인 배너 영역 -->
+			<article class="main_banner_wrap">
+				<ul class="main_banner">
+								
+					<li><a href="http://kbuseoul.org/" target="_blank" title="서울특별시시각장애인연합회 배너"><img src="/support/resources/banner/2019/6/20190612012430090" alt="서울특별시시각장애인연합회 배너"></a></li>
+								
+					<li><a href="http://www.seoul.go.kr/main/index.jsp" target="_blank" title="서울특별시 배너"><img src="/support/resources/banner/2019/6/20190612012442495" alt="서울특별시 배너"></a></li>
+								
+					<li><a href="http://www.kbuwel.or.kr/" target="_blank" title="사단법인한국시각장애인연합회 배너"><img src="/support/resources/banner/2019/6/20190612014403873" alt="사단법인한국시각장애인연합회 배너"></a></li>
+					
+				</ul>
+			</article>
+			<!--// 메인 배너 영역 -->
+		</main>
+		<!--// 메인 -->
+
+
+		
+
+		<!-- 푸터 -->
+		<footer>
+			<article class="footer_wrap">
+				<div class="footer_link">
+					<a href="/sub.do?menu_no=1&amp;c_no=6" title="센터소개">센터소개</a>
+					<span> I </span>
+					<a href="/contents.do?contents_no=2" title="개인정보 취급방침">개인정보 취급방침</a>					  
+					<span> I </span>
+					<a href="/contents.do?contents_no=3" title="이용자준수사항">이용자준수사항</a>
+				</div>
+				<span class="footer_callnum">
+				전화. 1600-4477 / 02-2092-0000&nbsp;&nbsp;&nbsp;팩스. 02-937-0099&nbsp;&nbsp;&nbsp;
+				민원 및 대절. 02-2092-0088&nbsp;&nbsp;&nbsp;바우처택시. 02-2092-0055
+				</span>
+				<p>서울특별시 동작구 상도로216 (인경빌딩 3, 4층)</p>
+				<small>Copyright ⓒ 2018 kbucall. All Right Reserved.</small>
+				
+				<!-- 웹접근성 인증마크 -->
+				<div class="wa_wrap">
+					<a href="http://www.kwacc.or.kr/CertificationSite/WA/List" title="한국웹접근성평가센터 인증현황 바로가기 _새창" target="_blank">
+					<img src="/support/resources/imagesUserMain/WA.png" alt="국가공인 웹 접근성 품질인증마크 ">
+					</a>
+				</div>				
+			</article>			
+		</footer>
+		<!--// 푸터 -->	
+	
 </body>
 </html>

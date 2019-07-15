@@ -11,9 +11,28 @@
 <script>
 	$(document).ready(function() {
 	});
-	function reviewRegForm(number) {
-		document.reviewRegForm.reserve_apply_car_number.value = number;
-		document.reviewRegForm.submit();
+	function checkReview() {
+		alert(1);
+		$.ajax({
+			url : "/support/reviewRegProc.do",
+			type : "post",
+			data : $("[name=reviewRegForm]").serialize(),
+			datatype : "html",
+
+			success : function(data) {
+				if (data == 1) {
+					alert("리뷰등록 성공!");
+					location.replace("/support/userUtilizationDetails.do");
+
+				} else {
+					alert("리뷰등록 실패!");
+				}
+			},
+			error : function() {
+				alert("서버 접속 실패!");
+			}
+
+		});
 
 	}
 </script>
@@ -87,18 +106,20 @@ label.star:before {
 				</tr>
 				<tr>
 					<th bgcolor="${headerColor}">별점
-					<td><input class="star star-5" id="star-5-2" type="radio"name="star" /> <label class="star star-5" for="star-5-2"></label>
-						<input class="star star-4" id="star-4-2" type="radio" name="star" /> <label class="star star-4" for="star-4-2"></label> <input
-						class="star star-3" id="star-3-2" type="radio" name="star" /> <label
+					<td><input class="star star-5" id="star-5-2" type="radio"
+						name="review_score" value="5"/> <label class="star star-5" for="star-5-2"></label>
+						<input class="star star-4" id="star-4-2" type="radio" name="review_score" value="4"/>
+						<label class="star star-4" for="star-4-2"></label> <input
+						class="star star-3" id="star-3-2" type="radio" name="review_score" value="3"/> <label
 						class="star star-3" for="star-3-2"></label> <input
-						class="star star-2" id="star-2-2" type="radio" name="star" /> <label
+						class="star star-2" id="star-2-2" type="radio" name="review_score" value="2"/> <label
 						class="star star-2" for="star-2-2"></label> <input
-						class="star star-1" id="star-1-2" type="radio" name="star" /> <label
+						class="star star-1" id="star-1-2" type="radio" name="review_score" checked="checked" value="1"/> <label
 						class="star star-1" for="star-1-2"></label></td>
 				</tr>
 				<tr>
 					<th bgcolor="${headerColor}">평가내용
-					<td><textarea name="content" rows="13" cols="40"></textarea></td>
+					<td><textarea name="review_content" rows="13" cols="40"></textarea></td>
 				</tr>
 			</table>
 
@@ -108,14 +129,15 @@ label.star:before {
 			</table>
 			<!-- 여백을 위한 -->
 
-			<input type="hidden" name="b_no" value="${param.b_no }"> <input
-				type="button" value="저장" onClick="checkBoardRegForm()"> <input
+			<input type="hidden" name="reserve_apply_car_number"
+				value="${reserveList.reserve_apply_car_number}"> <input
+				type="button" value="저장" onClick="checkReview()"> <input
 				type="reset" value="다시작성"> <input type="button" value="목록보기"
-				onClick="document.boardListForm.submit()">
+				onClick="document.userMainPage.submit()">
 		</form>
 
-		<form name="boardListForm" method="post"
-			action="/erp/boardListForm.do"></form>
+		<form name="userMainPage" method="post"
+			action="/support/userMainPage.do"></form>
 
 		<input type="button" value="정보보기" onclick="print_html_info();">
 	</center>

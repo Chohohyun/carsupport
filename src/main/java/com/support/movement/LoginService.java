@@ -17,4 +17,6 @@ public interface LoginService {
 	int sendEmailCheck(Map<String, String> paramsMap);
 
 	int emailAuthCheck(Map<String, String> paramsMap);
+
+	int getIdChk(Map<String, String> paramsMap);
 }

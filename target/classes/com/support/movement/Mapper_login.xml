@@ -206,4 +206,18 @@
 		where email=#{email} and email_auth_number = #{authenticationNumber}
 		
 	</select>
+	
+	<!-- 아이디 중복 체크 시도 -->
+	<select id="checkAdminId" parameterType="hashmap" resultType="int">
+	select count(*) From admin 
+	where admin_id = #{id}
+	</select>
+	<select id="checkUserId" parameterType="hashmap" resultType="int">
+	select count(*) From DISABILITY_USER 
+	where USER_ID = #{id}
+	</select>
+	<select id="checkDriverId" parameterType="hashmap" resultType="int">
+	select count(*) From driver 
+	where driver_id = #{id}
+	</select>
 </mapper>

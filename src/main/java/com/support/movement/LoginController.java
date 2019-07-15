@@ -408,7 +408,7 @@ public class LoginController {
 		int emailChk = 0;
 		try {
 			emailChk = this.loginService.emailAuthCheck(paramsMap);
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e);
@@ -420,6 +420,31 @@ public class LoginController {
 		return emailChk;
 	}
 
-	
+	//**********************************
+	// 아이디 중복 체크 시도
+	//**********************************
+	@RequestMapping(
+			value="/idCheck.do",
+			method=RequestMethod.POST,
+			produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public int idCheck(
+			HttpServletRequest request,HttpSession session,HttpServletResponse response,
+			@RequestParam Map<String,String> paramsMap
+			) {
+		int idChk = 0;
+		try {
+			idChk = this.loginService.getIdChk(paramsMap);
+
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			System.out.println("LoginController.loginProc(~) 에서 에러 발생");
+
+		} 
+
+		return idChk;
+	}
 
 }
