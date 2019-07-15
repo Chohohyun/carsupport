@@ -7,17 +7,17 @@ public interface AdminDAO {
 
 	int getAcceptPermit(String id);
 
-	int getAcceptListAllCnt();
+	int getAcceptListAllCnt(DriverSearchDTO driverSearchDTO);
 
-	List<Map<String, String>> getAcceptList();
+	List<Map<String, String>> getAcceptList(DriverSearchDTO driverSearchDTO);
 
 	int getAcceptDriverCnt(int driver_no);
 
 	int getDriverRegCnt(DriverDTO driverDTO);
 
-	int getDriverUpDelListAllCnt();
+	int getDriverUpDelListAllCnt(DriverSearchDTO driverSearchDTO);
 
-	List<Map<String, String>> getDriverUpDelList();
+	List<Map<String, String>> getDriverUpDelList(DriverSearchDTO driverSearchDTO);
 
 	DriverDTO getDriverDTO(int driver_no);
 

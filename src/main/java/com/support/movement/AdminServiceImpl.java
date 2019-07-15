@@ -24,10 +24,10 @@ public class AdminServiceImpl implements AdminService{
 	private AdminDAO adminDAO;
 
 	@Override
-	public int getAcceptListAllCnt(String id) {
+	public int getAcceptListAllCnt(String id,DriverSearchDTO driverSearchDTO) {
 		int acceptPermit = this.adminDAO.getAcceptPermit(id);
 		if(acceptPermit==1) {
-			int acceptListAllCnt = this.adminDAO.getAcceptListAllCnt();
+			int acceptListAllCnt = this.adminDAO.getAcceptListAllCnt(driverSearchDTO);
 			return acceptListAllCnt;
 		}
 		else {
@@ -36,9 +36,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Map<String, String>> getAcceptList(String id) {
+	public List<Map<String, String>> getAcceptList(String id,DriverSearchDTO driverSearchDTO) {
 
-		List<Map<String, String>> acceptList = this.adminDAO.getAcceptList();
+		List<Map<String, String>> acceptList = this.adminDAO.getAcceptList(driverSearchDTO);
 		return acceptList;
 
 	}
@@ -56,10 +56,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getDriverUpDelListAllCnt(String id) {
+	public int getDriverUpDelListAllCnt(String id,DriverSearchDTO driverSearchDTO) {
 		int acceptPermit = this.adminDAO.getAcceptPermit(id);
 		if(acceptPermit==1) {
-			int upDelListAllCnt = this.adminDAO.getDriverUpDelListAllCnt();
+			System.out.println("ㅇ기도?");
+			int upDelListAllCnt = this.adminDAO.getDriverUpDelListAllCnt(driverSearchDTO);
 			return upDelListAllCnt;
 		}
 		else {
@@ -68,8 +69,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Map<String, String>> getDriverUpDelList(String id) {
-		List<Map<String, String>> upDelList = this.adminDAO.getDriverUpDelList();
+	public List<Map<String, String>> getDriverUpDelList(String id,DriverSearchDTO driverSearchDTO) {
+		List<Map<String, String>> upDelList = this.adminDAO.getDriverUpDelList(driverSearchDTO);
 		return upDelList;
 
 	}

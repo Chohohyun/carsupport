@@ -5,17 +5,17 @@ import java.util.Map;
 
 public interface AdminService {
 
-	int getAcceptListAllCnt(String id);
+	int getAcceptListAllCnt(String id,DriverSearchDTO driverSearchDTO);
 
-	List<Map<String, String>> getAcceptList(String id);
+	List<Map<String, String>> getAcceptList(String id,DriverSearchDTO driverSearchDTO);
 
 	int getAcceptDriverCnt(int driver_no);
 
 	int getDriverRegCnt(DriverDTO driverDTO);
 
-	int getDriverUpDelListAllCnt(String id);
+	int getDriverUpDelListAllCnt(String id,DriverSearchDTO driverSearchDTO);
 
-	List<Map<String, String>> getDriverUpDelList(String id);
+	List<Map<String, String>> getDriverUpDelList(String id,DriverSearchDTO driverSearchDTO);
 
 	DriverDTO getDriverDTO(int driver_no);
 

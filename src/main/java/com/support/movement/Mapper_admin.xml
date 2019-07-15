@@ -10,11 +10,17 @@
 		select count(*) from admin where admin_id=#{id}
 	</select>
 	
-	<select id="getAcceptListAllCnt" resultType="int">
-		select count(*) from driver where admission_code='n'
+	<select id="getAcceptListAllCnt" parameterType="com.support.movement.DriverSearchDTO" resultType="int">
+		select count(*) from driver where admission_code='n' 
+		
 	</select>
 	
-	<select id="getAcceptList" resultType="hashmap">
+	<select id="getAcceptList"  parameterType="com.support.movement.DriverSearchDTO" resultType="hashmap">
+		<if test="selectPageNo>0">
+		select 
+			*
+		from (select zzz.*, rownum||'' RNUM from (
+		</if>
 		select
             driver_no||'' as "driver_no", 
              driver_name as "driver_name", 
@@ -33,38 +39,117 @@
               
          from driver
          where admission_code='n' 
-		
+         
+		<if test="selectPageNo>0">
+		<![CDATA[
+		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
+		 ]]>
+		 </if>
 	</select>
 	
 	
-	<select id="getDriverUpDelListAllCnt" resultType="int">
-		select count(*) from driver where admission_code='y'
+	<select id="getDriverUpDelListAllCnt" parameterType="com.support.movement.DriverSearchDTO"  resultType="int">
+		select count(*) from driver d where d.admission_code='y'
+		<if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(d.driver_road_addr) like upper( '%${keyword}%')
+						 or upper(d.driver_jibun_addr) like upper( '%${keyword}%')
+						 or upper(d.driver_email) like upper( '%${keyword}%')
+						 or upper(d.driver_phone) like upper( '%${keyword}%')
+						 or upper(d.driver_id) like upper( '%${keyword}%')
+						 or upper(d.driver_name) like upper( '%${keyword}%')
+						 or upper(d.driver_license_number) like upper( '%${keyword}%')
+						 or upper(to_char(d.driver_reg_date,'YYYYMMDD')) like upper( '%${keyword}%')
+						 
+				)
+		</if>
+		<if test="gender!=null"> 
+		
+				and(
+			 	substr(d.driver_jumin_num,7,1) in (
+				<foreach collection="gender" item="item" index="index">
+					<if test="index>0">
+						, 
+					</if>
+					<choose>
+						<when test="item.equals('male')">
+					 		1 ,3
+						</when>
+						<when test="item.equals('female')">
+					 		2 , 4
+						</when>
+					</choose> 
+				</foreach>
+				))  
+		</if> 
 	</select>
 	
 	<select id="getUserUpDelListAllCnt" resultType="int">
 		select count(*) from disability_user where admission_code='y'
+		
 	</select>
 	
-	<select id="getDriverUpDelList" resultType="hashmap">
+	<select id="getDriverUpDelList" parameterType="com.support.movement.DriverSearchDTO"  resultType="hashmap">
+		<if test="selectPageNo>0">
+		select 
+			*
+		from (select zzz.*, rownum||'' RNUM from (
+		</if>
 		select
-            driver_no||'' as "driver_no", 
-             driver_name as "driver_name", 
-             driver_id as "driver_id", 
-             driver_pwd as "driver_pwd", 
-             driver_gender as "driver_gender", 
-             driver_jumin_num as "driver_jumin_num", 
-             driver_postal_code||'' as "driver_postal_code", 
-             driver_road_addr as "driver_road_addr", 
-             driver_jibun_addr as "driver_jibun_addr", 
-             driver_detail_addr as "driver_detail_addr", 
-             driver_phone as "driver_phone",  
-             driver_email as "driver_email",  
-             driver_license_number as "driver_license_number", 
-             to_char(driver_reg_date,'YYYY-MM-DD') "driver_reg_date"
+            d.driver_no||'' as "driver_no", 
+             d.driver_name as "driver_name", 
+             d.driver_id as "driver_id", 
+             d.driver_pwd as "driver_pwd", 
+             d.driver_gender as "driver_gender", 
+             d.driver_jumin_num as "driver_jumin_num", 
+             d.driver_postal_code||'' as "driver_postal_code", 
+             d.driver_road_addr as "driver_road_addr", 
+             d.driver_jibun_addr as "driver_jibun_addr", 
+             d.driver_detail_addr as "driver_detail_addr", 
+             d.driver_phone as "driver_phone",  
+             d.driver_email as "driver_email",  
+             d.driver_license_number as "driver_license_number", 
+             to_char(d.driver_reg_date,'YYYY-MM-DD') "driver_reg_date"
               
-         from driver
-         where admission_code='y' 
+         from driver d
+         where d.admission_code='y' 
+         <if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(d.driver_road_addr) like upper( '%${keyword}%')
+						 or upper(d.driver_jibun_addr) like upper( '%${keyword}%')
+						 or upper(d.driver_email) like upper( '%${keyword}%')
+						 or upper(d.driver_phone) like upper( '%${keyword}%')
+						 or upper(d.driver_id) like upper( '%${keyword}%')
+						 or upper(d.driver_name) like upper( '%${keyword}%')
+						 or upper(d.driver_license_number) like upper( '%${keyword}%')
+						 or upper(to_char(d.driver_reg_date,'YYYYMMDD')) like upper( '%${keyword}%')
+						 
+				)
+		</if>
+		<if test="gender!=null"> 
 		
+				and(
+			 	substr(d.driver_jumin_num,7,1) in (
+				<foreach collection="gender" item="item" index="index">
+					<if test="index>0">
+						, 
+					</if>
+					<choose>
+						<when test="item.equals('male')">
+					 		1 ,3
+						</when>
+						<when test="item.equals('female')">
+					 		2 , 4
+						</when>
+					</choose> 
+				</foreach>
+				))  
+		</if> 
+		<if test="selectPageNo>0">
+		<![CDATA[
+		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
+		 ]]>
+		 </if>
 	</select>
 	
 	
@@ -339,10 +424,12 @@
 	</select>
 	
 	<!-- ============================차량리스트==============================-->
-	<select id="getCarList" resultType="hashmap">
+	<select id="getCarList" parameterType="com.support.movement.CarSearchDTO" resultType="hashmap">
+	<if test="selectPageNo>0">
 	select 
 			*
 		from (select zzz.*, rownum||'' RNUM from (
+		</if>
 		select
 			ci.car_info_no||'' as "car_info_no"
 			, ci.car_number||'' as "car_number"
@@ -364,9 +451,11 @@
 						  or upper((select cc.car_type from code_car cc where cc.car_code=ci.car_code)) like upper( '%${keyword}%')
 				)
 		</if>
+		<if test="selectPageNo>0">
 		<![CDATA[
 		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
 		 ]]>
+		 </if>
 	</select>
 	
 	<!-- ============================차량상세보기==============================-->
@@ -423,25 +512,73 @@
 	
 	<!-- ============================차량정비수정삭제(리스트 개수)==============================-->
 	<select id="getCarMaintanceListAllCnt" parameterType="com.support.movement.CarSearchDTO" resultType="int">
-		select count(*) from car_maintance_info	
+		select count(*) from car_maintance_info	cmi
 		where 1=1
 		
 		<if test="car_number!=null and car_number.length()>0">
-						and car_number=#{car_number}
+						and cmi.car_number=#{car_number}
 		</if>
+		<if test="car_code!=null and car_code.length()>0 and car_code!=0">
+						and (select ci.car_code from car_info ci where ci.car_number = cmi.car_number ) = ${car_code}
+		</if>
+		<if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(cmi.car_number) like upper( '%${keyword}%')
+						 or upper(cmi.car_maintance_content) like upper( '%${keyword}%')
+				)
+		</if>
+		
+		<if test="(maintance_year!=null and maintance_year.length()>0)">
+			and extract(year from cmi.car_maintance_date) = #{maintance_year}
+		</if>
+		<if test="(maintance_month!=null and maintance_year.length()>0)">
+			and extract(month from cmi.car_maintance_date) = #{maintance_month}
+		</if>
+		<if test="(maintance_code!=null and maintance_code.length()>0)">
+			and cmi.car_maintance_code = ${maintance_code}
+		</if>
+		
 	</select>
 	
 	<!-- ============================차량정비수정삭제(리스트)==============================-->
 	<select id="getCarMaintanceList" parameterType="com.support.movement.CarSearchDTO"  resultType="hashmap">
+	<if test="selectPageNo>0">
+		select 
+			*
+		from (select zzz.*, rownum||'' RNUM from (
+		</if>
 		select
-			car_maintance_info_no||'' as "car_maintance_info_no"
-			, car_number||'' as "car_number"
-			, car_maintance_date||'' as "car_maintance_date"
-		from car_maintance_info
+			cmi.car_maintance_info_no||'' as "car_maintance_info_no"
+			, cmi.car_number||'' as "car_number"
+			, cmi.car_maintance_date||'' as "car_maintance_date"
+		from car_maintance_info cmi
 		where 1=1	
 		<if test="car_number!=null and car_number.length()>0">
-						and car_number=#{car_number}
+						and cmi.car_number=#{car_number}
 		</if>
+		<if test="car_code!=null and car_code.length()>0 and car_code!=0">
+						and (select ci.car_code from car_info ci where ci.car_number = cmi.car_number ) = ${car_code}
+		</if>
+		<if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(cmi.car_number) like upper( '%${keyword}%')
+						or upper(cmi.car_maintance_content) like upper( '%${keyword}%')
+				)
+		</if>
+		<if test="(maintance_year!=null and maintance_year.length()>0)">
+			and extract(year from cmi.car_maintance_date) = #{maintance_year}
+		</if>
+		<if test="(maintance_month!=null and maintance_year.length()>0)">
+			and extract(month from cmi.car_maintance_date) = #{maintance_month}
+		</if>
+		<if test="(maintance_code!=null and maintance_code.length()>0)">
+			and cmi.car_maintance_code = ${maintance_code}
+		</if>
+		<if test="selectPageNo>0">
+		<![CDATA[
+		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
+		 ]]>
+		 </if>
 	</select>
 	
 	<!-- ============================차량정비수정삭제(상세보기)==============================-->

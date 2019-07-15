@@ -5,7 +5,26 @@ public class CarSearchDTO {
 	private String keyword;
 	private String car_code;
 	private int selectPageNo;
+	private String maintance_year;
+	private String maintance_month;
+	private String maintance_code;
 	
+	public String getMaintance_year() {
+		return maintance_year;
+	}
+
+	public void setMaintance_year(String maintance_year) {
+		this.maintance_year = maintance_year;
+	}
+
+	public String getMaintance_month() {
+		return maintance_month;
+	}
+
+	public void setMaintance_month(String maintance_month) {
+		this.maintance_month = maintance_month;
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -36,6 +55,14 @@ public class CarSearchDTO {
 
 	public void setSelectPageNo(int selectPageNo) {
 		this.selectPageNo = selectPageNo;
+	}
+
+	public String getMaintance_code() {
+		return maintance_code;
+	}
+
+	public void setMaintance_code(String maintance_code) {
+		this.maintance_code = maintance_code;
 	}
 	
 }

@@ -25,16 +25,16 @@ public class AdminDAOImpl implements AdminDAO{
 	}
 
 	@Override
-	public int getAcceptListAllCnt() {
+	public int getAcceptListAllCnt(DriverSearchDTO driverSearchDTO) {
 		int acceptListAllCnt = this.sqlSession.selectOne(
-				"com.support.movement.AdminDAO.getAcceptListAllCnt");
+				"com.support.movement.AdminDAO.getAcceptListAllCnt",driverSearchDTO);
 		return acceptListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getAcceptList() {
+	public List<Map<String, String>> getAcceptList(DriverSearchDTO driverSearchDTO) {
 		List<Map<String, String>> acceptList = this.sqlSession.selectList(
-				"com.support.movement.AdminDAO.getAcceptList");
+				"com.support.movement.AdminDAO.getAcceptList",driverSearchDTO);
 		return acceptList;
 	}
 
@@ -54,16 +54,16 @@ public class AdminDAOImpl implements AdminDAO{
 	}
 
 	@Override
-	public int getDriverUpDelListAllCnt() {
+	public int getDriverUpDelListAllCnt(DriverSearchDTO driverSearchDTO) {
 		int upDelListAllCnt = this.sqlSession.selectOne(
-				"com.support.movement.AdminDAO.getDriverUpDelListAllCnt");
+				"com.support.movement.AdminDAO.getDriverUpDelListAllCnt",driverSearchDTO);
 		return upDelListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getDriverUpDelList() {
+	public List<Map<String, String>> getDriverUpDelList(DriverSearchDTO driverSearchDTO) {
 		List<Map<String, String>> upDelList = this.sqlSession.selectList(
-				"com.support.movement.AdminDAO.getDriverUpDelList");
+				"com.support.movement.AdminDAO.getDriverUpDelList",driverSearchDTO);
 		return upDelList;
 	}
 

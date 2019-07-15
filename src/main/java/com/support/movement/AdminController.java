@@ -72,14 +72,15 @@ public class AdminController {
 	}
 
 	// 가상주소 /erp/loginForm.do로 접속하면 호출되는 메소드 선언
-	@RequestMapping(value="/driverAcceptForm.do")
+	@RequestMapping(
+			value="/driverAcceptForm.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
 	public ModelAndView driverAccept(
-			// HttpSession 객체가 들어올 매개변수 선언
-			// 매개변수에 자료형이 HttpSession이면 웹서버가
-			// 생성한 HttpSession 객체가 들어온다.
-			HttpSession session) {
-
-
+			HttpSession session, HttpServletResponse response,
+			DriverSearchDTO driverSearchDTO
+			){
 		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
 		//session.invalidate();
 		ModelAndView mav = new ModelAndView();
@@ -88,10 +89,12 @@ public class AdminController {
 		List<Map<String,String>> acceptList = new ArrayList<Map<String,String>>();
 		try {
 			String id = (String) session.getAttribute("id");
-
+			if(driverSearchDTO.getSelectPageNo()==0) {
+				driverSearchDTO.setSelectPageNo(1);
+			}
 			System.out.println(2);
 
-			int acceptListAllCnt = this.adminService.getAcceptListAllCnt(id);
+			int acceptListAllCnt = this.adminService.getAcceptListAllCnt(id,driverSearchDTO);
 
 			System.out.println(3);
 			System.out.println(acceptListAllCnt);
@@ -100,10 +103,11 @@ public class AdminController {
 			if(acceptListAllCnt!=0) {
 
 				System.out.println(5);
-				acceptList= this.adminService.getAcceptList(id);
+				acceptList= this.adminService.getAcceptList(id,driverSearchDTO);
 
 				System.out.println(6);
 			}
+			mav.addObject("driverSearchDTO",driverSearchDTO);
 			mav.addObject("acceptListAllCnt",acceptListAllCnt);
 			mav.addObject("acceptList",acceptList);
 
@@ -119,14 +123,15 @@ public class AdminController {
 	//**********************************
 	// 운전자 수정 및 삭제를 위해 운전자 목록을 불러오는 페이지
 	//**********************************
-	@RequestMapping(value="/driverUpDelForm.do")
+	@RequestMapping(
+			value="/driverUpDelForm.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
 	public ModelAndView driverUpDel(
-			// HttpSession 객체가 들어올 매개변수 선언
-			// 매개변수에 자료형이 HttpSession이면 웹서버가
-			// 생성한 HttpSession 객체가 들어온다.
-			HttpSession session) {
-
-
+			HttpSession session, HttpServletResponse response,
+			DriverSearchDTO driverSearchDTO
+			){
 		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
 		//session.invalidate();
 		ModelAndView mav = new ModelAndView();
@@ -134,13 +139,17 @@ public class AdminController {
 		List<Map<String,String>> upDelList = new ArrayList<Map<String,String>>();
 		try {
 			String id = (String) session.getAttribute("id");
-
-
-			int upDelListAllCnt = this.adminService.getDriverUpDelListAllCnt(id);
+			if(driverSearchDTO.getSelectPageNo()==0) {
+				driverSearchDTO.setSelectPageNo(1);
+			}
+			System.out.println("여기?");
+			System.out.println(driverSearchDTO.getGender()[0]);
+			int upDelListAllCnt = this.adminService.getDriverUpDelListAllCnt(id,driverSearchDTO);
 			System.out.println(upDelListAllCnt);
 			if(upDelListAllCnt!=0) {
-				upDelList= this.adminService.getDriverUpDelList(id);
+				upDelList= this.adminService.getDriverUpDelList(id,driverSearchDTO);
 			}
+			mav.addObject("driverSearchDTO",driverSearchDTO);
 			mav.addObject("upDelListAllCnt",upDelListAllCnt);
 			mav.addObject("upDelList",upDelList);
 
@@ -582,9 +591,13 @@ public class AdminController {
 			){
 		System.out.println("차량정보페이지");
 		ModelAndView mav = new ModelAndView();
+		System.out.println(carSearchDTO);
 		int carListAllCnt = 0;
 		List<Map<String,String>> carList = new ArrayList<Map<String,String>>();
 		try {
+			if(carSearchDTO.getSelectPageNo()==0) {
+				carSearchDTO.setSelectPageNo(1);
+			}
 			carListAllCnt = this.adminService.getCarListAllCnt(carSearchDTO);
 			if(carListAllCnt!=0) {
 				carList= this.adminService.getCarList(carSearchDTO);
@@ -611,7 +624,7 @@ public class AdminController {
 		System.out.println("차량정비등록페이지");
 		ModelAndView mav = new ModelAndView();
 		CarDTO carDTO = this.adminService.getCarDTO(car_info_no); 
-		
+
 		mav.addObject("carDTO", carDTO);
 		mav.setViewName("carMaintenanceRegForm.jsp");
 		return mav;
@@ -657,6 +670,9 @@ public class AdminController {
 		List<Map<String,String>> carMaintanceList = new ArrayList<Map<String,String>>();
 		ModelAndView mav = new ModelAndView();
 		try {
+			if(carSearchDTO.getSelectPageNo()==0) {
+				carSearchDTO.setSelectPageNo(1);
+			}
 			System.out.println(carSearchDTO.getCar_number());
 			carMaintanceListAllCnt = this.adminService.getCarMaintanceListAllCnt(carSearchDTO);
 			if(carMaintanceListAllCnt!=0) {
@@ -685,7 +701,7 @@ public class AdminController {
 			HttpSession session, HttpServletResponse response,
 			CarSearchDTO carSearchDTO
 			){
-	
+		System.out.println(carSearchDTO);
 		List<Map<String,String>> carList = this.adminService.getCarList(carSearchDTO);	
 		System.out.println(carList+"llllll");
 		return carList;

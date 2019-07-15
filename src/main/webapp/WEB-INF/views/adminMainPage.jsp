@@ -126,15 +126,15 @@ a:hover { color: white; text-decoration: underline;}
 function adminMainPage(){
 	location.replace("/support/adminMainPage.do")
 }
-function driverAcceptForm(){
-		location.replace("/support/driverAcceptForm.do");
+	function goDriverAcceptForm(){
+		document.driverAcceptForm.submit();
 	}
 
 	function driverRegForm(){
 		location.replace("/support/driverRegForm2.do");
 	}
-	function driverUpDelForm(){
-		location.replace("/support/driverUpDelForm.do");
+	function goDriverUpDelForm(){
+		document.driverUpDelForm.submit();
 	}
 	// 차량관리
 	function carRegForm(){
@@ -144,8 +144,8 @@ function driverAcceptForm(){
 		alert(1);
 		document.carUpDelForm.submit();
 	}
-	function carListInfoForm(){
-		location.replace("/support/carListInfoForm.do");
+	function goCarListInfoForm(){
+		document.carListInfoForm.submit();
 	}
 	function goCarMaintanceListForm(){
 		document.carMaintanceList.submit();
@@ -234,7 +234,7 @@ function driverAcceptForm(){
 						<ul class="subnav">  
 							<li><a href="javascript:carRegForm();">차량 등록</a></li>  
 							<li><a href="javascript:goCarUpDelForm();">차량 수정/삭제</a></li> 
-							<li><a href="javascript:carListInfoForm();">차량 정보</a></li>  
+							<li><a href="javascript:goCarListInfoForm();">차량 정보</a></li>  
 							<li><a href="javascript:goCarMaintanceListForm();">차량별 정비내역</a></li> 
 						</ul>  
 					</li> 
@@ -243,12 +243,12 @@ function driverAcceptForm(){
 						<div class="topnav">운전자관리</div>
 						<ul class="subnav">  
 								 <li>
-	<a href="javascript:driverAcceptForm();">운전자 승인</a></li>
-		 <li>
-      <a href="javascript:driverRegForm();">운전자 등록</a></li>
-		 <li>
-      <a href="javascript:driverUpDelForm();">운전자 수정/삭제</a></li>  
-						</ul>  
+							<a href="javascript:goDriverAcceptForm();">운전자 승인</a></li>
+							 <li>
+					      <a href="javascript:driverRegForm();">운전자 등록</a></li>
+							 <li>
+					      <a href="javascript:goDriverUpDelForm();">운전자 수정/삭제</a></li>  
+											</ul>  
 					</li> 
 
 					<li class="navi_set">  
@@ -290,5 +290,16 @@ function driverAcceptForm(){
 
 <form name="carUpDelForm" method="post" action="/support/adminCarUpDelForm.do">
 </form>
+
+<form name="carListInfoForm" method="post" action="/support/carListInfoForm.do">
+</form>
+
+<form name="driverAcceptForm" method="post" action="/support/driverAcceptForm.do">
+</form>
+
+<form name="driverUpDelForm" method="post" action="/support/driverUpDelForm.do">
+</form>
+
+
 </body>
 </html>
