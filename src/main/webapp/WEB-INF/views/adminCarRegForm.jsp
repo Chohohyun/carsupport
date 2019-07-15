@@ -68,6 +68,10 @@
     					alert("차량등록 성공!");
     					location.replace("/support/adminMainPage.do");
     				}
+    				else if(data==-2){
+    					alert("이미 등록되있는 차량입니다.");
+    					return;
+    				}
     				else{
     					alert("차량등록 실패!");
     				}
@@ -121,7 +125,7 @@
                     <th bgcolor="gray">운전자
                     <td>
                         <select name="car_driver" >
-                            <option value="">운전자선택
+                            <option value="0">운전자미등록
                             
                         </select>
                 </tr>

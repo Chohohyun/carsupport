@@ -307,9 +307,19 @@
 			, #{car_distance}
 			, #{car_code}
 			, #{car_driver}
+			
 		)
 	</insert>
 	
+	
+	<select id="getCheckCarNumber" parameterType="com.support.movement.CarDTO" resultType="int">
+		select
+			count(*)
+		from car_info
+		where car_number=#{car_number}
+	
+	
+	</select>
 	
 	
 	<!-- ============================차량총개수==============================-->
@@ -373,12 +383,14 @@
 			, car_maintance_date
 			, car_maintance_code
 			, car_maintance_content
+			, car_distance
 		) values (
 			(select nvl(max(car_maintance_info_no),0)+1 from car_maintance_info)
 			, #{car_number}
 			, to_date(#{car_maintance_date},'YYYYMMDD')
 			, ${car_maintance_code}
 			, #{car_maintance_content}
+			, ${car_distance}
 		)	
 	</insert>
 	
@@ -404,6 +416,7 @@
 			, to_char(car_maintance_date,'YYYYMMDD')||'' as "car_maintance_date"
 			, car_maintance_code||'' as "car_maintance_code"
 			, car_maintance_content||'' as "car_maintance_content"
+			, car_distance||'' as "car_distance"
 		from car_maintance_info	 
 		where car_maintance_info_no=#{car_maintance_info_no}
 	</select>

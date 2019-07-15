@@ -36,10 +36,13 @@
     					var option = $("<option value="+data[i].driver_no+">"+driverList[i]+"</option>");
     					$('[name=car_driver]').append(option);
     				}
-    				var driver = $("<option value="+"${carDTO.driver_no}"+">"+"${carDTO.car_driver}"+"</option>");
-					$('[name=car_driver]').append(driver);
-    				
-    				inputData("car_driver", "${carDTO.driver_no}" );
+    				var car_driver_check = "${carDTO.driver_no}"
+    				if(car_driver_check>0){
+    					var driver = $("<option value="+"${carDTO.driver_no}"+">"+"${carDTO.car_driver}"+"</option>");
+						$('[name=car_driver]').append(driver);
+    			
+    					inputData("car_driver", "${carDTO.driver_no}" );
+    				}
     			}
     			,error:function(){
     				alert("서버 접속 실패!");			
@@ -58,7 +61,7 @@
     			success:function(data){
     				if(data>=0){
     					alert("차량수정 성공!");
-    					location.replace("/support/adminMainPage.do");
+    					location.replace("/support/adminCarUpDelForm.do");
     				}
     				else{
     					alert("차량수정 실패!");
@@ -81,7 +84,7 @@
     			success:function(data){
     				if(data==1){
     					alert("차량삭제 성공!");
-    					location.replace("/support/adminMainPage.do");
+    					location.replace("/support/adminCarUpDelForm.do");
     				}
     				else{
     					alert("차량삭제 실패!");
@@ -94,8 +97,8 @@
     		}); 
         }
         
-        function goAdminMainPage(){
-        	location.replace("/support/adminMainPage.do");
+        function goUpDelForm(){
+        	location.replace("/support/adminCarUpDelForm.do");
         }
     </script>
     </head>
@@ -137,7 +140,7 @@
                     <th bgcolor="gray">운전자
                     <td>
                         <select name="car_driver" class="car_driver">
-                            
+                            <option value="0">운전자미지정
                             
                         </select>
                 </tr>
@@ -148,7 +151,7 @@
 			
             <input type="button" value="수정" onclick="goCarUpdateProc();"> &nbsp; &nbsp;
             <input type="button" value="삭제" onclick="goCarDeleteProc();"> &nbsp; &nbsp;
-             <input type="button" value="취소" onclick="goAdminMainPage();"> 
+             <input type="button" value="취소" onclick="goUpDelForm();"> 
         </form>	     
        
     </center></body>

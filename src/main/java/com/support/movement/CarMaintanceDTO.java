@@ -1,11 +1,12 @@
 package com.support.movement;
 
 public class CarMaintanceDTO {
-	String car_maintance_info_no;
-	String car_number;
-	String car_maintance_date;
-	String car_maintance_code;
-	String car_maintance_content;
+	private String car_maintance_info_no;
+	private String car_number;
+	private String car_maintance_date;
+	private String car_maintance_code;
+	private String car_maintance_content;
+	private String car_distance;
 	
 	public String getCar_maintance_info_no() {
 		return car_maintance_info_no;
@@ -36,6 +37,12 @@ public class CarMaintanceDTO {
 	}
 	public void setCar_maintance_content(String car_maintance_content) {
 		this.car_maintance_content = car_maintance_content;
+	}
+	public String getCar_distance() {
+		return car_distance;
+	}
+	public void setCar_distance(String car_distance) {
+		this.car_distance = car_distance;
 	}
 	
 	

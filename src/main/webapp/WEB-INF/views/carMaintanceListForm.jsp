@@ -10,17 +10,41 @@
 <html>
 <script>
 $(document).ready(function() {
-
+	createCarList();
 	
-}); //$(document).ready(function() {
-	//----------------------------------------
-	// 수정/삭제 화면이으로 이동
-	//----------------------------------------
+}); 
+	 
 	function goCarMaintanceUpDelDetailForm(car_maintance_info_no){
 		alert(car_maintance_info_no);
+		
 		$("[name=carMaintanceContent] [name=car_maintance_info_no]").val( car_maintance_info_no );
 		document.carMaintanceContent.submit();
 	}
+	
+	function createCarList(){
+    	alert(1);
+		var carList = [];
+    	$.ajax({
+			url:"/support/carList.do"
+			,type:"post"
+			,datatype: "application/json"
+			,success : function(data){
+				var datalen = data.length;
+				alert(datalen)
+				for(var i=0; i<datalen; i++){
+					carList[i] = data[i].car_number;
+					var option = $("<option value="+data[i].car_number+">"+carList[i]+"</option>");
+					$('[name=carList]').append(option);
+				}
+			
+			
+			}
+			,error:function(){
+				alert("서버 접속 실패!");			
+			}
+		});
+	}
+
 
 </script>
 <head>
@@ -38,7 +62,9 @@ $(document).ready(function() {
 		<table border=0>
 			
 			<tr><td align=right> 검색 총 개수 : ${requestScope.carMaintanceListAllCnt} 개
-	
+			<select name="carList">
+			
+			</select>
 			<tr><th align=center><span class="pagingNumber"></span>
 			<tr><td>
 			

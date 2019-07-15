@@ -358,5 +358,11 @@ public class AdminDAOImpl implements AdminDAO{
 		return groupCnt;
 	}
 
+	@Override
+	public int getCheckCarNumber(CarDTO carDTO) {
+		int checkCarNumber = this.sqlSession.selectOne("com.support.movement.AdminDAO.getCheckCarNumber",carDTO);
+		return checkCarNumber;
+	}
+
 
 }

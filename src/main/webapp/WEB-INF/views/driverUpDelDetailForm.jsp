@@ -386,7 +386,7 @@
                                 <div class="row row-space">
                                     <div class="input-group wrap-input100">
                                        
-                                           <input class="input100 input--style-5" type="text" name="name" placeholder="이름">
+                                           <input class="input100 input--style-5" type="text" name="name" placeholder="이름" readonly>
                                            <span class="focus-input100"></span>
                                         
                                     </div>

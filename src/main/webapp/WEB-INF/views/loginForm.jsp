@@ -22,9 +22,12 @@
 		//$('[name="loginForm"]').find('. login').click(function(){
 	});
 		
+	
 	function goRegForm(){
 		document.goRegForm.submit();
 	}
+		
+	
 	function goFindIdForm(){
 		document.goFindIdForm.submit();
 	}
@@ -140,6 +143,8 @@
 							
 					
 					</div>
+					
+					
 
 					<div class="text-center p-t-12">
 						<a class="txt2" href="javascript:goFindIdForm();">
@@ -167,6 +172,7 @@
 	<form name="goRegForm" method="get" action="/support/regForm.do"></form>
 	<form name="goFindIdForm" method="get" action="/support/findIdForm.do"></form>
 	<form name="goFindPwdForm" method="get" action="/support/findPwdForm.do"></form>
+	
 	
 
 </body>

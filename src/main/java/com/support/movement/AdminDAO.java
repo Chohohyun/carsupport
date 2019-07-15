@@ -97,4 +97,6 @@ public interface AdminDAO {
 
 	int getGroupCnt(Map<String, String> paramsMap);
 
+	int getCheckCarNumber(CarDTO carDTO);
+
 }

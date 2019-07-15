@@ -143,6 +143,10 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public int getCarRegCnt(CarDTO carDTO) {
+		int checkCarNumber = this.adminDAO.getCheckCarNumber(carDTO);
+		if(checkCarNumber>=1) {
+			return -2;
+		}
 		int carRegCnt = this.adminDAO.getCarRegCnt(carDTO);
 		return carRegCnt;
 	}

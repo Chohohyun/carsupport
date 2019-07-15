@@ -83,16 +83,26 @@ public class AdminController {
 		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
 		//session.invalidate();
 		ModelAndView mav = new ModelAndView();
+		System.out.println(1);
 		mav.setViewName("driverAcceptForm.jsp");
 		List<Map<String,String>> acceptList = new ArrayList<Map<String,String>>();
 		try {
 			String id = (String) session.getAttribute("id");
 
+			System.out.println(2);
 
 			int acceptListAllCnt = this.adminService.getAcceptListAllCnt(id);
+
+			System.out.println(3);
 			System.out.println(acceptListAllCnt);
+
+			System.out.println(4);
 			if(acceptListAllCnt!=0) {
+
+				System.out.println(5);
 				acceptList= this.adminService.getAcceptList(id);
+
+				System.out.println(6);
 			}
 			mav.addObject("acceptListAllCnt",acceptListAllCnt);
 			mav.addObject("acceptList",acceptList);
@@ -448,6 +458,9 @@ public class AdminController {
 			){
 		int carRegCnt = 0;
 		try {
+			if(carDTO.getCar_driver()==null) {
+				carDTO.setCar_driver("0");
+			}
 			carRegCnt = this.adminService.getCarRegCnt(carDTO);
 		} catch (Exception e) {
 			System.out.println("carRegProc을 불러오는 도중 오류");
@@ -635,7 +648,20 @@ public class AdminController {
 		mav.setViewName("carMaintanceListForm.jsp");
 		return mav;
 	}
+	//----------------------
+	// 차 리스트 (SelectBox용도)
+	//----------------------
+	@RequestMapping(
+			value="/carList.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public List<Map<String,String>> carList(){
+		List<Map<String,String>> carList = this.adminService.getCarList();	
+		System.out.println(carList+"llllll");
+		return carList;
 
+	}
 	//***************************************************
 	// 차량 정비 수정/삭제 상세보기 UI 이동 (차량정비 고유 넘버) 
 	//***************************************************

@@ -260,6 +260,12 @@
 
 	}
 	function goDriverRegForm() {
+		var driverIdChk = $("[name=driverRegForm] [name=idChk]").val();
+		if (driverIdChk== 0) {
+			alert("아이디 중복확인을 먼저 해주세요.");
+			$("[name=driverRegForm] [name=id]").focus();
+			return;
+		}
 		var emailCheck = $("[name=driverRegForm] [name=emailCheck]").val();
 		if (emailCheck == 0) {
 			alert("이메일 인증을 먼저 받으세요.");
@@ -517,7 +523,7 @@
 											value="아이디중복확인"> <span class="focus-input100"></span>
 
 									</div>
-									<input type="hidden" name="idchk" id="userIdChk" value="0">
+									<input type="hidden" name="idChk" id="userIdChk" value="0">
 								</div>
 							</div>
 						</div>
@@ -882,7 +888,7 @@
 											class="focus-input100"></span>
 
 									</div>
-									<input type="hidden" name="idchk" id="driverIdChk" value="0">
+									<input type="hidden" name="idChk" id="driverIdChk" value="0">
 								</div>
 							</div>
 						</div>
@@ -1098,23 +1104,16 @@
 							<div class="name">면허증번호</div>
 							<div class="value">
 								<div class="row row-refine">
-									<!-- <div class="col-3">
-                                        <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code">
-                                            <label class="label--desc">Area Code</label>
-                                        </div>
-                                    </div> -->
-									<div class="col-9">
-										<div class="input-group-desc wrap-input100">
-											<input class="input100 input--style-5" type="text"
-												name="driver_license_number" placeholder="면허증번호"> <span
-												class="focus-input100"></span>
-											<!-- <label class="label--desc">Phone Number</label> -->
-										</div>
+									<div class="input-group wrap-input90">
+										<input class="input100 input--style-5" type="text"
+												name="driver_license_number" placeholder="면허증번호"> 
+										<span class="focus-input100"></span>
 									</div>
+									
 								</div>
 							</div>
 						</div>
+
 
 						<div class="form-row m-b-55">
 
