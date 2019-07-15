@@ -133,11 +133,11 @@ label.star:before {
 				value="${reserveList.reserve_apply_car_number}"> <input
 				type="button" value="저장" onClick="checkReview()"> <input
 				type="reset" value="다시작성"> <input type="button" value="목록보기"
-				onClick="document.userMainPage.submit()">
+				onClick="document.userUtilizationDetails.submit()">
 		</form>
 
-		<form name="userMainPage" method="post"
-			action="/support/userMainPage.do"></form>
+		<form name="userUtilizationDetails" method="post"
+			action="/support/userUtilizationDetails.do"></form>
 
 		<input type="button" value="정보보기" onclick="print_html_info();">
 	</center>

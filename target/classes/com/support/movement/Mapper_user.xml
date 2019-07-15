@@ -306,4 +306,60 @@
 		where reserve_apply_car_number = ${reserve_apply_car_number}
 	
 	</update>
+	
+	<insert id ="getReviewRegCnt" parameterType="com.support.movement.ReviewDTO">
+		insert into review(
+		review_no,
+		reserve_apply_car_number,
+		review_score,
+		review_content) 
+		values(
+		(select nvl(max(review_no),0)+1 from review),
+		${reserve_apply_car_number},
+		${review_score},
+		#{review_content}
+		)
+	
+	</insert>
+	
+	<!-- 불만게시판 상세보기 -->
+	<select id="getReviewInfo" parameterType="int" resultType="com.support.movement.ReviewDTO">
+		select
+			(select to_char(rac.reservation_date,'yyyy')||'년 '||to_char(rac.reservation_date,'mm')||'월 '||
+            to_char(rac.reservation_date,'dd')||'일 '||to_char(rac.reservation_date,'hh24') from reserve_apply_car rac where rac.reserve_apply_car_number = rv.reserve_apply_car_number)||'시 ' as "reservation_date",
+            
+            (select decode(rac.end_road_addr,'','도로명주소없음',end_road_addr) from reserve_apply_car rac where rac.reserve_apply_car_number = rv.reserve_apply_car_number)||'' as "end_road_addr",
+            (select decode((select d.driver_name from driver d where rac.driver_no=d.driver_no),'','미정',(select d.driver_name from driver d where rac.driver_no=d.driver_no))
+            from reserve_apply_car rac where rac.reserve_apply_car_number = rv.reserve_apply_car_number)||'' as "driver_name",
+            reserve_apply_car_number||'' as "reserve_apply_car_number",
+            review_score||'' as "review_score",
+            review_content||'' as "review_content"
+		from review rv
+		where rv.reserve_apply_car_number=#{reserve_apply_car_number}
+	</select>
+	
+	
+	<select id="getReviewCnt" parameterType="com.support.movement.ReviewDTO" resultType="int">
+		select
+			count(*)
+		from review
+		where reserve_apply_car_number=${reserve_apply_car_number}
+	</select>
+	
+	<update id="getReviewUpCnt" parameterType="com.support.movement.ReviewDTO">
+		update review
+		set
+			review_date = sysdate,
+			review_score=${review_score},
+			review_content=#{review_content}
+		where reserve_apply_car_number=${reserve_apply_car_number}
+	
+	</update>
+	
+	<delete id="getReviewDelCnt" parameterType="com.support.movement.ReviewDTO">
+		delete 
+		from review
+		where reserve_apply_car_number=${reserve_apply_car_number}
+	</delete>
+	
 </mapper>

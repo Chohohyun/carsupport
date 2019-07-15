@@ -159,5 +159,37 @@ public class UserDAOImpl implements UserDAO{
 		return map;
 	}
 
+	@Override
+	public int getReviewRegCnt(ReviewDTO reviewDTO) {
+		System.out.println("여기오나");
+		int reviewRegCnt = this.sqlSession.insert("com.support.movement.UserDAO.getReviewRegCnt",reviewDTO);
+		System.out.println("여기오나");
+		return reviewRegCnt;
+	}
+
+	@Override
+	public ReviewDTO getReviewInfo(int reserve_apply_car_number) {
+		ReviewDTO reviewDTO = this.sqlSession.selectOne("com.support.movement.UserDAO.getReviewInfo",reserve_apply_car_number);
+		return reviewDTO;
+	}
+
+	@Override
+	public int getReviewUpCnt(ReviewDTO reviewDTO) {
+		int reviewUpCnt = this.sqlSession.update("com.support.movement.UserDAO.getReviewUpCnt",reviewDTO);
+		return reviewUpCnt;
+	}
+
+	@Override
+	public int getReviewCnt(ReviewDTO reviewDTO) {
+		int reviewCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getReviewCnt",reviewDTO);
+		return reviewCnt;
+	}
+
+	@Override
+	public int getReviewDelCnt(ReviewDTO reviewDTO) {
+		int reviewUpCnt = this.sqlSession.update("com.support.movement.UserDAO.getReviewDelCnt",reviewDTO);
+		return reviewUpCnt;
+	}
+
 
 }

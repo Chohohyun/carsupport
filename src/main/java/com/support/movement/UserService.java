@@ -35,4 +35,10 @@ public interface UserService {
 
 	int insertReview(ReviewDTO reviewDTO);
 
+	ReviewDTO getReviewInfo(int reserve_apply_car_number);
+
+	int getReviewUpCnt(ReviewDTO reviewDTO);
+
+	int getReviewDelCnt(ReviewDTO reviewDTO);
+
 }

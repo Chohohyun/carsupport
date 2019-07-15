@@ -50,5 +50,15 @@ public interface UserDAO {
 
 	Map<String, String> getReserveInfo(int reserve_apply_car_number);
 
+	int getReviewRegCnt(ReviewDTO reviewDTO);
+
+	ReviewDTO getReviewInfo(int reserve_apply_car_number);
+
+	int getReviewUpCnt(ReviewDTO reviewDTO);
+
+	int getReviewCnt(ReviewDTO reviewDTO);
+
+	int getReviewDelCnt(ReviewDTO reviewDTO);
+
 
 }

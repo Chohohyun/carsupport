@@ -19,6 +19,12 @@
 		document.reviewRegForm.submit();
 		
 	}
+	function goReviewUpDelForm(number){
+		alert(1);
+		document.reviewUpDelForm.reserve_apply_car_number.value=number;
+		document.reviewUpDelForm.submit();
+		
+	}
 </script>
 <head>
 
@@ -45,6 +51,7 @@
 												<th class="column5">운전자</th>
 												<th class="column6">예약상태</th>
 												<th class="column7">평점</th>
+												<th class="column8">비고</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -57,16 +64,16 @@
 													<td>${user.reservation_date}</td>
 													<td>${user.driver_name}</td>
 													<td>${user.reserve_status_name}</td>
-
+													<td>${user.review_score}</td>
 													<c:choose>
 														<c:when test="${user.review_score=='미평가'}">
-															<td><input type="button" value="리뷰남기기"
-																onclick="goReviewRegForm(${user.reserve_apply_car_number});">
+															<td><input type="button" value="리뷰남기기" onclick="goReviewRegForm(${user.reserve_apply_car_number});">
 															</td>
+															
 														</c:when>
 														<c:otherwise>
-															<td>${user.review_score}점</td>
-
+															<td><input type="button" value="리뷰수정/삭제" onclick="goReviewUpDelForm(${user.reserve_apply_car_number});">
+															</td>
 														</c:otherwise>
 													</c:choose>
 												</tr>
@@ -89,6 +96,10 @@
 		<input type="hidden" name="reserve_apply_car_number" value="">
 	</form>
 
+	<form name="reviewUpDelForm" method="post"
+		action="/support/reviewUpDelForm.do">
+		<input type="hidden" name="reserve_apply_car_number" value="">
+	</form>
 
 </body>
 </html>

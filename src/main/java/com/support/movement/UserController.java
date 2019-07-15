@@ -449,7 +449,7 @@ public class UserController {
 	//리뷰 시작하자
 	//********************************
 	//=================================
-	// 불만게시판에 입력한 글을 DB에  꽂아버리는 메소드
+	// 리뷰 등록하자
 	//=================================
 	@RequestMapping(
 			value="/reviewRegProc.do"
@@ -464,21 +464,82 @@ public class UserController {
 		// 메소드 첫 줄에 도스창 찍는 명령어 안되면 매개변수 쪽으로 들어오다가 오류 발생 한 것
 		System.out.println("reviewRegProc 메소드 시작. reviewDTO 이상없음");
 
-		//--------------------------------------
-		// 게시판 글 입력하고 [게시판 입력 적용행의 개수] 저장할 변수 선언
-		//--------------------------------------
+
 		int reviewRegCnt = 0;
 		System.out.println(reviewRegCnt);
 		try {
+			System.out.println(reviewDTO.getReserve_apply_car_number());
+			System.out.println(reviewDTO.getReview_score());
+			System.out.println(reviewDTO.getReview_content());
 			reviewRegCnt = this.userService.insertReview(reviewDTO);
 			System.out.println("에러 테스트3");
 
 		} catch(Exception e) {
-			System.out.println("BoardController.insertQna 메소드에서 에러발생!");
+			System.out.println("reviewRegProc 메소드에서 에러발생!");
 			reviewRegCnt = -1;
 		}
 		//
 		return reviewRegCnt;
 	}
+
+	// 리뷰 수정하러 가자
+
+	@RequestMapping(value="/reviewUpDelForm.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8") 
+	public ModelAndView reviewUpDelForm( 
+			@RequestParam(value="reserve_apply_car_number") int reserve_apply_car_number, 
+			HttpSession session ) { 
+		// ModelAndView객체 생성하기 
+		// ModelAndView객체에 호출 JSP 페이지명을 저장하기 
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("reviewUpDelForm.jsp"); 
+		try { 
+			System.out.println(reserve_apply_car_number);
+			System.out.println("g하이");
+
+			ReviewDTO reviewDTO = this.userService.getReviewInfo(reserve_apply_car_number);
+			mav.addObject("reviewDTO",reviewDTO);
+		}catch(Exception e){ 
+			System.out.println("UserController.reviewUpDelForm(~) 메소드 예외 발생"); 
+		} 
+		return mav; 
+	} 
+
+	//**********************************
+	// 리뷰 수정 삭제 시도 
+	//**********************************
+	@RequestMapping(
+			value="/reviewUpDelProc.do",
+			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public int reviewUpDelProc(
+			HttpSession session,HttpServletResponse response,
+			ReviewDTO reviewDTO,
+			@RequestParam(value="upDel") String upDel
+			) {
+
+		int reviewUpDelCnt=0;
+		try {
+			System.out.println(upDel);
+			if(upDel.equals("up")) {
+				System.out.println(reviewDTO);
+				System.out.println(reviewDTO.getReview_content());
+				System.out.println(reviewDTO.getReview_score());
+				System.out.println(reviewDTO.getReserve_apply_car_number());
+				reviewUpDelCnt = this.userService.getReviewUpCnt(reviewDTO);
+			}
+			else {
+				reviewUpDelCnt = this.userService.getReviewDelCnt(reviewDTO);
+			}
+			System.out.println("reviewUpDelCnt 된다 ");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("LoginController.driverRegProc(~) 에서 에러 발생");
+			reviewUpDelCnt=-3;
+		} 
+		return reviewUpDelCnt;
+	}
+
 
 }

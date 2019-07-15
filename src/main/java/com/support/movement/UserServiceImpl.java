@@ -154,8 +154,34 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int insertReview(ReviewDTO reviewDTO) {
-		int reviewRegCnt = 0;
+		int reviewRegCnt = this.userDAO.getReviewRegCnt(reviewDTO);
 		return reviewRegCnt;
+	}
+
+	@Override
+	public ReviewDTO getReviewInfo(int reserve_apply_car_number) {
+		ReviewDTO reviewDTO = this.userDAO.getReviewInfo(reserve_apply_car_number);
+		return reviewDTO;
+	}
+
+	@Override
+	public int getReviewUpCnt(ReviewDTO reviewDTO) {
+		int reviewCnt = this.userDAO.getReviewCnt(reviewDTO);
+		if(reviewCnt==0){
+			return -1;
+		}
+		int reviewUpCnt = this.userDAO.getReviewUpCnt(reviewDTO);
+		return reviewUpCnt;
+	}
+
+	@Override
+	public int getReviewDelCnt(ReviewDTO reviewDTO) {
+		int reviewCnt = this.userDAO.getReviewCnt(reviewDTO);
+		if(reviewCnt==0){
+			return -1;
+		}
+		int reviewDelCnt = this.userDAO.getReviewDelCnt(reviewDTO);
+		return reviewDelCnt;
 	}
 
 	
