@@ -43,9 +43,9 @@ public interface AdminDAO {
 
 	int getCarRegCnt(CarDTO carDTO);
 
-	int getCarListAllCnt();
+	int getCarListAllCnt(CarSearchDTO carSearchDTO);
 
-	List<Map<String, String>> getCarList();
+	List<Map<String, String>> getCarList(CarSearchDTO carSearchDTO);
 	
 	CarDTO getCarDTO(int car_info_no);
 
@@ -55,9 +55,9 @@ public interface AdminDAO {
 
 	int getCarMaintanceRegCnt(CarMaintanceDTO carMaintanceDTO);
 
-	int getCarMaintanceListAllCnt();
+	int getCarMaintanceListAllCnt(CarSearchDTO carSearchDTO);
 
-	List<Map<String, String>> getCarMaintanceList();
+	List<Map<String, String>> getCarMaintanceList(CarSearchDTO carSearchDTO);
 
 	CarMaintanceDTO getCarMaintanceDTO(int car_maintance_info_no);
 

@@ -13,6 +13,14 @@ $(document).ready(function() {
 	createCarList();
 	
 }); 
+
+	function searchCar(){
+		var car_number = $('[name=carList]').val();
+		alert(car_number);
+		document.searchCarForm.car_number.value=car_number;
+		document.searchCarForm.submit();
+		
+	}
 	 
 	function goCarMaintanceUpDelDetailForm(car_maintance_info_no){
 		alert(car_maintance_info_no);
@@ -35,6 +43,7 @@ $(document).ready(function() {
 					carList[i] = data[i].car_number;
 					var option = $("<option value="+data[i].car_number+">"+carList[i]+"</option>");
 					$('[name=carList]').append(option);
+		        	inputData("carList", "${carSearchDTO.car_number}" );
 				}
 			
 			
@@ -61,8 +70,11 @@ $(document).ready(function() {
     <!-- ----------------------[리스트 출력 화면]----------------------------- -->
 		<table border=0>
 			
-			<tr><td align=right> 검색 총 개수 : ${requestScope.carMaintanceListAllCnt} 개
-			<select name="carList">
+			<tr>
+			
+			<td align=right> 검색 총 개수 : ${requestScope.carMaintanceListAllCnt} 개
+			<tr>
+			<td align=right><select name="carList"  onchange="searchCar()">
 			
 			</select>
 			<tr><th align=center><span class="pagingNumber"></span>
@@ -93,6 +105,10 @@ $(document).ready(function() {
 	-->
 		<form name="carMaintanceContent" method="post" action="/support/carMaintanceContent.do">
 			<input type="hidden" name="car_maintance_info_no">
+		</form>
+		
+		<form name="searchCarForm" method="post" action="/support/carMaintanceListForm.do">
+			<input type="hidden" name="car_number">
 		</form>
 	 
 	</center>

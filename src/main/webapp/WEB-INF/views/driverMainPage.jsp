@@ -225,7 +225,7 @@ a:hover { color: white; text-decoration: underline;}
 					<li class="navi_set">  
 						<div class="topnav">회원정보</div>
 						<ul class="subnav">  
-							<li><a href="javascript:driverUpDelForm();">회원정보</a></li>  
+							<li><a href="javascript:driverUpDelForm();">정보수정</a></li>  
 						</ul>  
 					</li> 
 				

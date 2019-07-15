@@ -10,7 +10,27 @@
 <html>
 <script>
 $(document).ready(function() {
-
+	var evenTrColor = "${evenTrColor}";
+	var oddTrColor ="${oddTrColor}";
+	var headerColor="${headerColor}";
+	var mouseOverColor="${mouseOverColor}";
+	
+	setTableTrBgColor("contactList",headerColor,evenTrColor,oddTrColor,mouseOverColor);
+	
+	inputData("keyword","${carSearchDTO.keyword}");
+	inputData("car_code","${carSearchDTO.car_code}");
+	inputData("selectPageNo","${carSearchDTO.selectPageNo}");
+	
+	// 페이징 처리 관련 html 소스를 class= pagingNumber 가진 태그 안에 삽입하기
+	$(".pagingNumber").html(
+		getPagingNumber(
+		"${carListAllCnt}", // 검색 결과 총 행 개수
+		"${carSearchDTO.selectPageNo}", // 선택된 현재 페이지 번호
+		"5", // 페이지 당 출력행의 개수
+		"10", // 페이지 당 보여줄 페이징번호 개수
+		"goSearch();" // 페이지 번호 클릭 실행할 자스 코드
+		)
+	);
 	
 }); //$(document).ready(function() {
 	//----------------------------------------
@@ -21,6 +41,24 @@ $(document).ready(function() {
 		$("[name=carContentForm] [name=car_info_no]").val(car_info_no);
 		document.carContentForm.submit();
 	}
+	function goSearch(){
+		if(is_special_char("keyword")){
+			alert("키워드에는 영문,숫자,한글,_ 만 가능합니다.");
+			$(".keyword").val("");
+			return;
+		}
+		
+		document.carInfoSearchForm.submit();
+		
+	}
+	// 모두검색 키워드 없애기
+	function goSearchAll(){
+		// 공용함수 setEmpty2 활용
+		setEmpty2(" [name=keyword], [name=car_code]");
+		inputData("selectPageNo","1");
+		document.carInfoSearchForm.submit();
+	}
+
 
 </script>
 <head>
@@ -28,6 +66,33 @@ $(document).ready(function() {
 </head>
     <body>
     <center><h1>차량 수정/삭제 리스트 UI</h1><br><br>
+    
+    <form class="carInfoSearchForm" name="carInfoSearchForm" method="post" action="/support/adminCarUpDelForm.do">
+	<table class="tbcss1" width = "800" border="1" bordercolor="#DDDDDD" cellpadding="5" align="center">
+		<tr align="center">
+			<th bgcolor="${headerColor}" colspan="6">차량 정보 검색</th>
+		<tr align="center">
+			<th bgcolor="${headerColor}" width=60>키워드
+			<td width=250><input type="text" name="keyword"> 
+			<th bgcolor="${headerColor}" width=60>차량종류
+			<td width="150"><select name="car_code">
+					<option value="0"></option>
+					<option value="1">슬로프</option>
+					<option value="2">리프트</option>
+				</select>
+	</table>
+		<input type="hidden" name="selectPageNo">
+		<!-- <input type="hidden" name="ascDesc">
+		<input type="hidden" name="selectOption"> -->
+				<table>
+					<tr height=4>
+						<td>
+				</table>
+		<input type="button" value="검색" onClick="goSearch();"> 
+		<input type="button" value="전부검색" onClick="goSearchAll();"> 
+		<input type="reset" value="초기화">
+		
+	</form>
     <!-- ----------------------[리스트 검색/요청]----------------------------- -->
     <!-- 
     <form name="carListForm" method="post" action="/support/carListForm.do">

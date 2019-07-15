@@ -204,7 +204,7 @@ function goDriverRegForm() {
 		return;
 	}
 
-	if (confirm("가입하시겠습니까?") == false) {
+	if (confirm("등록하시겠습니까?") == false) {
 		return;
 	}
 		alert($("[name=driverRegForm]").serialize());
@@ -598,7 +598,7 @@ function duplicationId(type) {
 
 								<input type="button"
 									class=" login100-form-btn btn btn--radius-2 btn--red"
-									onclick="goDriverRegForm();" value="가입"> <span
+									onclick="goDriverRegForm();" value="등록"> <span
 									class="focus-input100"></span>
 
 							</div>

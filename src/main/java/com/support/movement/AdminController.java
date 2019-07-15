@@ -471,22 +471,33 @@ public class AdminController {
 	//***************************************************
 	//차량 수정/삭제 리스트 UI 이동 (리스트와 리스트수량)
 	//***************************************************
-	@RequestMapping(value="/adminCarUpDelForm.do")
-	public ModelAndView adminCarUpDelForm( HttpSession session ) {
+	@RequestMapping(
+			value="/adminCarUpDelForm.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public ModelAndView adminCarUpDelForm(
+			HttpSession session, HttpServletResponse response,
+			CarSearchDTO carSearchDTO
+			){
 		System.out.println("차량리스트페이지");
 		ModelAndView mav = new ModelAndView();
 		int carListAllCnt = 0;
 		List<Map<String,String>> carList = new ArrayList<Map<String,String>>();
 		try {
-			carListAllCnt = this.adminService.getCarListAllCnt();
+			if(carSearchDTO.getSelectPageNo()==0) {
+				carSearchDTO.setSelectPageNo(1);
+			}
+			carListAllCnt = this.adminService.getCarListAllCnt(carSearchDTO);
 			if(carListAllCnt!=0) {
-				carList= this.adminService.getCarList();
+				carList= this.adminService.getCarList(carSearchDTO);
 			}
 
 		} catch (Exception e) {
 			System.out.println("adminCarUpDelForm을 불러오는 도중 오류");
 		}
 		mav.setViewName("adminCarUpDelForm.jsp");
+		mav.addObject("carSearchDTO",carSearchDTO);
 		mav.addObject("carListAllCnt", carListAllCnt);
 		mav.addObject("carList", carList);
 		return mav;
@@ -562,16 +573,21 @@ public class AdminController {
 	//***************************************************
 	// 차량 정보 UI 이동
 	//***************************************************
-	@RequestMapping(value="/carListInfoForm.do")
-	public ModelAndView carListInfoForm( HttpSession session ) {
+	@RequestMapping(value="/carListInfoForm.do"	,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public ModelAndView carListInfoForm(
+			HttpSession session, HttpServletResponse response,
+			CarSearchDTO carSearchDTO
+			){
 		System.out.println("차량정보페이지");
 		ModelAndView mav = new ModelAndView();
 		int carListAllCnt = 0;
 		List<Map<String,String>> carList = new ArrayList<Map<String,String>>();
 		try {
-			carListAllCnt = this.adminService.getCarListAllCnt();
+			carListAllCnt = this.adminService.getCarListAllCnt(carSearchDTO);
 			if(carListAllCnt!=0) {
-				carList= this.adminService.getCarList();
+				carList= this.adminService.getCarList(carSearchDTO);
 			}
 
 		} catch (Exception e) {
@@ -595,6 +611,7 @@ public class AdminController {
 		System.out.println("차량정비등록페이지");
 		ModelAndView mav = new ModelAndView();
 		CarDTO carDTO = this.adminService.getCarDTO(car_info_no); 
+		
 		mav.addObject("carDTO", carDTO);
 		mav.setViewName("carMaintenanceRegForm.jsp");
 		return mav;
@@ -625,18 +642,25 @@ public class AdminController {
 	//***************************************************
 	// 차량 정비 수정/삭제 리스트 UI 이동
 	//***************************************************
-	@RequestMapping(value="/carMaintanceListForm.do")
-	public ModelAndView carMaintanceListForm( 
-			HttpSession session 
-			) {
+	@RequestMapping(
+			value="/carMaintanceListForm.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
+	public ModelAndView carMaintananceList(
+			HttpSession session, HttpServletResponse response,
+			CarSearchDTO carSearchDTO
+			){
+
 		System.out.println("차량정비수정삭제페이지");
 		int carMaintanceListAllCnt = 0;
 		List<Map<String,String>> carMaintanceList = new ArrayList<Map<String,String>>();
 		ModelAndView mav = new ModelAndView();
 		try {
-			carMaintanceListAllCnt = this.adminService.getCarMaintanceListAllCnt();
+			System.out.println(carSearchDTO.getCar_number());
+			carMaintanceListAllCnt = this.adminService.getCarMaintanceListAllCnt(carSearchDTO);
 			if(carMaintanceListAllCnt!=0) {
-				carMaintanceList= this.adminService.getCarMaintanceList();
+				carMaintanceList= this.adminService.getCarMaintanceList(carSearchDTO);
 			}
 
 		} catch (Exception e) {
@@ -644,6 +668,7 @@ public class AdminController {
 		}
 		mav.addObject("carMaintanceListAllCnt", carMaintanceListAllCnt);
 		mav.addObject("carMaintanceList", carMaintanceList);
+		mav.addObject("carSearchDTO",carSearchDTO);
 
 		mav.setViewName("carMaintanceListForm.jsp");
 		return mav;
@@ -656,8 +681,12 @@ public class AdminController {
 			method = RequestMethod.POST,produces="application/json;charset=UTF-8"
 			)
 	@ResponseBody 
-	public List<Map<String,String>> carList(){
-		List<Map<String,String>> carList = this.adminService.getCarList();	
+	public List<Map<String,String>> carList(
+			HttpSession session, HttpServletResponse response,
+			CarSearchDTO carSearchDTO
+			){
+	
+		List<Map<String,String>> carList = this.adminService.getCarList(carSearchDTO);	
 		System.out.println(carList+"llllll");
 		return carList;
 

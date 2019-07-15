@@ -152,14 +152,14 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getCarListAllCnt() {
-		int carRegCnt = this.adminDAO.getCarListAllCnt();
+	public int getCarListAllCnt(CarSearchDTO carSearchDTO) {
+		int carRegCnt = this.adminDAO.getCarListAllCnt(carSearchDTO);
 		return carRegCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getCarList() {
-		List<Map<String, String>> carList = this.adminDAO.getCarList();
+	public List<Map<String, String>> getCarList(CarSearchDTO carSearchDTO) {
+		List<Map<String, String>> carList = this.adminDAO.getCarList(carSearchDTO);
 		return carList;
 	}
 
@@ -188,14 +188,14 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getCarMaintanceListAllCnt() {
-		int carMaintanceListAllCnt = this.adminDAO.getCarMaintanceListAllCnt();
+	public int getCarMaintanceListAllCnt(CarSearchDTO carSearchDTO) {
+		int carMaintanceListAllCnt = this.adminDAO.getCarMaintanceListAllCnt(carSearchDTO);
 		return carMaintanceListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getCarMaintanceList() {
-		List<Map<String, String>> carMaintanceList = this.adminDAO.getCarMaintanceList();
+	public List<Map<String, String>> getCarMaintanceList(CarSearchDTO carSearchDTO) {
+		List<Map<String, String>> carMaintanceList = this.adminDAO.getCarMaintanceList(carSearchDTO);
 		return carMaintanceList;
 	}
 

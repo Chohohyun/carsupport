@@ -323,12 +323,26 @@
 	
 	
 	<!-- ============================차량총개수==============================-->
-	<select id="getCarListAllCnt" resultType="int">
-		select count(*) from car_info
+	<select id="getCarListAllCnt" parameterType="com.support.movement.CarSearchDTO" resultType="int">
+		select count(*) from car_info ci where 1=1
+		<if test="car_code!=null and car_code.length()>0 and car_code!=0">
+						and ci.car_code=#{car_code}
+		</if>
+		<if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(ci.car_number) like upper( '%${keyword}%')
+						 or upper(ci.car_year) like upper( '%${keyword}%')
+						 or upper(to_char(ci.car_reg_date,'yyyymmdd')) like upper( '%${keyword}%')
+						 or upper((select cc.car_type from code_car cc where cc.car_code=ci.car_code)) like upper( '%${keyword}%')
+				)
+		</if>
 	</select>
 	
 	<!-- ============================차량리스트==============================-->
 	<select id="getCarList" resultType="hashmap">
+	select 
+			*
+		from (select zzz.*, rownum||'' RNUM from (
 		select
 			ci.car_info_no||'' as "car_info_no"
 			, ci.car_number||'' as "car_number"
@@ -339,7 +353,20 @@
 			, ci.car_reg_date||'' as "car_reg_date"
 		from car_info ci 
 		where 1=1
-		
+		<if test="car_code!=null and car_code.length()>0 and car_code!=0">
+						and ci.car_code=#{car_code}
+		</if>
+		<if test="(keyword!=null and keyword.length()>0)">
+			and (
+						upper(ci.car_number) like upper( '%${keyword}%')
+						 or upper(ci.car_year) like upper( '%${keyword}%')
+						 or upper(to_char(ci.car_reg_date,'yyyymmdd')) like upper( '%${keyword}%')
+						  or upper((select cc.car_type from code_car cc where cc.car_code=ci.car_code)) like upper( '%${keyword}%')
+				)
+		</if>
+		<![CDATA[
+		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
+		 ]]>
 	</select>
 	
 	<!-- ============================차량상세보기==============================-->
@@ -395,17 +422,26 @@
 	</insert>
 	
 	<!-- ============================차량정비수정삭제(리스트 개수)==============================-->
-	<select id="getCarMaintanceListAllCnt" resultType="int">
+	<select id="getCarMaintanceListAllCnt" parameterType="com.support.movement.CarSearchDTO" resultType="int">
 		select count(*) from car_maintance_info	
+		where 1=1
+		
+		<if test="car_number!=null and car_number.length()>0">
+						and car_number=#{car_number}
+		</if>
 	</select>
 	
 	<!-- ============================차량정비수정삭제(리스트)==============================-->
-	<select id="getCarMaintanceList" resultType="hashmap">
+	<select id="getCarMaintanceList" parameterType="com.support.movement.CarSearchDTO"  resultType="hashmap">
 		select
 			car_maintance_info_no||'' as "car_maintance_info_no"
 			, car_number||'' as "car_number"
 			, car_maintance_date||'' as "car_maintance_date"
-		from car_maintance_info	
+		from car_maintance_info
+		where 1=1	
+		<if test="car_number!=null and car_number.length()>0">
+						and car_number=#{car_number}
+		</if>
 	</select>
 	
 	<!-- ============================차량정비수정삭제(상세보기)==============================-->

@@ -151,6 +151,12 @@
 
 	}
 	function goUserRegForm() {
+		var userIdChk = $("[name=userRegForm] [name=idChk]").val();
+		if (userIdChk== 0) {
+			alert("아이디 중복확인을 먼저 해주세요.");
+			$("[name=userRegForm] [name=id]").focus();
+			return;
+		}
 		var emailCheck = $("[name=userRegForm] [name=emailCheck]").val();
 		if (emailCheck == 0) {
 			alert("이메일 인증을 먼저 받으세요.");
@@ -354,11 +360,11 @@
 
 			success : function(data) {
 				if (data == 1) {
-					alert("회원가입 성공!");
+					alert("회원신청 성공!");
 
 					location.replace("/support/loginForm.do");
 				} else {
-					alert("회원가입 실패!");
+					alert("회원신청 실패!");
 				}
 			},
 			error : function() {
