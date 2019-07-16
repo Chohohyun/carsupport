@@ -6,7 +6,7 @@
 
 <!-- jsp 기술의 한 종류인 include Directive를 이용하여 common.jsp 파일 내의 소스를 삽입하기 -->
 <%@include file="common.jsp" %>
-<%@include file="userMainPage.jsp" %>
+<%@include file="userMenuBar.jsp" %>
 <html>
 <script>
 	$(document).ready(function(){
@@ -52,12 +52,86 @@
 });
 		
 	function goMainPage(){
-		location.replace("/support/adminMainPage.do");
+		location.replace("/support/userMainPage.do");
 
 	}
+	function checkDate(){
+    	var date = new Date(); 
+		var year = date.getFullYear(); 
+		var month = new String(date.getMonth()+1); 
+		var day = new String(date.getDate()); 
+		// 한자리수일 경우 0을 채워준다. 
+		if(month.length == 1){ 
+		  month = "0" + month; 
+		} 
+		if(day.length == 1){ 
+		  day = "0" + day; 
+		} 
+		var sysdate = year + "" + month + "" + day;
+    	var regDate = $("[name=car_reservation_date]").val();
+    	if(regDate>sysdate){
+    		alert("과거 날짜를 선택할 수 없습니다.");
+    		$("[name=car_reservation_date]").val("");
+    		return;
+    	}
+    }   
+   	function checkHour(){
+   		if(is_empty("car_reservation_date")){
+    		alert("날짜를 먼저선택해주세요.");
+    		$("[name=car_reservation_hour]").val("");
+    		return;
+    	}
+   
+   		var date = new Date(); 
+		var year = date.getFullYear(); 
+		var month = new String(date.getMonth()+1); 
+		var day = new String(date.getDate()); 
+		var hour = new String(date.getHours());
+		// 한자리수일 경우 0을 채워준다. 
+		if(month.length == 1){ 
+		  month = "0" + month; 
+		} 
+		if(day.length == 1){ 
+		  day = "0" + day; 
+		} 
+		if(hour.length==1){
+			hour = "0" + hour;
+		}
+		var sysdate = year + "" + month + "" + day ;
+    	var regDate = $("[name=car_reservation_date]").val();
+    	var regHour = $("[name=car_reservation_hour]").val();
+    	if(regDate==sysdate){
+    		if(hour>=regHour){
+    			alert("과거 시간을 선택할 수 없습니다.");
+    			return;
+    		}
+    	}
+    		
+   		
+   		
+   	}
 </script>
 <script>
 function reservationCheck() {
+			var start_postal_code = $("[name=start_postal_code]").val();
+			if (is_empty2(start_postal_code) == false) {
+			alert("출발지를 검색해주세요.");
+			return;
+			}
+			var end_postal_code = $("[name=end_postal_code]").val();
+			if (is_empty2(end_postal_code) == false) {
+			alert("도착지 검색해주세요.");
+			return;
+			}
+			
+			if(is_empty("car_reservation_date")){
+        		alert("날짜를 선택해주세요.");
+        	return;
+        	}
+			if(is_empty("car_reservation_hour")){
+				alert("시간을 선택해주세요.");
+			return;
+			}
 		alert(1);
 		alert($("[name=carReservationForm]").serialize());
 		$.ajax({
@@ -167,7 +241,7 @@ function reservationCheck() {
                                 <div class="row row-refine">
                                  	 
                                            <div class="wrap-input40 input-group-desc">
-                      						  <input class="input100 input--style-5" id="startpostal_code"  type="text" name="start_postal_code" >
+                      						  <input class="input100 input--style-5" id="startpostal_code"  type="text" placeholder="주소검색을 눌러주세요." name="start_postal_code" onfocus="this.blur();" readonly>
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -182,7 +256,7 @@ function reservationCheck() {
                                         </div>
                                          <div class="wrap-input40 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="startroad_addr"  type="text" name="start_road_addr" >
+                       					<input class="input100 input--style-5" id="startroad_addr"  type="text" placeholder="주소검색을 눌러주세요." name="start_road_addr" onfocus="this.blur();" readonly>
                        					
                                            <span class="focus-input100"></span>
                                         
@@ -190,7 +264,7 @@ function reservationCheck() {
                                         
                                  			  &nbsp;&nbsp;&nbsp;
                                           <div class="wrap-input50 input-group-desc">
-                    					<input class="input100 input--style-5" id="startjibun_addr" type="text" name="start_jibun_addr" >
+                    					<input class="input100 input--style-5" id="startjibun_addr" type="text" placeholder="주소검색을 눌러주세요." name="start_jibun_addr" onfocus="this.blur();" readonly>
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -216,7 +290,7 @@ function reservationCheck() {
                                 <div class="row row-refine">
                                  	 
                                            <div class="wrap-input40 input-group-desc">
-                      						  <input class="input100 input--style-5" id="endpostal_code"  type="text" name="end_postal_code" >
+                      						  <input class="input100 input--style-5" id="endpostal_code"  type="text" placeholder="주소검색을 눌러주세요."  onfocus="this.blur();" name="end_postal_code" readonly>
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -231,7 +305,7 @@ function reservationCheck() {
                                         </div>
                                          <div class="wrap-input40 input-group-desc">
                                         
-                       					<input class="input100 input--style-5" id="endroad_addr"  type="text" name="end_road_addr" >
+                       					<input class="input100 input--style-5" id="endroad_addr"  type="text" name="end_road_addr"  placeholder="주소검색을 눌러주세요." onfocus="this.blur();" eadonly>
                        					
                                            <span class="focus-input100"></span>
                                         
@@ -239,7 +313,7 @@ function reservationCheck() {
                                         
                                  			  &nbsp;&nbsp;&nbsp;
                                           <div class="wrap-input50 input-group-desc">
-                    					<input class="input100 input--style-5" id="endjibun_addr" type="text" name="end_jibun_addr" >
+                    					<input class="input100 input--style-5" id="endjibun_addr" type="text" name="end_jibun_addr"  placeholder="주소검색을 눌러주세요." onfocus="this.blur();" readonly>
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -298,7 +372,7 @@ function reservationCheck() {
                                  	 
                                         <div class="wrap-input40 input-group-desc">
                                         
-                                            <input class="input100 input--style-5" type="text" id="datepicker" name="car_reservation_date" placeholder="날짜선택▼">
+                                            <input class="input100 input--style-5" type="text" onchange="checkDate();" id="datepicker" name="car_reservation_date" placeholder="날짜선택▼">
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -307,8 +381,8 @@ function reservationCheck() {
                                  			  &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
                                             <div class="rs-select2 js-select-simple select--no-search">
-                                        	<select name="car_reservation_hour">
-                                            <option disabled="disabled" selected="selected" value="">시간을 선택해주세요</option>
+                                        	<select name="car_reservation_hour" onchange="checkHour();">
+                                            <option disabled="disabled" selected="selected"  value="">시간을 선택해주세요</option>
                                             <option value="08">오전8시</option>
 											<option value="10">오전10시</option>
 											<option value="12">오후12시</option>

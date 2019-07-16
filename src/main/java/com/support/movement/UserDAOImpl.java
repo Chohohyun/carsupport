@@ -55,14 +55,14 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public int getUserRevListAllCnt(String id) {
-		int userRevListAllCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserRevListAllCnt",id);
+	public int getUserRevListAllCnt(UserRevSearchDTO userRevSearchDTO) {
+		int userRevListAllCnt = this.sqlSession.selectOne("com.support.movement.UserDAO.getUserRevListAllCnt",userRevSearchDTO);
 		return userRevListAllCnt;
 	}
 	
 	@Override
-	public List<Map<String, String>> getUserRevList(String id) {
-		List<Map<String, String>> userRevList = this.sqlSession.selectList("com.support.movement.UserDAO.getUserRevList",id);
+	public List<Map<String, String>> getUserRevList(UserRevSearchDTO userRevSearchDTO) {
+		List<Map<String, String>> userRevList = this.sqlSession.selectList("com.support.movement.UserDAO.getUserRevList",userRevSearchDTO);
 		System.out.println("여기까진 잘 실행했다는 뜻?");
 		return userRevList;
 	}

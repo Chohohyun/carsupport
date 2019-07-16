@@ -53,14 +53,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int getUserRevListAllCnt(String id) {
-		int userRevListAllCnt = this.userDAO.getUserRevListAllCnt(id);
+	public int getUserRevListAllCnt(UserRevSearchDTO userRevSearchDTO) {
+		int userRevListAllCnt = this.userDAO.getUserRevListAllCnt(userRevSearchDTO);
 		return userRevListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getUserRevList(String id) {
-		List<Map<String, String>> userRevList = this.userDAO.getUserRevList(id);
+	public List<Map<String, String>> getUserRevList(UserRevSearchDTO userRevSearchDTO) {
+		List<Map<String, String>> userRevList = this.userDAO.getUserRevList(userRevSearchDTO);
 		return userRevList;
 	}
 

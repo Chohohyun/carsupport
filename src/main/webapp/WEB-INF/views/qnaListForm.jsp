@@ -6,15 +6,19 @@
 <!-- common.jsp 소스 파일 가져오기 [Include Directive] 기술-->
 <!--  여러 JSP 페이지에 공통으로 들어갈 코드가 있다면 이 방법을 사용한다-->
 <%@include file="common.jsp"%>
+<c:if test="${id=='abc'}">
 <%@include file="adminMainPage.jsp"%>
-
+</c:if>
+<c:if test="${id!='abc'}">
+<%@include file="userMenuBar.jsp"%>
+</c:if>
 
 <!-- 게시판 화면을 구성하는 태그 -->
 <html>
 <script>
 
 	$(document).ready(function() {
-		
+	
 
 	    // id = movieList 를 가진 태그를 관리하는 jQuery 객체의 메위주를 변수 tableObj 에 저장
 	    var tableObj = $(".qnaList");
@@ -102,7 +106,7 @@ function goQnaUpDelForm(data) {
 				<td>QnA 게시판<br>
 				<br>
 			<tr>
-				<c:if test="{sessionScope.id=='abc'}">
+				<c:if test="${id=='abc'}">
 					<td><input type="button" value=" 글쓰기 "
 						onclick="goQnaRegForm();">
 				</c:if>

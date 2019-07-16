@@ -7,9 +7,9 @@ public interface UserService {
 
 	int getReservationCheck(UserReservationDTO userReservationDTO,String userId);
 
-	int getUserRevListAllCnt(String id);
+	int getUserRevListAllCnt(UserRevSearchDTO userRevSearchDTO);
 
-	List<Map<String, String>> getUserRevList(String id);
+	List<Map<String, String>> getUserRevList(UserRevSearchDTO userRevSearchDTO);
 
 	int getUserUtilDetailListAllCnt(String id);
 

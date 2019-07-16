@@ -123,13 +123,16 @@ public class UserController {
 	//**********************************
 	// 유저가 자신의 예약 현황을 볼 수 있는 페이지 
 	//**********************************
-	@RequestMapping(value="/userReservationSituation.do")
+	@RequestMapping(value="/userReservationSituation.do"
+			,method = RequestMethod.POST
+			,produces="application/json;charset=UTF-8")
+	@ResponseBody 
 	public ModelAndView userReservationSituation(
 			// HttpSession 객체가 들어올 매개변수 선언
 			// 매개변수에 자료형이 HttpSession이면 웹서버가
 			// 생성한 HttpSession 객체가 들어온다.
-			HttpSession session) {
-
+			HttpSession session, HttpServletResponse response,
+			UserRevSearchDTO userRevSearchDTO) {
 
 		// <참고>HttpSession 객체에 저장된 모든 데이터 제거한다.
 		//session.invalidate();
@@ -139,12 +142,16 @@ public class UserController {
 		try {
 			String id = (String) session.getAttribute("id");
 			System.out.println(id);
-
-			int userRevListAllCnt = this.userService.getUserRevListAllCnt(id);
+			if(userRevSearchDTO.getSelectPageNo()==0) {
+				userRevSearchDTO.setSelectPageNo(1);
+			}
+			userRevSearchDTO.setId(id);
+			int userRevListAllCnt = this.userService.getUserRevListAllCnt(userRevSearchDTO);
 			System.out.println(userRevListAllCnt);
 
-			userRevList= this.userService.getUserRevList(id);
+			userRevList= this.userService.getUserRevList(userRevSearchDTO);
 			System.out.println(userRevList.size());
+			mav.addObject("userRevSearchDTO",userRevSearchDTO);
 			mav.addObject("userRevListAllCnt",userRevListAllCnt);
 			mav.addObject("userRevList",userRevList);
 

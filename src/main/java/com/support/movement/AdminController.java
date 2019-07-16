@@ -785,13 +785,14 @@ public class AdminController {
 		mav.setViewName("qnaListForm.jsp");
 
 		try {
-
+			String id= (String) session.getAttribute("id");
 			List<Map<String,String>> qnaList = this.adminService.getQnaList(question_group_no );
 			//------------------------------------------------------------------
 			// ModelAndView 객체에  검색 개수, 게시판 검색 목록 저장하기
 			// ModelAndView 객체에 addObject 메소드로 저장된 것은
 			// 추후 HttpServletRequest 객체에 setAttribute 메소드 호출로 다시 재저장 된다
 			mav.addObject("qnaList", qnaList);
+			mav.addObject("id",id);
 
 		}catch(Exception e) {
 			System.out.println("AdminController.qnaList(~) 메소드 호출 시 에러발생!");

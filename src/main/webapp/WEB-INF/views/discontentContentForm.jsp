@@ -4,7 +4,7 @@
 
 <!--JSP 기술의 한 종류인 [Include Directive] 를 이용하여 common.jsp파일의 코드를 삽입-->
 <%@include file="common.jsp" %>
-<%@include file="userMainPage.jsp" %>
+<%@include file="userMenuBar.jsp" %>
 
 <!-- 게시판에 보이는 글이 내가 클릭하기 직전에 삭제되었으면 경고를 띄우고  게시판 목록보기 화면으로 이동하기-->
 <c:if test="${empty discontentDTO}">

@@ -6,7 +6,7 @@
 
 <!-- jsp 기술의 한 종류인 include Directive를 이용하여 common.jsp 파일 내의 소스를 삽입하기 -->
 <%@include file="common.jsp" %>
-<%@include file="userMainPage.jsp" %>
+<%@include file="userMenuBar.jsp" %>
 <html>
 <script>
 	
@@ -418,7 +418,7 @@
                                 <div class="row row-refine">
                                  	 
                                         <div class="wrap-input40 input-group-desc">
-                                            <input class="input100 input--style-5" type="text" name="jumin_num1" placeholder="앞주민번호">
+                                            <input class="input100 input--style-5" type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" name="jumin_num1" placeholder="앞주민번호">
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -426,7 +426,7 @@
                                  
                                  			  &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
-                                            <input class="input100 input--style-5" type="password" name="jumin_num2" placeholder="뒷주민번호">
+                                            <input class="input100 input--style-5" type="password" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" name="jumin_num2" placeholder="뒷주민번호">
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -499,7 +499,7 @@
                                     </div> -->
                                     <div class="col-9">
                                         <div class="input-group-desc wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="phone" placeholder="휴대폰번호">
+                                            <input class="input100 input--style-5" type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" name="phone" placeholder="휴대폰번호">
                                             
                                            <span class="focus-input100"></span>
                                             <!-- <label class="label--desc">Phone Number</label> -->
