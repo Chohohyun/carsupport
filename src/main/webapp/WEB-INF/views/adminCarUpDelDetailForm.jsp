@@ -61,7 +61,7 @@
     			success:function(data){
     				if(data>=0){
     					alert("차량수정 성공!");
-    					location.replace("/support/adminCarUpDelForm.do");
+    					document.goAdminCarUpDelForm.submit();
     				}
     				else{
     					alert("차량수정 실패!");
@@ -84,7 +84,7 @@
     			success:function(data){
     				if(data==1){
     					alert("차량삭제 성공!");
-    					location.replace("/support/adminCarUpDelForm.do");
+    					document.goAdminCarUpDelForm.submit();
     				}
     				else{
     					alert("차량삭제 실패!");
@@ -98,7 +98,7 @@
         }
         
         function goUpDelForm(){
-        	location.replace("/support/adminCarUpDelForm.do");
+        	document.goAdminCarUpDelForm.submit();
         }
     </script>
     </head>
@@ -106,7 +106,9 @@
     
     
     <body><center>
-    	
+    	<form name="goAdminCarUpDelForm" method="post"action="/support/adminCarUpDelForm.do" >
+	
+		</form>
          <h1>차량 상세보기 UI</h1><br><br>
          <form name = "carUpDelProcForm" method="POST">
          

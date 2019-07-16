@@ -71,9 +71,8 @@ public interface AdminService {
 
 	int deleteQna(QnaDTO qnaDTO);
 
-	int getAdminDiscontentListAllCnt();
-
-	List<Map<String, String>> getAdminDiscontentList();
+	int getAdminDiscontentListAllCnt(DiscontentSearchDTO discontentSearchDTO);
+	List<Map<String, String>> getAdminDiscontentList(DiscontentSearchDTO discontentSearchDTO);
 
 	DiscontentDTO getDiscontentDTO(int adminDiscontent_no);
 

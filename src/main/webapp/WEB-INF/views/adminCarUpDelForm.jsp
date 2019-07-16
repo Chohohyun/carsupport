@@ -64,6 +64,7 @@ $(document).ready(function() {
 <head>
 
 </head>
+	
     <body>
     <center><h1>차량 수정/삭제 리스트 UI</h1><br><br>
     

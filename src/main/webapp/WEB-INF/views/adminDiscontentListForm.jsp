@@ -13,6 +13,18 @@
 	// body 태그안의 모든 태그를 읽어들인 후 실행할 자스 코딩 설정
 	//***********************************************************
 	$(document).ready(function(){
+		
+		inputData("selectPageNo","${discontentSearchDTO.selectPageNo}");
+		inputData("keyword","${discontentSearchDTO.keyword}");
+		$(".pagingNumber").html(
+				getPagingNumber(
+				"${adminDiscontentListAllCnt}", // 검색 결과 총 행 개수
+				"${discontentSearchDTO.selectPageNo}", // 선택된 현재 페이지 번호
+				"5", // 페이지 당 출력행의 개수
+				"10", // 페이지 당 보여줄 페이징번호 개수
+				"goSearch();" // 페이지 번호 클릭 실행할 자스 코드
+				)
+			);
 		//***********************************************************
 		// name=boardRegForm 을 가진 form 태그와
 		// name=boardContentForm 을 가진 form 태그를 안보이게 하기
@@ -29,6 +41,25 @@
 		document.adminDiscontentContentForm.submit();
 	}
 	
+	function goSearch(){
+		alert(1);
+		if(is_special_char("keyword")){
+			alert("키워드에는 영문,숫자,한글,_ 만 가능합니다.");
+			$(".keyword").val("");
+			return;
+		}
+		
+		document.discontentSearchForm.submit();
+		
+	}
+	// 모두검색 키워드 없애기
+	function goSearchAll(){
+		// 공용함수 setEmpty2 활용
+		setEmpty2(" [name=keyword]");
+		inputData("selectPageNo","1");
+		document.discontentSearchForm.submit();
+	}
+	
 </script>
 
 
@@ -36,50 +67,62 @@
 
 <body>
 	<center>
-		<br>
+		
+		<h1>불만게시판 관리자용UI</h1>
+		<form class="discontentSearchForm" name="discontentSearchForm" method="post"
+			action="/support/adminDiscontentListForm.do">
+			<table class="tbcss1" width="800" border="1" bordercolor="#DDDDDD"
+				cellpadding="5" align="center">
+				<tr align="center">
+					<th bgcolor="${headerColor}" colspan="6">회원 검색</th>
+				<tr align="center">
+					<th bgcolor="${headerColor}" width=60>키워드
+					<td width=250><input type="text" name="keyword">
+			</table>
+			<input type="hidden" name="selectPageNo">
+			<!-- 
+		<input type="hidden" name="ascDesc">
+		<input type="hidden" name="selectOption"> -->
+			<table>
+				<tr height=4>
+					<td>
+			</table>
+			<input type="button" value="검색" onClick="goSearch();"> <input
+				type="button" value="전부검색" onClick="goSearchAll();"> <input
+				type="reset" value="초기화"> 
 
-		<form name="discontentListForm" method=post
-			action="/support/discontentListForm.do"></form>
-
+		</form>
+		<br> <br>
 		<table border=0>
+
 			<tr>
-				<td align=right>[검색 총 개수] :
-					${requestScope.adminDiscontentListAllCnt}&nbsp;&nbsp;&nbsp;&nbsp;
+
+				<td align=right>검색 총 개수 : ${requestScope.adminDiscontentListAllCnt} 개
+			<tr>
+				<th align=center><span class="pagingNumber"></span>
 			<tr>
 				<td>
-					<table border=0 class="discontentList tbcss2" cellpadding=5
-						cellspacing=0 width=500>
+
+					<table class="tbcss2 discontentList" border="0" cellspacing="0"
+						cellpadding="5" rules="rows" frame="hsides" width=700px>
 						<tr>
 							<th>번호
 							<th>제목
 							<th>글쓴이
 							<th>등록일
-							<th>조회수 <!--****************************************************************-->
-								<!--HttpServletRequest 객체에 boardList 라는 키값으로 저장된********--> <!--ArrayList<HashMap<String,String>> 객체를 꺼내고*****************-->
-								<!--ArrayList<HashMap<String,String>> 객체 안의*********************-->
-								<!--HashMap<String,String> 을 꺼내고 HashMap<String,String> 객체안의-->
-								<!--키값에 대응하는 문자열을 꺼내서 출력하기************************--> <!--****************************************************************-->
-								<!--HttpServletRequest 객체에 boardList 라는 키값으로 저장된********--> <!--ArrayList<HashMap<String,String>> 객체안의 <HashMap<String,String> 들을-->
-								<!--자바 지역변수 board 에 1개씩 저장하고 반복문 안으로 들어가서--> <!--달러{지역변수board.HashMap객체키값명} 으로 표현하고 있다-->
-								<!--반복문 돌때 마다 자바 지역변수 board 에는 n 번째 <HashMap<String,String> 객체가 저장된다-->
-								<!--반복문 돌때마다 LoopTagStatus 객체의 index 라는 속성변수안의 데이터를 꺼내어--> <!--출력한다. 출력 시 형식은 EL 로 달러{loopTagStatus} 로 한다-->
-								<!--반복문 돌때 마다 LoopTagStatus 객체의 count 라는 속성변수안의 데이터는 0부터--> <!--시작해서 1씩 증가 하면서 반복문 안에서 표현된다-->
-								<!--현재 LoopTagStatus 객체의 메위주는 loopTagStatus 라는 지역 변수에 저장되어 있다-->
-								<!--바로 varStatus="loopTagStatus" 에 선언된 지역변수이다--> <!--****************************************************************-->
-								<c:forEach items="${requestScope.adminDiscontentList}"
-									var="adminDiscontent" varStatus="loopTagStatus">
-									<tr style="cursor: pointer"
-										onClick="goAdminDiscontentContentForm(${adminDiscontent.discontent_no});">
-										<td>
-											<!-- ${(sessionScope.selectPageNo*sessionScope.rowCntPerPage-sessionScope.rowCntPerPage+1+loopTagStatus.index)} -->
-											${discontentListAllCnt-(discontentSearchDTO.selectPageNo*discontentSearchDTO.rowCntPerPage-discontentSearchDTO.rowCntPerPage+1+loopTagStatus.index)+1}
-										
+							<th>조회수
+							<c:forEach items="${adminDiscontentList}" var="adminDiscontent"
+									varStatus="loopTagStatus">
+									<tr style="cursor: pointer" onClick="goAdminDiscontentContentForm(${adminDiscontent.discontent_no});">
+										<td>${selectPageNo*rowCntPerPage-rowCntPerPage+1+loopTagStatus.index}
+											<!-- 1증가일련번호-->
 										<td><c:if test="${adminDiscontent.print_no > 1 }">
 												<c:forEach begin="1" end="${adminDiscontent.print_no }">
-											&nbsp;
-										</c:forEach>
-										답변:
-									</c:if> ${adminDiscontent.discontent_subject} <c:choose>
+													&nbsp;
+												</c:forEach>
+												답변:
+											</c:if> ${adminDiscontent.discontent_subject}
+										<c:choose>
 												<c:when test="${adminDiscontent.print_no==1}">
 												<td>${adminDiscontent.user_name}
 												</c:when>
@@ -87,17 +130,16 @@
 												<c:otherwise>
 												<td>${adminDiscontent.admin_name}
 												</c:otherwise>
-											</c:choose>
-										
+										</c:choose>
 										<td>${adminDiscontent.reg_date}
-										<td>${adminDiscontent.readcount}<!-- readcount는 BoardDAO에 getBoardList에 while문안에 "readcount" 요고다 -->
+										<td>${adminDiscontent.readcount}
 								</c:forEach>
 					</table>
-			<tr>
-				<th><span class="pagingNumber"></span>
 		</table>
-		${requestScope.adminDiscontentListAllCnt==0?'검색된 글이 없습니다.':''}
 
+		<br> ${requestScope.adminDiscontentListAllCnt==0? '  검색된 글이 없습니다.  ':''}
+		
+			
 		<!--*********************************************************************-->
 		<!--[게시판 등록 화면]으로 이동하는 주소를 가진 form 태그 선언하기-->
 		<!--이 form 태그 내부의 입력양식은 파라미터값으로 이동 페이지로 전달된다-->
@@ -115,5 +157,7 @@
 			<!--*********************************************************************-->
 			<input type="hidden" name="adminDiscontent_no">
 		</form>
+		
+		</center>
 </body>
 </html>

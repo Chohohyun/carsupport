@@ -108,7 +108,7 @@
 		}); 
 	}
 	function goUpDelPage(){
-		location.replace("/support/userUpDelForm.do");
+		document.goUserUpDelForm.submit();
 
 	}
 	
@@ -219,7 +219,7 @@
 						alert("회원삭제 성공!");
 						
 
-						location.replace("/support/userUpDelForm.do");
+						document.goUserUpDelForm.submit();
 					}
 					else{
 						alert("회원삭제 실패!");
@@ -229,7 +229,7 @@
 					if(data==1){
 						alert("회원수정 성공!");
 
-						location.replace("/support/userUpDelForm.do");
+						document.goUserUpDelForm.submit();
 					}
 					else{
 						alert("회원수정 실패!");
@@ -335,6 +335,9 @@
 </head>
 
 <body>
+	<form name="goUserUpDelForm" method="post"action="/support/userUpDelForm.do" >
+	
+					</form>
     <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div class="wrapper wrapper--w790">
             <div class="card card-5">
@@ -428,7 +431,7 @@
                                 <div class="row row-refine">
                                  	 
                                         <div class="wrap-input40 input-group-desc">
-                                            <input class="input100 input--style-5" type="text" name="jumin_num1" placeholder="앞주민번호">
+                                            <input class="input100 input--style-5" type="text" name="jumin_num1" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="앞주민번호">
                                             
                                            <span class="focus-input100"></span>
                                     
@@ -436,7 +439,7 @@
                                  
                                  			  &nbsp;&nbsp;&nbsp;
                                         <div class="wrap-input50 input-group-desc">
-                                            <input class="input100 input--style-5" type="password" name="jumin_num2" placeholder="뒷주민번호">
+                                            <input class="input100 input--style-5" type="password" name="jumin_num2" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="뒷주민번호">
                                             
                                            <span class="focus-input100"></span>
                                           
@@ -509,7 +512,7 @@
                                     </div> -->
                                     <div class="col-9">
                                         <div class="input-group-desc wrap-input100">
-                                            <input class="input100 input--style-5" type="text" name="phone" placeholder="휴대폰번호">
+                                            <input class="input100 input--style-5" type="text" name="phone" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="휴대폰번호">
                                             
                                            <span class="focus-input100"></span>
                                             <!-- <label class="label--desc">Phone Number</label> -->
@@ -677,11 +680,12 @@
                           	<input type="hidden" name="upDel" value="up"> 
                        </div>    
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
-
+	
    
 
 </body>

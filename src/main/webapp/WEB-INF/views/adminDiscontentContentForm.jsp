@@ -9,7 +9,7 @@
 <c:if test="${empty discontentDTO}">
    <script>
       alert("게시판 글이 삭제되었습니다");
-      location.replace("/support/adminDiscontentListForm.do")
+		document.goAdminDiscontentListForm.submit();
    </script>
 </c:if> 
 
@@ -36,13 +36,12 @@
 				 
 					if(data == 0) {
 						alert("이미 삭제된 게시글입니다.")
-						location.replace("/support/adminDiscontentListForm.do");
-						
+						document.goAdminDiscontentListForm.submit();
 					} else if(data == 1) {
 						document.adminDiscontentRegForm.submit();
 					} else if(data==2){
 						alert("이미 답글이 있는 게시물 입니다");
-						location.replace("/support/adminDiscontentListForm.do");
+						document.goAdminDiscontentListForm.submit();
 					
 					}
 					else{
@@ -86,10 +85,10 @@
 						// 게시판 새글 입력 행 적용개수 가 한개면 메세지 띄우고 /erp/boardListForm.do 로 이동
 						if(upDelCnt >= 1) {
 							alert("삭제 성공!");
-							location.replace("/support/adminDiscontentListForm.do");
+							document.goAdminDiscontentListForm.submit();
 						} else if(upDelCnt == -1) {
 							alert("이미 삭제된 글입니다");
-							location.replace("/support/adminDiscontentListForm.do");
+							document.goAdminDiscontentListForm.submit();
 						} 
 						 else {
 							alert("서버연동 실패");
@@ -105,7 +104,7 @@
 	   }	  
 		   
    		function goAdminDiscontentEditForm() {
-   			document.adminDiscontentEditForm.submit();
+			document.adminDiscontentEditForm.submit();
    		}
    </script>
    
@@ -151,12 +150,12 @@
       	
       			<input type="button"   value="삭제"   onClick="goAdminDiscontentUpDelForm('del');">
       			<input type="button"	value="답글쓰기"	onClick="goAdminDiscontentRegForm();">
-      			<input type="button"   value="글목록보기"   onClick="document.discontentListForm.submit();">
+      			<input type="button"   value="글목록보기"   onClick="document.goDiscontentListForm.submit();">
       		</c:when>
       		
       		<c:otherwise>
       			<input type="button"   value="수정/삭제"   onClick="goAdminDiscontentEditForm();">
-      			<input type="button"   value="글목록보기"   onClick="document.discontentListForm.submit();">
+      			<input type="button"   value="글목록보기"   onClick="document.goDiscontentListForm.submit();">
       		</c:otherwise>
       </c:choose>
       
@@ -184,6 +183,10 @@
       <!-- 게시판 상세보기 글의 고유번호를 hidden 태그에 저장한다-->
       <!-- 수정/삭제를 하려면 현재 글의 고유번호를 알아야 하기 때문이다-->
       <input type="hidden"      name="discontent_no"   value="${discontentDTO.discontent_no}">   
+   </form>
+   
+   <form name="goDiscontentListForm"   method="post"   action="/support/adminDiscontentListForm.do">
+      
    </form>
 </body>
 </html>

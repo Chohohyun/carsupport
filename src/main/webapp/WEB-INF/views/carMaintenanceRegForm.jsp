@@ -60,7 +60,7 @@
        			success:function(data){
        				if(data==1){
        					alert("차량 정비 내용 등록 성공!");
-       					location.replace("/support/adminMainPage.do");
+       					document.goCarListInfoForm.submit();
        				}
        				else{
        					alert("차량 정비 내용 등록 실패!");
@@ -95,13 +95,15 @@
         }
         
         function goAdminMainPage(){
-        	location.replace("/support/adminMainPage.do");
+				document.goCarListInfoForm.submit();
         }
         </script>
     </head>
 
-    <body><center>
-            <hl>차량 정비 등록 UI<br><br>
+    <body><form name="goCarListInfoForm" method="post" action="/support/carListInfoForm.do">
+	</form>
+	<center>
+            <hl>차량 정비 등록 UI</hl><br><br>
         <form name = "carMaintanceRegProc" >
             <table border=1 cellpadding=7 cellspacing=0 >
                 <tr>
@@ -137,5 +139,7 @@
             <input type="button" value="취소" class="cancle" onclick="goAdminMainPage();"> 
             
         </form>
+        </center>
+        
     </body>
 </html>

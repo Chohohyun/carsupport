@@ -55,7 +55,7 @@
 			, success : function( discontentRegCnt ) {
 				if( discontentRegCnt == 1 ) {
 					alert("게시판 답글 등록 성공!");
-					location.replace("/support/adminDiscontentListForm.do");
+					document.goAdminDiscontentListForm.submit();
 				}
 				// [게시판 새글 입력 행 적용 개수] 가 1개가 아니면 경고하기
 				else {
@@ -73,7 +73,10 @@
 	}
 </script>
 </head>
-<body><center><br>
+<body>
+<form name="goAdminDiscontentListForm" method="post" action="/support/adminDiscontentListForm.do">
+</form>
+<center><br>
 	<!-- [게시판 등록] 화면을 출력하는 form 태그 선언-->
 	<form  method="post" name="adminDiscontentRegForm" action="/support/adminDiscontentRegFormRegProc.do">
 		
@@ -101,11 +104,8 @@
 		<input type="hidden" name="discontent_no" value="${discontent_no}">
 		<input type="button" value="저장"	 onClick="checkDiscontentRegForm()">
 		<input type="reset"	 value="다시작성" >
-		<input type="button" value="목록보기"		onClick="document.adminDiscontentListForm.submit()">
+		<input type="button" value="목록보기"		onClick="document.goAdminDiscontentListForm.submit()">
 		
-	</form>
-	
-	<form name="adminDiscontentListForm"	method="post"	action="/support/adminDiscontentListForm.do">
 	</form>
 	
 	

@@ -919,21 +919,29 @@ public class AdminController {
 	//*********************************************************
 	// 불만게시판 글 목록을 싹 다 가져오는 메소드
 	//*********************************************************
-	@RequestMapping( value="/adminDiscontentListForm.do" )
+	@RequestMapping(
+			value="/adminDiscontentListForm.do"
+			,method = RequestMethod.POST,produces="application/json;charset=UTF-8"
+			)
+	@ResponseBody 
 	public ModelAndView getAdminDiscontentList(
-			HttpSession session
-			) {
+			HttpSession session, HttpServletResponse response,
+			DiscontentSearchDTO discontentSearchDTO
+			){
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("adminDiscontentListForm.jsp");
 		try {
-
-			int adminDiscontentListAllCnt = this.adminService.getAdminDiscontentListAllCnt();
+			if(discontentSearchDTO.getSelectPageNo()==0) {
+				discontentSearchDTO.setSelectPageNo(1);
+			}
+			int adminDiscontentListAllCnt = this.adminService.getAdminDiscontentListAllCnt(discontentSearchDTO);
 			// System.out.println(adminDiscontentListAllCnt); 이상없음
 			//-----------------------------------------------------
-			List<Map<String,String>> adminDiscontentList = this.adminService.getAdminDiscontentList();
+			List<Map<String,String>> adminDiscontentList = this.adminService.getAdminDiscontentList(discontentSearchDTO);
 			//-----------------------------------------------------
 
 			//-----------------------------------------------------
+			mav.addObject( "discontentSearchDTO", discontentSearchDTO );
 			mav.addObject( "adminDiscontentList", adminDiscontentList );
 			mav.addObject( "adminDiscontentListAllCnt", adminDiscontentListAllCnt );
 		}catch(Exception ex) {

@@ -77,9 +77,9 @@ public interface AdminDAO {
 
 	int deleteQna(QnaDTO qnaDTO);
 
-	int getAdminDiscontentListAllCnt();
+	int getAdminDiscontentListAllCnt(DiscontentSearchDTO discontentSearchDTO);
 
-	List<Map<String, String>> getAdminDiscontentList();
+	List<Map<String, String>> getAdminDiscontentList(DiscontentSearchDTO discontentSearchDTO);
 
 	int getReadcountUp(int adminDiscontent_no);
 

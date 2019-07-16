@@ -4,7 +4,6 @@
 
 <!--JSP 기술의 한 종류인 [Include Directive] 를 이용하여 common.jsp파일의 코드를 삽입-->
 <%@include file="common.jsp" %>
-<%@include file="userMainPage.jsp" %>
 
 <html>
 <head>
@@ -61,11 +60,11 @@
             if(upDel == "up") {
                if(upDelCnt >= 1) {
                alert("수정성공");
-               location.replace("/support/adminDiscontentListForm.do");
+               document.goAdminDiscontentListForm.submit();
                } 
                else if (upDelCnt == -1) {
                   alert("삭제되어 수정이 불가능합니다")
-                  location.replace("/support/adminDiscontentListForm.do");
+                  document.goAdminDiscontentListForm.submit();
                } else {
                   alert("서버 DB 연동 실패!")
                }
@@ -73,10 +72,10 @@
               else if(upDel=="del") {
                if(upDelCnt >= 1) {
                   alert("삭제 성공");
-                  location.replace("/support/adminDiscontentListForm.do");
+                  document.goAdminDiscontentListForm.submit();
                } else if(upDelCnt == -1) {
                   alert("이미 삭제된 글입니다");
-                  location.replace("/support/adminDiscontentListForm.do");
+                  document.goAdminDiscontentListForm.submit();
                }else {
                   alert("서버연동 실패");
                }
@@ -121,11 +120,11 @@
       
 		  <input type="button"   value="수정"   onClick="checkDisContentUpDelForm('up');">
       <input type="button"   value="삭제"   onClick="checkDisContentUpDelForm('del');">
-      <input type="button"   value="목록보기"   onClick="document.discontentListForm.submit();"> 
+      <input type="button"   value="목록보기"   onClick="document.goAdminDiscontentListForm.submit();"> 
 
 	</form>
 	
-	<form name="discontentListForm"	method="post"	action="/support/adminDiscontentListForm.do">
+	<form name="goAdminDiscontentListForm"	method="post"	action="/support/adminDiscontentListForm.do">
 	</form>
 	
 	

@@ -81,7 +81,7 @@
     			success:function(data){
     				if(data>=1){
     					alert("차량 정비내용 수정 성공!");
-    					location.replace("/support/adminMainPage.do");
+    					document.goCarMaintanceListForm.submit();
     				}
     				else{
     					alert("차량 정비내용 수정 실패!");
@@ -104,7 +104,7 @@
     			success:function(data){
     				if(data==1){
     					alert("차량 정비내용 삭제 성공!");
-    					location.replace("/support/adminMainPage.do");
+    					document.goCarMaintanceListForm.submit();
     				}
     				else{
     					alert("차량 정비내용 삭제 실패!");
@@ -118,11 +118,14 @@
         }
      // 취소 버튼(메인페이지 이동)
         function goAdminMainPage(){
-        	location.replace("/support/adminMainPage.do");
+			document.goCarMaintanceListForm.submit();
         }
         </script>
 </head>
-	<body><center>
+	<body>
+	<form name="goCarMaintanceListForm" method="post" action="/support/carMaintanceListForm.do">
+	</form>
+	<center>
 		<form name="carMaintanceUpDelProc">
     
             <hl>차량 정비 수정/삭제 UI<br><br>

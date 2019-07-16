@@ -760,18 +760,37 @@
    </select>
    
    <!-- 불만게시판 [글목록 총개수] 가져오기  -->
-	<select id="getAdminDiscontentListAllCnt" resultType="int">
+	<select id="getAdminDiscontentListAllCnt" parameterType = "com.support.movement.DiscontentSearchDTO"	  resultType="int">
+		
 		select
 			count(*)
-			from discontent
-			
-		order by discontent_group_no desc, discontent_print_no asc
-	
+			from discontent dc
+		where 1=1
+		<if test="(keyword!=null and keyword.length()>0)">
+				and dc.discontent_group_no in( (select dc2.discontent_group_no from discontent dc2 where
+						(upper(dc2.discontent_subject) like upper( '%${keyword}%')
+						 or upper(dc2.discontent_content) like upper( '%${keyword}%')
+						 or upper(dc2.admin_name) like upper( '%${keyword}%')
+						 or upper((select du.user_name from disability_user du where du.user_no=dc2.user_no)) like upper( '%${keyword}%')
+						)
+						)
+						 
+				)
+				</if>
+		
+		order by dc.discontent_group_no desc, dc.discontent_print_no asc
+		
+		
 	</select>
    
    <!-- 불만게시판의 글을 싹 다 가져오기  -->
-   <select id="getAdminDiscontentList" resultType="hashMap">	
-		select
+   <select id="getAdminDiscontentList" parameterType = "com.support.movement.DiscontentSearchDTO" resultType="hashMap">	
+		<if test="selectPageNo>0">
+		select 
+			*
+		from (select zzz.*, rownum||'' RNUM from (
+		</if>
+			select
 				dc.discontent_no||''	as "discontent_no"
 				, dc.discontent_subject	as "discontent_subject"
 				, (select du.user_name from disability_user du where du.user_no=dc.user_no)	as "user_name"
@@ -782,10 +801,26 @@
 				, to_char(dc.reg_date, 'YYYY-MM-DD') "reg_date"
 				, dc.readcount||''		as "readcount"
 				, dc.admin_name as "admin_name"
-				, dc.discontent_print_no||'' as "print_no"
 				from discontent dc
-			
+				where 1=1
+				<if test="(keyword!=null and keyword.length()>0)">
+				and dc.discontent_group_no in( (select dc2.discontent_group_no from discontent dc2 where
+				(
+						upper(dc2.discontent_subject) like upper( '%${keyword}%')
+						 or upper(dc2.discontent_content) like upper( '%${keyword}%')
+						 or upper(dc2.admin_name) like upper( '%${keyword}%')
+						 or upper((select du.user_name from disability_user du where du.user_no=dc2.user_no)) like upper( '%${keyword}%')
+						)
+					)
+						 
+				)
+				</if>
 			order by dc.discontent_group_no desc, dc.discontent_print_no asc
+		<if test="selectPageNo>0">	
+		<![CDATA[
+		 ) zzz)  where RNUM>= ${selectPageNo} * 5 - 5+1 and RNUM <= ${selectPageNo} * 5
+		 ]]>
+		 </if>
 	</select>
 	
 	<!-- 조회수 증가 -->

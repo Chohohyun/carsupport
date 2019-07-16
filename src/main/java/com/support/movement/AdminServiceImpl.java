@@ -266,14 +266,14 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getAdminDiscontentListAllCnt() {
-		int adminDiscontentListAllCnt = this.adminDAO.getAdminDiscontentListAllCnt();
+	public int getAdminDiscontentListAllCnt(DiscontentSearchDTO discontentSearchDTO) {
+		int adminDiscontentListAllCnt = this.adminDAO.getAdminDiscontentListAllCnt(discontentSearchDTO);
 		return adminDiscontentListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getAdminDiscontentList() {
-		List<Map<String,String>> adminDiscontentList = this.adminDAO.getAdminDiscontentList();
+	public List<Map<String, String>> getAdminDiscontentList(DiscontentSearchDTO discontentSearchDTO) {
+		List<Map<String,String>> adminDiscontentList = this.adminDAO.getAdminDiscontentList(discontentSearchDTO);
 		// System.out.println("서비스까지 오나");
 		return adminDiscontentList;
 	}

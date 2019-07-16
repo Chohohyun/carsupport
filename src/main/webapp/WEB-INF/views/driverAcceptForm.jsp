@@ -41,7 +41,7 @@ $(".pagingNumber").html(
 			success:function(data){
 				if(data==1){
 					alert("승인 성공!");
-					location.replace("/support/driverAcceptForm.do");
+					document.goDriverAcceptForm.submit();
 				}
 				
 				else{
@@ -110,7 +110,8 @@ $(".pagingNumber").html(
 
 </head>
 <body>
-
+	<form name="goDriverAcceptForm" method="post" action="/support/driverAcceptForm.do">
+	</form>
 	<center>
 		<h1>운전자 승인 리스트 UI</h1>
 		<br>

@@ -279,18 +279,23 @@ public class AdminDAOImpl implements AdminDAO{
 	}
 
 	@Override
-	public int getAdminDiscontentListAllCnt() {
+	public int getAdminDiscontentListAllCnt(DiscontentSearchDTO discontentSearchDTO) {
+		System.out.println("여긴가");
 		int adminDiscontentListAllCnt = this.sqlSession.selectOne(
-				"com.support.movement.AdminDAO.getAdminDiscontentListAllCnt"
+				"com.support.movement.AdminDAO.getAdminDiscontentListAllCnt",discontentSearchDTO
 				);
+		System.out.println("여긴가");
 		return adminDiscontentListAllCnt;
 	}
 
 	@Override
-	public List<Map<String, String>> getAdminDiscontentList() {
+	public List<Map<String, String>> getAdminDiscontentList(DiscontentSearchDTO discontentSearchDTO) {
+		System.out.println("여긴가2");
+		System.out.println(discontentSearchDTO.getSelectPageNo());
 		List<Map<String,String>> adminDiscontentList = this.sqlSession.selectList(
-				"com.support.movement.AdminDAO.getAdminDiscontentList"
+				"com.support.movement.AdminDAO.getAdminDiscontentList",discontentSearchDTO
 				);
+		System.out.println("여긴가2");
 		return adminDiscontentList;
 	}
 

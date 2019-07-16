@@ -105,8 +105,8 @@
 			
 		}); 
 	}
-	function goMainPage(){
-		location.replace("/support/driverUpDelForm.do");
+	function goUpDelPage(){
+		document.goDriverUpDelForm.submit();
 
 	}
 	
@@ -212,7 +212,7 @@
 						alert("운전자삭제 성공!");
 						
 
-						location.replace("/support/driverUpDelForm.do");
+						document.goDriverUpDelForm.submit();
 					}
 					else{
 						alert("운전자삭제 실패!");
@@ -222,7 +222,7 @@
 					if(data==1){
 						alert("운전자수정 성공!");
 
-						location.replace("/support/driverUpDelForm.do");
+						document.goDriverUpDelForm.submit();
 					}
 					else{
 						alert("운전자수정 실패!");
@@ -327,6 +327,8 @@
 </head>
 
 <body>
+	<form name="goDriverUpDelForm" method="post" action="/support/driverUpDelForm.do">
+	</form>
     <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div class="wrapper wrapper--w790">
             <div class="card card-5">
