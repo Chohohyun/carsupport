@@ -141,7 +141,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.6.5</version>
+			<version>2.13.4.1</version>
 			<!-- <주의><version>2.5.4</version> 은에러발생-->
 			<!--       <version>2.5.1</version>는가능-->
 			<!--       <version>2.1.1</version>는가능-->
